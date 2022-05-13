@@ -4517,8 +4517,6 @@ class SparqlParser ( Parser ):
                 listener.exitRdfLiteral(self)
 
 
-
-
     def rdfLiteral(self):
 
         localctx = SparqlParser.RdfLiteralContext(self, self._ctx, self.state)
