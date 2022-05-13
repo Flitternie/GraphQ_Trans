@@ -1,3 +1,4 @@
+import os
 import re
 from antlr4 import *
 
@@ -6,8 +7,7 @@ from .SparqlParser import SparqlParser
 from .SparqlListener import SparqlListener
 
 
-from ..utils import *
-from ..ir.utils import *
+from .utils import *
 
 
 class IREmitter(SparqlListener):
@@ -20,7 +20,8 @@ class IREmitter(SparqlListener):
             '!=': 'is not'
         }
         self.VTYPE = {
-            "xsd:double": 'number'
+            "xsd:double": 'number',
+            "xsd:date": 'date'
         }
         self.ir = ""
 
@@ -33,7 +34,9 @@ class IREmitter(SparqlListener):
     # Enter a parse tree produced by SparqlParser#query.
     def enterQuery(self, ctx: SparqlParser.QueryContext):
         self.ir = ""
-        ctx.slots = strictDict({"entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "", "attribute": ""})
+        ctx.slots = strictDict({
+            "entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "", "attribute": "", "qualifier": ""
+        })
         return super().enterQuery(ctx)
 
     # Exit a parse tree produced by SparqlParser#query.
@@ -46,6 +49,12 @@ class IREmitter(SparqlListener):
             self.ir = "what is the attribute {} Of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
         if self.queryType == "PredicateQuery":
             self.ir = "what is the relation from {} to {}".format(ctx.slots["relationEntitySet1"], ctx.slots["relationEntitySet2"])
+        if self.queryType == "SelectQuery":
+            self.ir = "which one has the {} among {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
+        if self.queryType == "VerifyQuery":
+            self.ir = "whether {}".format(ctx.slots["entitySet"])
+        if self.queryType == "QualifierQuery":
+            self.ir = "what is the qualifier {} of {}".format(ctx.slots["qualifier"], ctx.slots["entitySet"])
         return super().exitQuery(ctx)
 
         # Enter a parse tree produced by SparqlParser#prologue.
@@ -74,7 +83,11 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#selectQuery.
     def enterSelectQuery(self, ctx: SparqlParser.SelectQueryContext):
-        ctx.slots = strictDict({"entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "", "attribute": ""})
+        ctx.slots = strictDict({
+            "entitySet": "", "relationEntitySet1": "",
+            "relationEntitySet2": "", "attribute": "", "attributeTable": "{}",
+            "selectVar": "", "stringOP": "", "qualifier": ""
+        })
         return super().enterSelectQuery(ctx)
 
     # Exit a parse tree produced by SparqlParser#selectQuery.
@@ -82,7 +95,12 @@ class IREmitter(SparqlListener):
         ctx.parentCtx.slots['entitySet'] = ctx.slots['entitySet']
         ctx.parentCtx.slots['relationEntitySet1'] = ctx.slots['relationEntitySet1']
         ctx.parentCtx.slots['relationEntitySet2'] = ctx.slots['relationEntitySet2']
-        ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
+        ctx.parentCtx.slots['qualifier'] = ctx.slots['qualifier']
+        if ctx.slots['selectVar']:
+            ctx.parentCtx.slots['attribute'] = '{} {}'.format(
+                ctx.slots['stringOP'], ctx.slots['attributeTable'][ctx.slots['selectVar']])
+        else:
+            ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
         return super().exitSelectQuery(ctx)
 
     # Enter a parse tree produced by SparqlParser#entityQueryCondition.
@@ -94,6 +112,8 @@ class IREmitter(SparqlListener):
     def exitEntityQueryCondition(self, ctx: SparqlParser.EntityQueryConditionContext):
         if ctx.slots["var"] == "?pv":
             self.queryType = "AttributeQuery"
+        if ctx.slots["var"] == "?qpv":
+            self.queryType = "QualifierQuery"
         self.query_var = ctx.slots["var"]
         return super().exitEntityQueryCondition(ctx)
 
@@ -125,11 +145,14 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#askQuery.
     def enterAskQuery(self, ctx: SparqlParser.AskQueryContext):
-        pass
+        self.queryType = 'VerifyQuery'
+        ctx.slots = strictDict({"entitySet": ""})
+        return super().enterAskQuery(ctx)
 
     # Exit a parse tree produced by SparqlParser#askQuery.
     def exitAskQuery(self, ctx: SparqlParser.AskQueryContext):
-        pass
+        ctx.parentCtx.slots['entitySet'] = ctx.slots['entitySet']
+        return super().exitAskQuery(ctx)
 
     # Enter a parse tree produced by SparqlParser#datasetClause.
     def enterDatasetClause(self, ctx: SparqlParser.DatasetClauseContext):
@@ -165,24 +188,33 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#whereClause.
     def enterWhereClause(self, ctx: SparqlParser.WhereClauseContext):
-        ctx.slots = strictDict({"entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "", "attribute": ""})
+        ctx.slots = strictDict({
+            "entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "", "attribute": "", "attributeTable": {},
+            "qualifier": ""
+        })
         return super().enterWhereClause(ctx)
 
     # Exit a parse tree produced by SparqlParser#whereClause.
     def exitWhereClause(self, ctx: SparqlParser.WhereClauseContext):
         ctx.parentCtx.slots['entitySet'] = ctx.slots['entitySet']
-        ctx.parentCtx.slots['relationEntitySet1'] = ctx.slots['relationEntitySet1']
-        ctx.parentCtx.slots['relationEntitySet2'] = ctx.slots['relationEntitySet2']
-        ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
+        if isinstance(ctx.parentCtx, SparqlParser.SelectQueryContext):
+            ctx.parentCtx.slots['relationEntitySet1'] = ctx.slots['relationEntitySet1']
+            ctx.parentCtx.slots['relationEntitySet2'] = ctx.slots['relationEntitySet2']
+            ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
+            ctx.parentCtx.slots['attributeTable'] = ctx.slots['attributeTable']
+            ctx.parentCtx.slots['qualifier'] = ctx.slots['qualifier']
         return super().exitWhereClause(ctx)
 
     # Enter a parse tree produced by SparqlParser#solutionModifier.
     def enterSolutionModifier(self, ctx: SparqlParser.SolutionModifierContext):
-        pass
+        ctx.slots = strictDict({"var": "", "stringOP": ""})
+        return super().enterSolutionModifier(ctx)
 
     # Exit a parse tree produced by SparqlParser#solutionModifier.
     def exitSolutionModifier(self, ctx: SparqlParser.SolutionModifierContext):
-        pass
+        ctx.parentCtx.slots['selectVar'] = ctx.slots['var']
+        ctx.parentCtx.slots['stringOP'] = ctx.slots['stringOP']
+        return super().exitSolutionModifier(ctx)
 
     # Enter a parse tree produced by SparqlParser#limitOffsetClauses.
     def enterLimitOffsetClauses(self, ctx: SparqlParser.LimitOffsetClausesContext):
@@ -194,27 +226,37 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#orderClause.
     def enterOrderClause(self, ctx: SparqlParser.OrderClauseContext):
-        pass
+        ctx.slots = strictDict({"var": "", "stringOP": ""})
+        return super().enterOrderClause(ctx)
 
     # Exit a parse tree produced by SparqlParser#orderClause.
     def exitOrderClause(self, ctx: SparqlParser.OrderClauseContext):
-        pass
+        ctx.parentCtx.slots['var'] = ctx.slots['var']
+        ctx.parentCtx.slots['stringOP'] = ctx.slots['stringOP']
+        return super().exitOrderClause(ctx)
 
     # Enter a parse tree produced by SparqlParser#orderCondition.
     def enterOrderCondition(self, ctx: SparqlParser.OrderConditionContext):
-        pass
+        ctx.slots = strictDict({"var": "", "dtype": ""})
+        return super().enterOrderCondition(ctx)
 
     # Exit a parse tree produced by SparqlParser#orderCondition.
     def exitOrderCondition(self, ctx: SparqlParser.OrderConditionContext):
-        pass
+        ctx.parentCtx.slots['var'] = ctx.slots['var']
+        if len(list(ctx.getChildren())) == 1:
+            ctx.parentCtx.slots['stringOP'] = 'smallest'
+        else:
+            ctx.parentCtx.slots['stringOP'] = 'largest'
+        return super().exitOrderCondition(ctx)
 
     # Enter a parse tree produced by SparqlParser#limitClause.
     def enterLimitClause(self, ctx: SparqlParser.LimitClauseContext):
-        pass
+        return super().enterLimitClause(ctx)
 
     # Exit a parse tree produced by SparqlParser#limitClause.
     def exitLimitClause(self, ctx: SparqlParser.LimitClauseContext):
-        pass
+        self.queryType = "SelectQuery"
+        return super().exitLimitClause(ctx)
 
     # Enter a parse tree produced by SparqlParser#offsetClause.
     def enterOffsetClause(self, ctx: SparqlParser.OffsetClauseContext):
@@ -226,22 +268,45 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#groupGraphPattern.
     def enterGroupGraphPattern(self, ctx: SparqlParser.GroupGraphPatternContext):
-        ctx.slots = strictDict({"triple_table": dict(), "filter_table": dict()})
+        ctx.slots = strictDict({"triple_table": dict(), "filter_table": dict(), "existingES": ""})
         return super().enterGroupGraphPattern(ctx)
 
     # Exit a parse tree produced by SparqlParser#groupGraphPattern.
     def exitGroupGraphPattern(self, ctx: SparqlParser.GroupGraphPatternContext):
         if isinstance(ctx.parentCtx, SparqlParser.WhereClauseContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
-                print(ctx.slots['triple_table'])
-                print(ctx.slots['filter_table'])
-                ctx.parentCtx.slots['entitySet'] = scout_entity_set(
-                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var
-                )
+
+                attribute_table = {}
+                for triple in ctx.slots['triple_table'][self.query_var]:
+                    if triple[2].startswith('?pv'):
+                        for tp in ctx.slots['triple_table'][triple[2]]:
+                            if tp[0] == triple[2] and tp[2].startswith('?v'):
+                                attribute_table[tp[2]] = '<A> {} </A>'.format(triple[1][1:-1].replace('_', ' '))
+                ctx.parentCtx.slots['attributeTable'] = attribute_table
+
+                if ctx.slots['existingES']:
+                    cur_es = scout_entity_set(
+                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var
+                    )
+
+                    if '[placeholder]' in ctx.slots['existingES']:
+                        ctx.parentCtx.slots['entitySet'] = ctx.slots['existingES'].replace('[placeholder]', cur_es)
+                    elif cur_es != 'ones':
+                        ctx.parentCtx.slots['entitySet'] = '<ES> {} and {} </ES>'.format(cur_es, ctx.slots['existingES'])
+                    else:
+                        ctx.parentCtx.slots['entitySet'] = ctx.slots['existingES']
+                else:
+                    # print(ctx.slots['existingES'])
+                    # print(ctx.slots['triple_table'])
+                    # print(ctx.slots['filter_table'])
+
+                    ctx.parentCtx.slots['entitySet'] = scout_entity_set(
+                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var
+                    )
 
             if self.queryType == 'AttributeQuery':
-                print(ctx.slots['triple_table'])
-                print(ctx.slots['filter_table'])
+                # print(ctx.slots['triple_table'])
+                # print(ctx.slots['filter_table'])
                 attribute = ''
                 es_var = ''
 
@@ -257,8 +322,8 @@ class IREmitter(SparqlListener):
                 ctx.parentCtx.slots['entitySet'] = es
                 ctx.parentCtx.slots['attribute'] = attribute
             if self.queryType == 'PredicateQuery':
-                print(ctx.slots['triple_table'])
-                print(ctx.slots['filter_table'])
+                # print(ctx.slots['triple_table'])
+                # print(ctx.slots['filter_table'])
                 es_var1, es_var2 = '', ''
                 for triple in ctx.slots['triple_table'][self.query_var]:
                     if triple[1] == self.query_var:
@@ -273,6 +338,38 @@ class IREmitter(SparqlListener):
                 )
                 ctx.parentCtx.slots['relationEntitySet1'] = es1
                 ctx.parentCtx.slots['relationEntitySet2'] = es2
+            if self.queryType == 'VerifyQuery':
+                # print(ctx.slots['triple_table'])
+                # print(ctx.slots['filter_table'])
+                ES = scout_entity_set(
+                    ctx.slots['triple_table'], ctx.slots['filter_table'], '?e'
+                )
+                if ES.endswith(' </ES>'):
+                    ES = ES[5: -5]
+                ctx.parentCtx.slots['entitySet'] = ES
+            if self.queryType == 'QualifierQuery':
+                print(ctx.slots['triple_table'])
+                print(ctx.slots['filter_table'])
+                var = None
+                for key in ctx.slots['triple_table'].keys() - {self.query_var}:
+                    for triple in ctx.slots['triple_table'][key]:
+                        if triple[2] == self.query_var:
+                            var = triple[0]
+                            ctx.parentCtx.slots['qualifier'] = "<Q> {} </Q>".format(triple[1][1:-1].replace("_", " "))
+
+                assert var is not None
+                ES = scout_entity_set(
+                    ctx.slots['triple_table'], ctx.slots['filter_table'], var, excluding=[self.query_var]
+                )
+                if ES.endswith(' </ES>'):
+                    ES = ES[5: -5]
+                ctx.parentCtx.slots['entitySet'] = ES
+
+        elif isinstance(ctx.parentCtx, SparqlParser.GroupOrUnionGraphPatternContext):
+            if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
+                ctx.parentCtx.slots['entitySets'].append(scout_entity_set(
+                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True
+                ))
 
         return super().exitGroupGraphPattern(ctx)
 
@@ -288,11 +385,13 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#graphPatternNotTriples.
     def enterGraphPatternNotTriples(self, ctx: SparqlParser.GraphPatternNotTriplesContext):
-        pass
+        ctx.slots = strictDict({'existingES': ''})
+        return super().enterGraphPatternNotTriples(ctx)
 
     # Exit a parse tree produced by SparqlParser#graphPatternNotTriples.
     def exitGraphPatternNotTriples(self, ctx: SparqlParser.GraphPatternNotTriplesContext):
-        pass
+        ctx.parentCtx.slots['existingES'] = ctx.slots['existingES']
+        return super().exitGraphPatternNotTriples(ctx)
 
     # Enter a parse tree produced by SparqlParser#optionalGraphPattern.
     def enterOptionalGraphPattern(self, ctx: SparqlParser.OptionalGraphPatternContext):
@@ -312,11 +411,19 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#groupOrUnionGraphPattern.
     def enterGroupOrUnionGraphPattern(self, ctx: SparqlParser.GroupOrUnionGraphPatternContext):
-        pass
+        ctx.slots = strictDict({'entitySets': []})
+        return super().enterGroupOrUnionGraphPattern(ctx)
 
     # Exit a parse tree produced by SparqlParser#groupOrUnionGraphPattern.
     def exitGroupOrUnionGraphPattern(self, ctx: SparqlParser.GroupOrUnionGraphPatternContext):
-        pass
+        entitySets = ctx.slots['entitySets']
+        ES = f"{entitySets.pop()}"
+        while len(entitySets) != 0:
+            es = entitySets.pop()
+            ES = "<ES> {} or {} </ES>".format(ES, es)
+
+        ctx.parentCtx.slots['existingES'] = ES
+        return super().exitGroupOrUnionGraphPattern(ctx)
 
     # Enter a parse tree produced by SparqlParser#filter_.
     def enterFilter_(self, ctx: SparqlParser.Filter_Context):
@@ -329,7 +436,11 @@ class IREmitter(SparqlListener):
             ctx.parentCtx.slots['filter_table'][ctx.slots['var']] = []
 
         ctx.parentCtx.slots['filter_table'][ctx.slots['var']].append(
-            (ctx.slots['sop'], ctx.slots['vtype'], ctx.slots['value'])
+            {
+                'sop': ctx.slots['sop'],
+                'vtype': ctx.slots['vtype'],
+                'value': ctx.slots['value']
+            }
         )
         return super().exitFilter_(ctx)
 
@@ -401,15 +512,15 @@ class IREmitter(SparqlListener):
             ctx.parentCtx.slots['triple_table'][ctx.slots['tail']] = []
 
         ctx.parentCtx.slots['triple_table'][ctx.slots['head']].append(
-            (ctx.slots['head'], ctx.slots['relation'], ctx.slots['tail']))
+            (ctx.slots['head'], ctx.slots['relation'], ctx.slots['tail'], ctx.slots['dtype']))
 
         if ctx.slots['relation'].startswith('?'):
             ctx.parentCtx.slots['triple_table'][ctx.slots['relation']].append(
-                (ctx.slots['head'], ctx.slots['relation'], ctx.slots['tail']))
+                (ctx.slots['head'], ctx.slots['relation'], ctx.slots['tail'], ctx.slots['dtype']))
 
         if ctx.slots['dtype'] == 'var':
             ctx.parentCtx.slots['triple_table'][ctx.slots['tail']].append(
-                (ctx.slots['head'], ctx.slots['relation'], ctx.slots['tail']))
+                (ctx.slots['head'], ctx.slots['relation'], ctx.slots['tail'], ctx.slots['dtype']))
         return super().exitTriplesSameSubject(ctx)
 
     # Enter a parse tree produced by SparqlParser#propertyListNotEmpty.
@@ -419,18 +530,25 @@ class IREmitter(SparqlListener):
 
     # Exit a parse tree produced by SparqlParser#propertyListNotEmpty.
     def exitPropertyListNotEmpty(self, ctx: SparqlParser.PropertyListNotEmptyContext):
-        ctx.parentCtx.slots["relation"] = ctx.slots["relation"]
-        ctx.parentCtx.slots["tail"] = ctx.slots["tail"]
-        ctx.parentCtx.slots["dtype"] = ctx.slots["dtype"]
+        if isinstance(ctx.parentCtx, SparqlParser.BlankNodePropertyListContext):
+            ctx.parentCtx.slots["head"] = list(ctx.getChildren())[1].slots["tail"]
+        else:
+            ctx.parentCtx.slots["relation"] = ctx.slots["relation"]
+            ctx.parentCtx.slots["tail"] = ctx.slots["tail"]
+            ctx.parentCtx.slots["dtype"] = ctx.slots["dtype"]
         return super().exitPropertyListNotEmpty(ctx)
 
     # Enter a parse tree produced by SparqlParser#propertyList.
     def enterPropertyList(self, ctx: SparqlParser.PropertyListContext):
-        pass
+        ctx.slots = strictDict({"relation": "", "tail": "", "dtype": ""})
+        return super().enterPropertyList(ctx)
 
     # Exit a parse tree produced by SparqlParser#propertyList.
     def exitPropertyList(self, ctx: SparqlParser.PropertyListContext):
-        pass
+        ctx.parentCtx.slots["relation"] = ctx.slots["relation"]
+        ctx.parentCtx.slots["tail"] = ctx.slots["tail"]
+        ctx.parentCtx.slots["dtype"] = ctx.slots["dtype"]
+        return super().exitPropertyList(ctx)
 
     # Enter a parse tree produced by SparqlParser#objectList.
     def enterObjectList(self, ctx: SparqlParser.ObjectListContext):
@@ -469,19 +587,23 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#triplesNode.
     def enterTriplesNode(self, ctx: SparqlParser.TriplesNodeContext):
-        pass
+        ctx.slots = strictDict({"head": ""})
+        return super().enterTriplesNode(ctx)
 
     # Exit a parse tree produced by SparqlParser#triplesNode.
     def exitTriplesNode(self, ctx: SparqlParser.TriplesNodeContext):
-        pass
+        ctx.parentCtx.slots['head'] = ctx.slots["head"]
+        return super().exitTriplesNode(ctx)
 
     # Enter a parse tree produced by SparqlParser#blankNodePropertyList.
     def enterBlankNodePropertyList(self, ctx: SparqlParser.BlankNodePropertyListContext):
-        pass
+        ctx.slots = strictDict({"head": ""})
+        return super().enterBlankNodePropertyList(ctx)
 
     # Exit a parse tree produced by SparqlParser#blankNodePropertyList.
     def exitBlankNodePropertyList(self, ctx: SparqlParser.BlankNodePropertyListContext):
-        pass
+        ctx.parentCtx.slots['head'] = ctx.slots["head"]
+        return super().exitBlankNodePropertyList(ctx)
 
     # Enter a parse tree produced by SparqlParser#collection.
     def enterCollection(self, ctx: SparqlParser.CollectionContext):
@@ -601,17 +723,23 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#relationalExpression.
     def enterRelationalExpression(self, ctx: SparqlParser.RelationalExpressionContext):
+        ctx.slots = strictDict({"var": "", "dtype": "", "value": ""})
         return super().enterNumericExpression(ctx)
 
     # Exit a parse tree produced by SparqlParser#relationalExpression.
     def exitRelationalExpression(self, ctx: SparqlParser.RelationalExpressionContext):
-        left, op, right = ctx.getChildren()
-        if left.slots['dtype'] == 'var' and right.slots['dtype'] != 'var':
-            ctx.parentCtx.slots['var'] = left.slots['var']
-            ctx.parentCtx.slots['sop'] = self.SOP[op.getText()]
-            ctx.parentCtx.slots['vtype'] = self.VTYPE[right.slots['dtype']]
-            ctx.parentCtx.slots['value'] = right.slots['value']
-
+        if len(list(ctx.getChildren())) == 3:
+            left, op, right = ctx.getChildren()
+            if left.slots['dtype'] == 'var' and right.slots['dtype'] != 'var':
+                ctx.parentCtx.slots['var'] = left.slots['var']
+                ctx.parentCtx.slots['sop'] = self.SOP[op.getText()]
+                if right.slots['dtype']:
+                    ctx.parentCtx.slots['vtype'] = right.slots['dtype']
+                ctx.parentCtx.slots['value'] = right.slots['value']
+        else:
+            ctx.parentCtx.slots['var'] = ctx.slots['var']
+            ctx.parentCtx.slots['vtype'] = ctx.slots['dtype']
+            ctx.parentCtx.slots['value'] = ctx.slots['value']
         return super().exitRelationalExpression(ctx)
 
     # Enter a parse tree produced by SparqlParser#numericExpression.
@@ -621,6 +749,9 @@ class IREmitter(SparqlListener):
 
     # Exit a parse tree produced by SparqlParser#numericExpression.
     def exitNumericExpression(self, ctx: SparqlParser.NumericExpressionContext):
+        ctx.parentCtx.slots['var'] = ctx.slots['var']
+        ctx.parentCtx.slots['dtype'] = ctx.slots['dtype']
+        ctx.parentCtx.slots['value'] = ctx.slots['value']
         return super().exitNumericExpression(ctx)
 
     # Enter a parse tree produced by SparqlParser#additiveExpression.
@@ -679,9 +810,10 @@ class IREmitter(SparqlListener):
     # Exit a parse tree produced by SparqlParser#brackettedExpression.
     def exitBrackettedExpression(self, ctx: SparqlParser.BrackettedExpressionContext):
         ctx.parentCtx.slots['var'] = ctx.slots['var']
-        ctx.parentCtx.slots['sop'] = ctx.slots['sop']
-        ctx.parentCtx.slots['vtype'] = ctx.slots['vtype']
-        ctx.parentCtx.slots['value'] = ctx.slots['value']
+        if isinstance(ctx.parentCtx, SparqlParser.ConstraintContext):
+            ctx.parentCtx.slots['sop'] = ctx.slots['sop']
+            ctx.parentCtx.slots['vtype'] = ctx.slots['vtype']
+            ctx.parentCtx.slots['value'] = ctx.slots['value']
         return super().exitBrackettedExpression(ctx)
 
     # Enter a parse tree produced by SparqlParser#builtInCall.
@@ -717,24 +849,27 @@ class IREmitter(SparqlListener):
     def exitRdfLiteral(self, ctx: SparqlParser.RdfLiteralContext):
         ctx.parentCtx.slots["value"] = ctx.slots["value"]
         if not ctx.slots["dtype"]:
-            ctx.slots["dtype"] = "string"
+            ctx.slots["dtype"] = "text"
         ctx.parentCtx.slots["dtype"] = ctx.slots["dtype"]
         return super().exitRdfLiteral(ctx)
     # Enter a parse tree produced by SparqlParser#numericLiteral.
     def enterNumericLiteral(self, ctx: SparqlParser.NumericLiteralContext):
-        pass
+        ctx.slots = strictDict({"value": ""})
+        return super().enterNumericLiteral(ctx)
 
     # Exit a parse tree produced by SparqlParser#numericLiteral.
     def exitNumericLiteral(self, ctx: SparqlParser.NumericLiteralContext):
-        pass
+        ctx.parentCtx.slots["value"] = ctx.slots["value"]
+        return super().exitNumericLiteral(ctx)
 
     # Enter a parse tree produced by SparqlParser#numericLiteralUnsigned.
     def enterNumericLiteralUnsigned(self, ctx: SparqlParser.NumericLiteralUnsignedContext):
-        pass
+        return super().enterNumericLiteralUnsigned(ctx)
 
     # Exit a parse tree produced by SparqlParser#numericLiteralUnsigned.
     def exitNumericLiteralUnsigned(self, ctx: SparqlParser.NumericLiteralUnsignedContext):
-        pass
+        ctx.parentCtx.slots['value'] = ctx.getText()
+        return super().exitNumericLiteralUnsigned(ctx)
 
     # Enter a parse tree produced by SparqlParser#numericLiteralPositive.
     def enterNumericLiteralPositive(self, ctx: SparqlParser.NumericLiteralPositiveContext):
@@ -771,14 +906,18 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#iriRef.
     def enterIriRef(self, ctx: SparqlParser.IriRefContext):
+        ctx.slots = strictDict({'dtype': ""})
         return super().enterIriRef(ctx)
 
     # Exit a parse tree produced by SparqlParser#iriRef.
     def exitIriRef(self, ctx: SparqlParser.IriRefContext):
         if isinstance(ctx.parentCtx, SparqlParser.VarOrIRIrefContext):
             ctx.parentCtx.slots["predicate"] = ctx.getText()
+        elif isinstance(ctx.parentCtx, SparqlParser.RdfLiteralContext):
+            ctx.parentCtx.slots["dtype"] = ctx.slots['dtype']
         else:
             ctx.parentCtx.slots["dtype"] = ctx.getText()
+
         return super().exitIriRef(ctx)
 
     # Enter a parse tree produced by SparqlParser#prefixedName.
@@ -787,7 +926,8 @@ class IREmitter(SparqlListener):
 
     # Exit a parse tree produced by SparqlParser#prefixedName.
     def exitPrefixedName(self, ctx: SparqlParser.PrefixedNameContext):
-        pass
+        ctx.parentCtx.slots['dtype'] = self.VTYPE[ctx.getText()]
+        return super().exitPrefixedName(ctx)
 
     # Enter a parse tree produced by SparqlParser#blankNode.
     def enterBlankNode(self, ctx: SparqlParser.BlankNodeContext):
@@ -824,49 +964,91 @@ def get_label(table: dict, var):
 def get_attribute(triple_table: dict, filter_table: dict, var):
     assert var in triple_table.keys()
     constraints = []
-    for triple in triple_table[var]:
-        if triple[0] == var and triple[1] == '<pred:value>':
-            if not triple[2].startswith('?'):
-                return [('is', 'text', triple[2], '')]
+    unit = ''
+    for tp in triple_table[var]:
+        if tp[0] == var and tp[1] == '<pred:unit>':
+            if tp[2] == '1':
+                unit = ''
+                break
             else:
-                for tp in triple_table[var]:
-                    if tp[0] == var and tp[1] == '<pred:unit>':
-                        if tp[2] == '1':
-                            unit = ''
-                            break
-                        else:
-                            unit = tp[2] + ' '
-                            break
-                for ft in filter_table[triple[2]]:
-                    constraints.append((*ft, unit))
+                unit = tp[2] + ' '
+                break
+
+    for triple in triple_table[var]:
+        if triple[0] == var and triple[1].startswith('<pred:'):
+            if not triple[2].startswith('?') and triple[1] == '<pred:value>':
+                return [('is', triple[3], triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:date>':
+                return [('is', 'date', triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:year>':
+                return [('is', 'year', triple[2], unit)]
+            elif triple[2].startswith('?'):
+                vtype = triple[1][6:-1]
+                if triple[2] in filter_table.keys():
+                    for ft in filter_table[triple[2]]:
+                        if not ft['vtype']:
+                            ft['vtype'] = vtype
+                        constraints.append((*list(ft.values()), unit))
                 return constraints
 
 
-def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[]):
+def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False):
     entity = ''
     cls = ''
     entitySets = []
+    intersectSets = []
     for triple in triple_table[var]:
-        if triple[2] == '?c':
-            cls = '<C> {} </C>'.format(get_label(triple_table, '?c'))
+        if triple[2].startswith('?c'):
+            cls = '<C> {} </C>'.format(get_label(triple_table, triple[2]))
         if triple[1] == '<pred:name>':
             entity = '<E> {} </E>'.format(triple[2])
 
     if entity == '' and cls != '':
         entity = cls
     elif entity == '' and cls == '':
-        entity = 'Ones'
+        if union_block:
+            entity = '[placeholder]'
+        else:
+            entity = 'ones'
     elif cls != '' and cls != '':
         entity = '{} {}'.format(cls, entity)
 
     for triple in triple_table[var]:
         if triple[2].startswith('?pv') and triple[2] not in excluding and triple[1] not in excluding:
             entity_set = '<ES> {} whose <A> {} </A> {} {} <V> {} {}</V> </ES>'
-            attr = triple[1].strip('"').replace('<', '').replace('>', '')
+            attr = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraints = get_attribute(triple_table, filter_table, triple[2])
             for constraint in constraints:
                 entity_set = entity_set.format(entity, attr, *constraint)
                 entitySets.append(entity_set)
+        if triple[2].startswith('?e') and triple[2] not in excluding and triple[1] not in excluding and triple[0] == var:
+            # intersect_set = '(<ES> {}ones that <R> {} </R> {} to {} </ES>)'
+            # logic = ''
+
+            intersect_set = 'that <R> {} </R> {} to {}'
+
+            direc = 'backward'
+            pred = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
+            constraint_e = scout_entity_set(triple_table, filter_table, triple[2], excluding=[var])
+
+            # intersect_set = intersect_set.format(logic, pred, direc, constraint_e)
+            intersect_set = intersect_set.format(pred, direc, constraint_e)
+
+            intersectSets.append(intersect_set)
+        if triple[0].startswith('?e') and triple[0] not in excluding and triple[1] not in excluding and triple[2] == var:
+            # intersect_set = '(<ES> {}ones that <R> {} </R> {} to {} </ES>)'
+            # logic = ''
+
+            intersect_set = 'that <R> {} </R> {} to {}'
+
+            direc = 'forward'
+            pred = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
+            constraint_e = scout_entity_set(triple_table, filter_table, triple[0], excluding=[var])
+            # intersect_set = intersect_set.format(logic, pred, direc, constraint_e)
+
+            intersect_set = intersect_set.format(pred, direc, constraint_e)
+
+            intersectSets.append(intersect_set)
 
     if entitySets:
         ES = f"{entitySets.pop()}"
@@ -875,6 +1057,9 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
             ES = "<ES> {} and {} </ES>".format(ES, es)
     else:
         ES = entity
+
+    while intersectSets:
+        ES = f"<ES> {ES} {intersectSets.pop()} </ES>"
 
     return ES
 
