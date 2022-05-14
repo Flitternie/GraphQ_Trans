@@ -25,7 +25,6 @@ class IREmitter(SparqlListener):
             "xsd:date": 'date'
         }
         self.ir = ""
-
         self.query_var = ""
         self.queryType = ""
 
@@ -35,6 +34,9 @@ class IREmitter(SparqlListener):
     # Enter a parse tree produced by SparqlParser#query.
     def enterQuery(self, ctx: SparqlParser.QueryContext):
         self.ir = ""
+        self.query_var = ""
+        self.queryType = ""
+
         ctx.slots = strictDict({
             "entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "",
             "attribute": "", "qualifier": "", "verify": ""
@@ -207,7 +209,6 @@ class IREmitter(SparqlListener):
             ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
             ctx.parentCtx.slots['attributeTable'] = ctx.slots['attributeTable']
             ctx.parentCtx.slots['qualifier'] = ctx.slots['qualifier']
-
         return super().exitWhereClause(ctx)
 
     # Enter a parse tree produced by SparqlParser#solutionModifier.
@@ -280,7 +281,6 @@ class IREmitter(SparqlListener):
     def exitGroupGraphPattern(self, ctx: SparqlParser.GroupGraphPatternContext):
         if isinstance(ctx.parentCtx, SparqlParser.WhereClauseContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
-
                 attribute_table = {}
                 for triple in ctx.slots['triple_table'][self.query_var]:
                     if triple[2].startswith('?pv'):
@@ -344,7 +344,9 @@ class IREmitter(SparqlListener):
                 ctx.parentCtx.slots['relationEntitySet1'] = es1
                 ctx.parentCtx.slots['relationEntitySet2'] = es2
             if self.queryType == 'VerifyQuery':
-                verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], '?e')
+                verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], '?e', excluding=[])
+                # print(ctx.slots['triple_table'])
+
                 ctx.parentCtx.slots['verify'] = verify
 
             if self.queryType == 'QualifierQuery':
@@ -357,7 +359,9 @@ class IREmitter(SparqlListener):
 
                 assert var is not None
                 verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], var, excluding=[self.query_var])
+                print(self.query_var)
                 ctx.parentCtx.slots['verify'] = verify
+                print(ctx.parentCtx.slots['verify'])
 
         elif isinstance(ctx.parentCtx, SparqlParser.GroupOrUnionGraphPatternContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
@@ -867,19 +871,21 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#numericLiteralPositive.
     def enterNumericLiteralPositive(self, ctx: SparqlParser.NumericLiteralPositiveContext):
-        pass
+        return super().enterNumericLiteralPositive(ctx)
 
     # Exit a parse tree produced by SparqlParser#numericLiteralPositive.
     def exitNumericLiteralPositive(self, ctx: SparqlParser.NumericLiteralPositiveContext):
-        pass
+        ctx.parentCtx.slots['value'] = ctx.getText()
+        return super().exitNumericLiteralPositive(ctx)
 
     # Enter a parse tree produced by SparqlParser#numericLiteralNegative.
     def enterNumericLiteralNegative(self, ctx: SparqlParser.NumericLiteralNegativeContext):
-        pass
+        return super().enterNumericLiteralNegative(ctx)
 
     # Exit a parse tree produced by SparqlParser#numericLiteralNegative.
     def exitNumericLiteralNegative(self, ctx: SparqlParser.NumericLiteralNegativeContext):
-        pass
+        ctx.parentCtx.slots['value'] = ctx.getText()
+        return super().exitNumericLiteralNegative(ctx)
 
     # Enter a parse tree produced by SparqlParser#booleanLiteral.
     def enterBooleanLiteral(self, ctx: SparqlParser.BooleanLiteralContext):
@@ -1059,7 +1065,6 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
 
 def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False):
-
     for triple in triple_table[var]:
         if triple[2].startswith('?pv') and triple[2] not in excluding and triple[1] not in excluding:
             verify = "{} whose <A> {} </A> {} {} <V> {} {}</V>"
