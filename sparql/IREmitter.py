@@ -1051,6 +1051,8 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
                     entity_set = '<ES> {} whose <A> {} </A> {} {} <V> {} {}</V> </ES>'.format(entity, attr, *constraint)
                     entitySets.append(entity_set)
                 elif select:
+                    if entity.startswith('<C>') and entity.endswith('</C>'):
+                        entity = "<ES> {} </ES>".format(entity)
                     entity_set = '<ES> {} that has {} <A> {} </A> </ES>'.format(entity, *constraint, attr)
                     entitySets.append(entity_set)
         if triple[2].startswith('?e') and triple[2] not in excluding and triple[1] not in excluding and triple[0] == var:
@@ -1092,6 +1094,9 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
     while intersectSets:
         ES = f"<ES> {ES} {intersectSets.pop()} </ES>"
+
+    if ES.startswith('<C>') and ES.endswith('</C>'):
+        ES = "<ES> {} </ES>".format(ES)
 
     return ES
 
