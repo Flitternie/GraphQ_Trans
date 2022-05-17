@@ -20,8 +20,13 @@ class IREmitter(SparqlListener):
             '=': 'is',
             '!=': 'is not'
         }
+
         self.VTYPE = {
             "xsd:double": 'number',
+            "xsd:int": 'number',
+            "xsd:float": 'number',
+            "xsd:year": 'year',
+            "xsd:time": 'time',
             "xsd:date": 'date'
         }
         self.ir = ""
@@ -89,8 +94,8 @@ class IREmitter(SparqlListener):
     def enterSelectQuery(self, ctx: SparqlParser.SelectQueryContext):
         ctx.slots = strictDict({
             "entitySet": "", "relationEntitySet1": "",
-            "relationEntitySet2": "", "attribute": "", "attributeTable": "{}",
-            "selectVar": "", "stringOP": "", "qualifier": "", "verify": ""
+            "relationEntitySet2": "", "attribute": "", "attributeTable": {},
+            "selectVar": "", "stringOP": "", "qualifier": "", "verify": "", "selectEntitySet": ""
         })
         return super().enterSelectQuery(ctx)
 
@@ -101,11 +106,18 @@ class IREmitter(SparqlListener):
         ctx.parentCtx.slots['relationEntitySet2'] = ctx.slots['relationEntitySet2']
         ctx.parentCtx.slots['qualifier'] = ctx.slots['qualifier']
         ctx.parentCtx.slots['verify'] = ctx.slots['verify']
-        if ctx.slots['selectVar']:
-            ctx.parentCtx.slots['attribute'] = '{} {}'.format(
-                ctx.slots['stringOP'], ctx.slots['attributeTable'][ctx.slots['selectVar']])
+        if ctx.slots['stringOP'] != '':
+            if ctx.slots['attributeTable'] != {}:
+                self.queryType = "SelectQuery"
+                ctx.parentCtx.slots['attribute'] = '{} {}'.format(
+                    ctx.slots['stringOP'], ctx.slots['attributeTable'][ctx.slots['selectVar']])
+                ctx.parentCtx.slots['entitySet'] = ctx.slots['entitySet']
+            else:
+                ctx.parentCtx.slots['entitySet'] = ctx.slots['selectEntitySet'].replace(ctx.slots["selectVar"], ctx.slots["stringOP"])
         else:
             ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
+            ctx.parentCtx.slots['entitySet'] = ctx.slots['entitySet']
+
         return super().exitSelectQuery(ctx)
 
     # Enter a parse tree produced by SparqlParser#entityQueryCondition.
@@ -195,7 +207,7 @@ class IREmitter(SparqlListener):
     def enterWhereClause(self, ctx: SparqlParser.WhereClauseContext):
         ctx.slots = strictDict({
             "entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "", "attribute": "", "attributeTable": {},
-            "qualifier": "", "verify": ""
+            "qualifier": "", "verify": "", "selectEntitySet": ""
         })
         return super().enterWhereClause(ctx)
 
@@ -209,6 +221,7 @@ class IREmitter(SparqlListener):
             ctx.parentCtx.slots['attribute'] = ctx.slots['attribute']
             ctx.parentCtx.slots['attributeTable'] = ctx.slots['attributeTable']
             ctx.parentCtx.slots['qualifier'] = ctx.slots['qualifier']
+            ctx.parentCtx.slots['selectEntitySet'] = ctx.slots['selectEntitySet']
         return super().exitWhereClause(ctx)
 
     # Enter a parse tree produced by SparqlParser#solutionModifier.
@@ -224,11 +237,11 @@ class IREmitter(SparqlListener):
 
     # Enter a parse tree produced by SparqlParser#limitOffsetClauses.
     def enterLimitOffsetClauses(self, ctx: SparqlParser.LimitOffsetClausesContext):
-        pass
+        return super().enterLimitOffsetClauses(ctx)
 
     # Exit a parse tree produced by SparqlParser#limitOffsetClauses.
     def exitLimitOffsetClauses(self, ctx: SparqlParser.LimitOffsetClausesContext):
-        pass
+        return super().exitLimitOffsetClauses(ctx)
 
     # Enter a parse tree produced by SparqlParser#orderClause.
     def enterOrderClause(self, ctx: SparqlParser.OrderClauseContext):
@@ -261,7 +274,7 @@ class IREmitter(SparqlListener):
 
     # Exit a parse tree produced by SparqlParser#limitClause.
     def exitLimitClause(self, ctx: SparqlParser.LimitClauseContext):
-        self.queryType = "SelectQuery"
+        # self.queryType = "SelectQuery"
         return super().exitLimitClause(ctx)
 
     # Enter a parse tree produced by SparqlParser#offsetClause.
@@ -288,10 +301,9 @@ class IREmitter(SparqlListener):
                             if tp[0] == triple[2] and tp[2].startswith('?v'):
                                 attribute_table[tp[2]] = '<A> {} </A>'.format(triple[1][1:-1].replace('_', ' '))
                 ctx.parentCtx.slots['attributeTable'] = attribute_table
-
                 if ctx.slots['existingES']:
                     cur_es = scout_entity_set(
-                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var
+                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, select=False
                     )
 
                     if '[placeholder]' in ctx.slots['existingES']:
@@ -306,7 +318,10 @@ class IREmitter(SparqlListener):
                     # print(ctx.slots['filter_table'])
 
                     ctx.parentCtx.slots['entitySet'] = scout_entity_set(
-                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var
+                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, select=False
+                    )
+                    ctx.parentCtx.slots['selectEntitySet'] = scout_entity_set(
+                        ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, select=True
                     )
 
             if self.queryType == 'AttributeQuery':
@@ -359,14 +374,17 @@ class IREmitter(SparqlListener):
 
                 assert var is not None
                 verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], var, excluding=[self.query_var])
-                print(self.query_var)
+                # print(self.query_var)
                 ctx.parentCtx.slots['verify'] = verify
-                print(ctx.parentCtx.slots['verify'])
+                # print(ctx.parentCtx.slots['verify'])
 
         elif isinstance(ctx.parentCtx, SparqlParser.GroupOrUnionGraphPatternContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
                 ctx.parentCtx.slots['entitySets'].append(scout_entity_set(
-                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True
+                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True, select=False
+                ))
+                print(scout_entity_set(
+                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True, select=False
                 ))
 
         return super().exitGroupGraphPattern(ctx)
@@ -982,6 +1000,14 @@ def get_attribute(triple_table: dict, filter_table: dict, var):
                 return [('is', 'date', triple[2], unit)]
             elif not triple[2].startswith('?') and triple[1] == '<pred:year>':
                 return [('is', 'year', triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:int>':
+                return [('is', 'number', triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:float>':
+                return [('is', 'number', triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:double>':
+                return [('is', 'number', triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:time>':
+                return [('is', 'time', triple[2], unit)]
             elif triple[2].startswith('?'):
                 vtype = triple[1][6:-1]
                 if triple[2] in filter_table.keys():
@@ -989,10 +1015,12 @@ def get_attribute(triple_table: dict, filter_table: dict, var):
                         if not ft['vtype']:
                             ft['vtype'] = vtype
                         constraints.append((*list(ft.values()), unit))
+                else:
+                    constraints.append([triple[2]])
                 return constraints
 
 
-def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False):
+def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False, select=True):
     entity = ''
     cls = ''
     entitySets = []
@@ -1015,12 +1043,18 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
     for triple in triple_table[var]:
         if triple[2].startswith('?pv') and triple[2] not in excluding and triple[1] not in excluding:
-            entity_set = '<ES> {} whose <A> {} </A> {} {} <V> {} {}</V> </ES>'
+
             attr = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraints = get_attribute(triple_table, filter_table, triple[2])
             for constraint in constraints:
-                entity_set = entity_set.format(entity, attr, *constraint)
-                entitySets.append(entity_set)
+                if len(constraint) != 1:
+                    entity_set = '<ES> {} whose <A> {} </A> {} {} <V> {} {}</V> </ES>'.format(entity, attr, *constraint)
+                    entitySets.append(entity_set)
+                elif select:
+                    if entity.startswith('<C>') and entity.endswith('</C>'):
+                        entity = "<ES> {} </ES>".format(entity)
+                    entity_set = '<ES> {} that has {} <A> {} </A> </ES>'.format(entity, *constraint, attr)
+                    entitySets.append(entity_set)
         if triple[2].startswith('?e') and triple[2] not in excluding and triple[1] not in excluding and triple[0] == var:
             # intersect_set = '(<ES> {}ones that <R> {} </R> {} to {} </ES>)'
             # logic = ''
@@ -1061,7 +1095,14 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
     while intersectSets:
         ES = f"<ES> {ES} {intersectSets.pop()} </ES>"
 
+    if ES.startswith('<C>') and ES.endswith('</C>'):
+        ES = "<ES> {} </ES>".format(ES)
+
     return ES
+
+
+def has_value(triple_table: dict, filter_table: dict, var: str, excluding=[]):
+    assert var.startswith("?pv")
 
 
 def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False):
