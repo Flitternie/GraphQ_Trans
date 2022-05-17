@@ -82,6 +82,10 @@ def grailqa_normalizer(q: str):
                         line = line.replace(triple[2], cls_var)
                         new_line.append(line)
                 else:
+                    pred = triple[1].split('.')[-1] + " " + triple[1].split('.')[-2]
+                    pred = pred[0].capitalize() + pred[1:]
+                    pred = "<{}>".format(pred.replace('_', ' '))
+                    line = line.replace(triple[1], pred)
                     new_line.append(line)
             elif line.startswith("VALUES"):
                 _, head, _, tail, _ = line.split()
@@ -146,10 +150,6 @@ def normalize(src: str):
         for node in grail[idxs]['graph_query']['nodes']:
             if f" :{node['id']} " in logical_form:
                 logical_form = logical_form.replace(f" :{node['id']} ", f" \"{node['friendly_name']}\" ")
-
-        for edge in grail[idxs]['graph_query']['edges']:
-            if f" :{edge['relation']} " in logical_form:
-                logical_form = logical_form.replace(f" :{edge['relation']} ", f" <{edge['friendly_name']}> ")
 
         translator = Translator()
 
