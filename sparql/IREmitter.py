@@ -55,7 +55,7 @@ class IREmitter(SparqlListener):
         if self.queryType == "CountQuery":
             self.ir = "how many {}".format(ctx.slots["entitySet"])
         if self.queryType == 'AttributeQuery':
-            self.ir = "what is the attribute {} Of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
+            self.ir = "what is the attribute {} of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
         if self.queryType == "PredicateQuery":
             self.ir = "what is the relation from {} to {}".format(ctx.slots["relationEntitySet1"], ctx.slots["relationEntitySet2"])
         if self.queryType == "SelectQuery":
@@ -313,10 +313,6 @@ class IREmitter(SparqlListener):
                     else:
                         ctx.parentCtx.slots['entitySet'] = ctx.slots['existingES']
                 else:
-                    # print(ctx.slots['existingES'])
-                    # print(ctx.slots['triple_table'])
-                    # print(ctx.slots['filter_table'])
-
                     ctx.parentCtx.slots['entitySet'] = scout_entity_set(
                         ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, select=False
                     )
@@ -325,8 +321,6 @@ class IREmitter(SparqlListener):
                     )
 
             if self.queryType == 'AttributeQuery':
-                # print(ctx.slots['triple_table'])
-                # print(ctx.slots['filter_table'])
                 attribute = ''
                 es_var = ''
 
@@ -342,8 +336,6 @@ class IREmitter(SparqlListener):
                 ctx.parentCtx.slots['entitySet'] = es
                 ctx.parentCtx.slots['attribute'] = attribute
             if self.queryType == 'PredicateQuery':
-                # print(ctx.slots['triple_table'])
-                # print(ctx.slots['filter_table'])
                 es_var1, es_var2 = '', ''
                 for triple in ctx.slots['triple_table'][self.query_var]:
                     if triple[1] == self.query_var:
@@ -360,8 +352,6 @@ class IREmitter(SparqlListener):
                 ctx.parentCtx.slots['relationEntitySet2'] = es2
             if self.queryType == 'VerifyQuery':
                 verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], '?e', excluding=[])
-                # print(ctx.slots['triple_table'])
-
                 ctx.parentCtx.slots['verify'] = verify
 
             if self.queryType == 'QualifierQuery':
@@ -374,16 +364,11 @@ class IREmitter(SparqlListener):
 
                 assert var is not None
                 verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], var, excluding=[self.query_var])
-                # print(self.query_var)
                 ctx.parentCtx.slots['verify'] = verify
-                # print(ctx.parentCtx.slots['verify'])
 
         elif isinstance(ctx.parentCtx, SparqlParser.GroupOrUnionGraphPatternContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
                 ctx.parentCtx.slots['entitySets'].append(scout_entity_set(
-                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True, select=False
-                ))
-                print(scout_entity_set(
                     ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True, select=False
                 ))
 

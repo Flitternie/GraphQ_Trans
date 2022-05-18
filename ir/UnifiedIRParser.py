@@ -1,4 +1,4 @@
-# Generated from ./parser/ir/UnifiedIRParser.g4 by ANTLR 4.9.2
+# Generated from UnifiedIRParser.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
