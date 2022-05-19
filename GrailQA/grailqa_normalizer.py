@@ -104,6 +104,7 @@ def grailqa_normalizer(q: str):
                     if head.startswith("?"):
                         head = head.replace("x", "e_").replace("_0", "")
                         var_mapping[head] = "?pv_{}".format(pv_count).replace("_0", "")
+                        pv_count += 1
                     new_line.append('{} <pred:{}> {} .'.format(head, replaced, tail))
 
             elif line.startswith("FILTER"):
@@ -111,14 +112,22 @@ def grailqa_normalizer(q: str):
                     pass
                 else:
                     replaced = False
+                    line = re.sub(r'(?<=\?)x', 'e_', line)
+                    line = re.sub(r'(?<=e)_0', '', line)
+                    var = re.search(r'\?e(_)*(\d)*', line).group(0)
+                    new_var = "?pv_{}".format(pv_count).replace("_0", "")
+                    var_mapping[var] = new_var
+                    pv_count += 1
+                    line = line.replace(var, '?v')
                     for key in dtype.keys():
                         if key in line:
                             line = line.replace(key, dtype[key])
                             replaced = True
                             break
-
                     if not replaced:
                         raise Exception
+                    new_line.append(line)
+                    new_line.append('{} <pred:value> ?v . '.format(var))
 
         new_lines.extend(new_line)
 
@@ -136,7 +145,6 @@ def grailqa_normalizer(q: str):
         new_q = new_q + ' ' + nl
 
     return new_q.strip()
-
 
 def normalize(src: str):
     with open(src) as f:

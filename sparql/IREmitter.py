@@ -15,10 +15,14 @@ class IREmitter(SparqlListener):
 
     def __init__(self):
         self.SOP = {
+            "=": "is",
             "<": "smaller than",
             ">": "larger than",
-            '=': 'is',
-            '!=': 'is not'
+            "!=": "is not",
+            "<=": "at most",
+            ">=": "at least",
+            "max": "most",
+            "min": "least"
         }
 
         self.VTYPE = {
@@ -55,7 +59,7 @@ class IREmitter(SparqlListener):
         if self.queryType == "CountQuery":
             self.ir = "how many {}".format(ctx.slots["entitySet"])
         if self.queryType == 'AttributeQuery':
-            self.ir = "what is the attribute {} Of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
+            self.ir = "what is the attribute {} of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
         if self.queryType == "PredicateQuery":
             self.ir = "what is the relation from {} to {}".format(ctx.slots["relationEntitySet1"], ctx.slots["relationEntitySet2"])
         if self.queryType == "SelectQuery":
@@ -295,6 +299,9 @@ class IREmitter(SparqlListener):
         if isinstance(ctx.parentCtx, SparqlParser.WhereClauseContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
                 attribute_table = {}
+                qualifier_constraint = scout_qualifier_constraint(ctx.slots['triple_table'])
+                # print(qualifier_constraint)
+
                 for triple in ctx.slots['triple_table'][self.query_var]:
                     if triple[2].startswith('?pv'):
                         for tp in ctx.slots['triple_table'][triple[2]]:
@@ -323,6 +330,11 @@ class IREmitter(SparqlListener):
                     ctx.parentCtx.slots['selectEntitySet'] = scout_entity_set(
                         ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, select=True
                     )
+
+                if qualifier_constraint != '':
+                    ctx.parentCtx.slots['entitySet'] = \
+                        ctx.parentCtx.slots['entitySet'][:-6] + ' ' + qualifier_constraint + ' ' + \
+                        ctx.parentCtx.slots['entitySet'][-5:]
 
             if self.queryType == 'AttributeQuery':
                 # print(ctx.slots['triple_table'])
@@ -373,7 +385,8 @@ class IREmitter(SparqlListener):
                             ctx.parentCtx.slots['qualifier'] = "<Q> {} </Q>".format(triple[1][1:-1].replace("_", " "))
 
                 assert var is not None
-                verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], var, excluding=[self.query_var])
+                verify = scout_verify(ctx.slots['triple_table'], ctx.slots['filter_table'], var,
+                                      excluding=[self.query_var], qpv_constraint=False)
                 # print(self.query_var)
                 ctx.parentCtx.slots['verify'] = verify
                 # print(ctx.parentCtx.slots['verify'])
@@ -381,9 +394,6 @@ class IREmitter(SparqlListener):
         elif isinstance(ctx.parentCtx, SparqlParser.GroupOrUnionGraphPatternContext):
             if self.queryType == 'CountQuery' or self.queryType == 'EntityQuery':
                 ctx.parentCtx.slots['entitySets'].append(scout_entity_set(
-                    ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True, select=False
-                ))
-                print(scout_entity_set(
                     ctx.slots['triple_table'], ctx.slots['filter_table'], self.query_var, union_block=True, select=False
                 ))
 
@@ -1020,11 +1030,13 @@ def get_attribute(triple_table: dict, filter_table: dict, var):
                 return constraints
 
 
-def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False, select=True):
+def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False, select=True,
+                     qpv_constraint=True):
     entity = ''
     cls = ''
     entitySets = []
     intersectSets = []
+
     for triple in triple_table[var]:
         if triple[2].startswith('?c'):
             cls = '<C> {} </C>'.format(get_label(triple_table, triple[2]))
@@ -1046,6 +1058,7 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
             attr = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraints = get_attribute(triple_table, filter_table, triple[2])
+
             for constraint in constraints:
                 if len(constraint) != 1:
                     entity_set = '<ES> {} whose <A> {} </A> {} {} <V> {} {}</V> </ES>'.format(entity, attr, *constraint)
@@ -1105,7 +1118,10 @@ def has_value(triple_table: dict, filter_table: dict, var: str, excluding=[]):
     assert var.startswith("?pv")
 
 
-def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False):
+def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False, qpv_constraint=True):
+    qualifier_constraint = ''
+    if qpv_constraint:
+        qualifier_constraint = scout_qualifier_constraint(triple_table)
     for triple in triple_table[var]:
         if triple[2].startswith('?pv') and triple[2] not in excluding and triple[1] not in excluding:
             verify = "{} whose <A> {} </A> {} {} <V> {} {}</V>"
@@ -1114,7 +1130,10 @@ def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[],
             new_excluding = excluding
             new_excluding.append(triple[2])
             entity = scout_entity_set(triple_table, filter_table, var, new_excluding)
-            return verify.format(entity, attr, *constraint)
+            verify = verify.format(entity, attr, *constraint)
+            if qualifier_constraint != '':
+                verify = verify + ' ' + qualifier_constraint
+            return verify
         elif triple[2].startswith('?e') and triple[2] not in excluding and triple[1] not in excluding and triple[0] == var:
             verify = '{} that <R> {} </R> {} to {}'
             direc = 'backward'
@@ -1123,7 +1142,10 @@ def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[],
             new_excluding = excluding
             new_excluding.append(triple[2])
             entity = scout_entity_set(triple_table, filter_table, var, new_excluding)
-            return verify.format(entity, pred, direc, constraint_e)
+            verify = verify.format(entity, pred, direc, constraint_e)
+            if qualifier_constraint != '':
+                verify = verify + ' ' + qualifier_constraint
+            return verify
         elif triple[0].startswith('?e') and triple[0] not in excluding and triple[1] not in excluding and triple[2] == var:
             verify = '{} that <R> {} </R> {} to {}'
             direc = 'forward'
@@ -1132,9 +1154,30 @@ def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[],
             new_excluding = excluding
             new_excluding.append(triple[0])
             entity = scout_entity_set(triple_table, filter_table, var, new_excluding)
-            return verify.format(entity, pred, direc, constraint_e)
+            verify = verify.format(entity, pred, direc, constraint_e)
+            if qualifier_constraint != '':
+                verify = verify + ' ' + qualifier_constraint
+            return verify
 
     return ""
 
 
+def scout_qualifier_constraint(triple_table: dict):
+    if '?qpv' not in triple_table.keys():
+        return ''
+
+    unit = ''
+    for triple in triple_table['?qpv']:
+        if triple[0] == '?qpv':
+            unit = triple[3]
+            v = triple[2]
+            if unit == '' and triple[1][6:-1] != 'value':
+                unit = triple[1][6:-1]
+        else:
+            qualifier = triple[1][1:-1].replace('_', ' ')
+
+    if unit != '':
+        return "( <Q> {} </Q> is {} <V> {} </V> )".format(qualifier, unit, v)
+    else:
+        return "( <Q> {} </Q> is <V> {} </V> )".format(qualifier, v)
 
