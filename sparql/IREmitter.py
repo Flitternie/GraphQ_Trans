@@ -14,13 +14,6 @@ from ..ir.utils import *
 class IREmitter(SparqlListener):
 
     def __init__(self):
-        self.SOP = {
-            "<": "smaller than",
-            ">": "larger than",
-            '=': 'is',
-            '!=': 'is not'
-        }
-
         self.VTYPE = {
             "xsd:double": 'number',
             "xsd:int": 'number',
@@ -733,7 +726,7 @@ class IREmitter(SparqlListener):
             left, op, right = ctx.getChildren()
             if left.slots['dtype'] == 'var' and right.slots['dtype'] != 'var':
                 ctx.parentCtx.slots['var'] = left.slots['var']
-                ctx.parentCtx.slots['sop'] = self.SOP[op.getText()]
+                ctx.parentCtx.slots['sop'] = symbolOP_vocab[op.getText()]
                 if right.slots['dtype']:
                     ctx.parentCtx.slots['vtype'] = right.slots['dtype']
                 ctx.parentCtx.slots['value'] = right.slots['value']
