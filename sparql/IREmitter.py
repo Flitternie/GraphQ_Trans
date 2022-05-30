@@ -14,14 +14,20 @@ from ..ir.utils import *
 class IREmitter(SparqlListener):
 
     def __init__(self):
-        self.VTYPE = {
+        self.vtype = {
             "xsd:double": 'number',
             "xsd:int": 'number',
             "xsd:float": 'number',
             "xsd:year": 'year',
             "xsd:time": 'time',
-            "xsd:date": 'date'
+            "xsd:date": 'date',
+            'xsd:gYearMonth': 'month',
         }
+        self.ir = ""
+        self.query_var = ""
+        self.queryType = ""
+    
+    def initialize(self):
         self.ir = ""
         self.query_var = ""
         self.queryType = ""
@@ -29,12 +35,10 @@ class IREmitter(SparqlListener):
     def get_ir(self, ctx):
         return self.ir
 
+
     # Enter a parse tree produced by SparqlParser#query.
     def enterQuery(self, ctx: SparqlParser.QueryContext):
-        self.ir = ""
-        self.query_var = ""
-        self.queryType = ""
-
+        self.initialize()
         ctx.slots = strictDict({
             "entitySet": "", "relationEntitySet1": "", "relationEntitySet2": "",
             "attribute": "", "qualifier": "", "verify": ""
@@ -922,7 +926,7 @@ class IREmitter(SparqlListener):
 
     # Exit a parse tree produced by SparqlParser#prefixedName.
     def exitPrefixedName(self, ctx: SparqlParser.PrefixedNameContext):
-        ctx.parentCtx.slots['dtype'] = self.VTYPE[ctx.getText()]
+        ctx.parentCtx.slots['dtype'] = self.vtype[ctx.getText()]
         return super().exitPrefixedName(ctx)
 
     # Enter a parse tree produced by SparqlParser#blankNode.
@@ -976,6 +980,8 @@ def get_attribute(triple_table: dict, filter_table: dict, var):
                 return [('is', triple[3], triple[2], unit)]
             elif not triple[2].startswith('?') and triple[1] == '<pred:date>':
                 return [('is', 'date', triple[2], unit)]
+            elif not triple[2].startswith('?') and triple[1] == '<pred:gYearMonth>':
+                return [('is', 'month', triple[2], unit)]
             elif not triple[2].startswith('?') and triple[1] == '<pred:year>':
                 return [('is', 'year', triple[2], unit)]
             elif not triple[2].startswith('?') and triple[1] == '<pred:int>':
@@ -996,6 +1002,7 @@ def get_attribute(triple_table: dict, filter_table: dict, var):
                 else:
                     constraints.append([triple[2]])
                 return constraints
+            raise Exception('Unknown predicate: ' + triple[1])
 
 
 def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding=[], union_block=False, select=True):
@@ -1021,9 +1028,9 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
     for triple in triple_table[var]:
         if triple[2].startswith('?pv') and triple[2] not in excluding and triple[1] not in excluding:
-
             attr = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraints = get_attribute(triple_table, filter_table, triple[2])
+            assert constraints is not None
             for constraint in constraints:
                 if len(constraint) != 1:
                     entity_set = '<ES> {} whose <A> {} </A> {} {} <V> {} {}</V> </ES>'.format(entity, attr, *constraint)

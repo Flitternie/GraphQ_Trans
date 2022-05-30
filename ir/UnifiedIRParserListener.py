@@ -422,6 +422,15 @@ class UnifiedIRParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by UnifiedIRParser#Month.
+    def enterMonth(self, ctx:UnifiedIRParser.MonthContext):
+        pass
+
+    # Exit a parse tree produced by UnifiedIRParser#Month.
+    def exitMonth(self, ctx:UnifiedIRParser.MonthContext):
+        pass
+
+
     # Enter a parse tree produced by UnifiedIRParser#year.
     def enterYear(self, ctx:UnifiedIRParser.YearContext):
         pass

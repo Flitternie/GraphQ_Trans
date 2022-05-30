@@ -147,6 +147,7 @@ valueType
     : Text #text
     | Quantity #quantity
     | Date #date
+    | Month #Month
     | Year #year
     | Time #time
     ;

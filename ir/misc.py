@@ -146,6 +146,18 @@ def gen_attribute_query(key, value, v_type, v_unit=None, op='=', e='?e', in_qual
                 PRED_DATE,
                 op, value
                 )
+    elif v_type == 'month':
+        if op == '=':
+            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:gYearMonth . '.format(
+                k,
+                PRED_DATE, value
+                )
+        else:
+            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:gYearMonth ) . '.format(
+                k,
+                PRED_DATE,
+                op, value
+                )
     else:
         raise ValueError('Unsupported value type {}'.format(v_type))
     if in_qualifier:

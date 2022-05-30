@@ -472,6 +472,10 @@ class SparqlEmitter(UnifiedIRParserListener):
         ctx.parentCtx.slots["valueType"] = "date"
         return super().exitDate(ctx)
     
+    def exitMonth(self, ctx: UnifiedIRParser.MonthContext):
+        ctx.parentCtx.slots["valueType"] = "month"
+        return super().exitMonth(ctx)
+    
     def exitYear(self, ctx: UnifiedIRParser.YearContext):
         ctx.parentCtx.slots["valueType"] = "year"
         return super().exitYear(ctx)
