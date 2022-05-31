@@ -307,6 +307,9 @@ class SparqlEmitter(UnifiedIRParserListener):
             ctx.slots["qualifierFilter"]["value"], qv_unit = self.get_value_unit(ctx.slots["qualifierFilter"]["value"], ctx.slots["qualifierFilter"]["valueType"])
             subqueries += gen_attribute_query(ctx.slots["qualifierFilter"]["qualifier"], ctx.slots["qualifierFilter"]["value"], ctx.slots["qualifierFilter"]["valueType"], qv_unit, ctx.slots["qualifierFilter"]["op"], e=fact_node, in_qualifier=True)
 
+        if ctx.slots["entitySet"][0].concept:
+            ctx.slots["concept"] = ctx.slots["entitySet"][0].concept
+
         insert(ctx.parentCtx, subqueries, concept=ctx.slots["concept"])
         if ctx.slots["orderBy"] != "":
             ctx.parentCtx.slots["orderBy"] = ctx.slots["orderBy"]
