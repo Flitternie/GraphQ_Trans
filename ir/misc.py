@@ -33,6 +33,21 @@ def esc_quot(s):
     '''
     return s.replace('"', '\\"')
 
+def reduce_variable(query):
+    variables = get_all_variables(query)
+    variables.sort()
+    if "?e" not in variables:
+        for v in variables:
+            if '_' in v:
+                prefix, idx = v.split('_')
+                idx = int(idx)
+                if idx > 1:
+                    new_variable = prefix + '_' + str(idx - 1)
+                else:
+                    new_variable = prefix
+                query = query.replace(v, new_variable)
+    return query
+
 def replace_variable(query, variable):
     """
     replace variable in query, and return new query and new variable
@@ -124,12 +139,12 @@ def gen_attribute_query(key, value, v_type, v_unit=None, op='=', e='?e', in_qual
                 )
     elif v_type == 'year':
         if op == '=':
-            query = '?e <{}> ?pv . ?pv <{}> {} . '.format(
+            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:year . '.format(
                 k,
                 PRED_YEAR, value
                 )
         else:
-            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} {} ) . '.format(
+            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:year ) . '.format(
                 k,
                 PRED_YEAR,
                 op, value

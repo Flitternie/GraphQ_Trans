@@ -81,7 +81,7 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().enterEntityQuery(ctx)
     
     def exitEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
-        subqueries = ctx.slots["entitySet"]
+        subqueries = reduce_variable(ctx.slots["entitySet"])
         ctx.parentCtx.slots["query"] = self.skeleton["entityQuery"].format(subqueries)
         return super().exitEntityQuery(ctx)
     
@@ -119,7 +119,7 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().enterCountQuery(ctx)
     
     def exitCountQuery(self, ctx: UnifiedIRParser.CountQueryContext):
-        subqueries = ctx.slots["entitySet"]
+        subqueries = reduce_variable(ctx.slots["entitySet"])
         ctx.parentCtx.slots["query"] = self.skeleton["countQuery"].format(subqueries)
         return super().exitCountQuery(ctx)
     
@@ -138,6 +138,7 @@ class SparqlEmitter(UnifiedIRParserListener):
     
     def exitSelectQuery(self, ctx: UnifiedIRParser.SelectQueryContext):
         subqueries = append_attribute_value_query(ctx.slots["entitySet"], ctx.slots["attribute"], 'quantity')
+        subqueries = reduce_variable(subqueries)
         ctx.parentCtx.slots["query"] = self.skeleton["selectQuery"].format(subqueries, ctx.slots["orderBy"].format('?v'), ctx.slots["number"])
         return super().exitSelectQuery(ctx)
 
