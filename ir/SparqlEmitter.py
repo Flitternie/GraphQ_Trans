@@ -279,25 +279,24 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().enterEntitySetByPredicate(ctx)
     
     def exitEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
-        print(len(ctx.slots["entitySet"]))
         ctx.slots["direction"] = reverse_dir(ctx.slots["direction"]) if ctx.slots["direction"] != "" else "forward"        
         subqueries = gen_concept_query(ctx.slots["concept"]) if ctx.slots["concept"] != "" else ""
         
         if len(ctx.slots["entitySet"]) == 2:
             if diff_concept(ctx.slots["entitySet"][0], ctx.slots["entitySet"][1]):
-                ctx.slots["entitySet"][1], _ = replace_variable(ctx.slots["entitySet"][1], "?c")
+                new_query, _ = replace_variable(ctx.slots["entitySet"][1], "?c")
+                ctx.slots["entitySet"][1] = ctx.slots["entitySet"][1].reassign(new_query)
             sbj_variable, obj_variable = '?e_1', '?e_2'
             # ctx.slots["entitySet"][1], obj_variable = replace_variable(ctx.slots["entitySet"][1], "?e")
-            try:
-                subqueries += gen_relation_query(sbj_sparql=ctx.slots["entitySet"][0], sbj_variable=sbj_variable, obj_sparql=ctx.slots["entitySet"][1], obj_variable=obj_variable, pred=ctx.slots["predicate"], direction=ctx.slots["direction"])
-            except AttributeError:
-                print("First ES: ", ctx.slots["entitySet"][0])
-                print("Second ES: ", ctx.slots["entitySet"][1])
+            subqueries += gen_relation_query(sbj_sparql=ctx.slots["entitySet"][0], sbj_variable=sbj_variable, obj_sparql=ctx.slots["entitySet"][1], obj_variable=obj_variable, pred=ctx.slots["predicate"], direction=ctx.slots["direction"])
         elif len(ctx.slots["entitySet"]) == 1:
             if diff_concept(ctx.slots["concept"], ctx.slots["entitySet"][0]):
-                ctx.slots["entitySet"][0], _ = replace_variable(ctx.slots["entitySet"][0], "?c")
+                new_query, _ = replace_variable(ctx.slots["entitySet"][0], "?c")
+                ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign(new_query)
+            ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign(reduce_variable(ctx.slots["entitySet"][0]))
             sbj_variable = '?e'
-            ctx.slots["entitySet"][0], obj_variable = replace_variable(ctx.slots["entitySet"][0], "?e")
+            new_query, obj_variable = replace_variable(ctx.slots["entitySet"][0], "?e")
+            ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign(new_query)
             subqueries += gen_relation_query(sbj_sparql=None, sbj_variable=sbj_variable, obj_sparql=ctx.slots["entitySet"][0], obj_variable=obj_variable, pred=ctx.slots["predicate"], direction=ctx.slots["direction"])
         else:
             raise Exception("Unexpected number of entitySet")

@@ -176,12 +176,12 @@ def gen_attribute_query(key, value, v_type, v_unit=None, op='=', e='?e', in_qual
                 )
     elif v_type == 'time':
         if op == '=':
-            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:dateTime . '.format(
+            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:time . '.format(
                 k,
                 PRED_TIME, value
                 )
         else:
-            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:dateTime ) . '.format(
+            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:time ) . '.format(
                 k,
                 PRED_TIME,
                 op, value
