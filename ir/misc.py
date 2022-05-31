@@ -38,7 +38,7 @@ def reduce_variable(query):
     variables.sort()
     if "?e" not in variables:
         for v in variables:
-            if '_' in v:
+            if 'e_' in v:
                 prefix, idx = v.split('_')
                 idx = int(idx)
                 if idx > 1:
