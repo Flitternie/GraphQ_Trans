@@ -38,7 +38,6 @@ class SparqlEmitter(UnifiedIRParserListener):
             "verifyQuery": "ASK {{ {} }}",
             "selectQuery": "SELECT ?e WHERE {{ {} }} ORDER BY {} LIMIT {}"
         }
-
     
     def initialize(self):
         self.logical_form = ""
@@ -77,12 +76,15 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().exitRoot(ctx)
     
     def enterEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
-        ctx.slots = strictDict({"entitySet": entitySet()})
+        ctx.slots = strictDict({"entitySet": entitySet(), "orderBy": ""})
         return super().enterEntityQuery(ctx)
     
     def exitEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
         subqueries = reduce_variable(ctx.slots["entitySet"])
         ctx.parentCtx.slots["query"] = self.skeleton["entityQuery"].format(subqueries)
+        if ctx.slots["orderBy"] != "":
+            ctx.parentCtx.slots["query"] = \
+                ctx.parentCtx.slots["query"] + " ORDER BY " + ctx.slots["orderBy"].format("?v") + " LIMIT 1"
         return super().exitEntityQuery(ctx)
     
     def enterAttributeQuery(self, ctx: UnifiedIRParser.AttributeQueryContext):
@@ -141,8 +143,6 @@ class SparqlEmitter(UnifiedIRParserListener):
         subqueries = reduce_variable(subqueries)
         ctx.parentCtx.slots["query"] = self.skeleton["selectQuery"].format(subqueries, ctx.slots["orderBy"].format('?v'), ctx.slots["number"])
         return super().exitSelectQuery(ctx)
-
-    
 
     def enterVerifyByAttribute(self, ctx: UnifiedIRParser.VerifyByAttributeContext):
         ctx.slots = strictDict({"entitySet": entitySet(), "attribute": "", "op": "=", "valueType": "", "value": "", "qualifierFilter": {}})
@@ -203,7 +203,6 @@ class SparqlEmitter(UnifiedIRParserListener):
         
         return super().exitVerifyByPredicate(ctx)
 
-
     def enterEntitySetGroup(self, ctx: UnifiedIRParser.EntitySetGroupContext):
         ctx.slots = strictDict({"entitySet": [], "setOP": ""})
         return super().enterEntitySetGroup(ctx)
@@ -228,11 +227,13 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().exitEntitySetIntersect(ctx)
     
     def enterEntitySetFilter(self, ctx: UnifiedIRParser.EntitySetFilterContext):
-        ctx.slots = strictDict({"entitySet": entitySet()})
+        ctx.slots = strictDict({"entitySet": entitySet(), "orderBy": ""})
         return super().enterEntitySetFilter(ctx)
     
     def exitEntitySetFilter(self, ctx: UnifiedIRParser.EntitySetFilterContext):
         insert(ctx.parentCtx, ctx.slots["entitySet"], concept=ctx.slots["entitySet"].concept)
+        if ctx.slots["orderBy"] != "":
+            ctx.parentCtx.slots["orderBy"] = ctx.slots["orderBy"]
         return super().exitEntitySetFilter(ctx)
     
     def enterEntitySetPlaceholder(self, ctx: UnifiedIRParser.EntitySetPlaceholderContext):
@@ -249,8 +250,6 @@ class SparqlEmitter(UnifiedIRParserListener):
         insert(ctx.parentCtx, gen_name_query(ctx.slots["entity"]))
         return super().exitEntitySetAtom(ctx)
 
-
-    
     def enterEntitySetByAttribute(self, ctx: UnifiedIRParser.EntitySetByAttributeContext):
         ctx.slots = strictDict({"concept": "", "entitySet": entitySet(), "attribute": "", "op": "", "valueType": "", "value": "", "qualifierFilter": {}})
         return super().enterEntitySetByAttribute(ctx)
@@ -275,19 +274,25 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().exitEntitySetByAttribute(ctx)
     
     def enterEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
-        ctx.slots = strictDict({"concept": "", "entitySet": [], "predicate": "", "direction": "", "qualifierFilter": {}})
+        ctx.slots = strictDict({"concept": "", "entitySet": [], "predicate": "", "direction": "", "qualifierFilter": {},
+                                "orderBy": ""})
         return super().enterEntitySetByPredicate(ctx)
     
     def exitEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
+        print(len(ctx.slots["entitySet"]))
         ctx.slots["direction"] = reverse_dir(ctx.slots["direction"]) if ctx.slots["direction"] != "" else "forward"        
         subqueries = gen_concept_query(ctx.slots["concept"]) if ctx.slots["concept"] != "" else ""
         
         if len(ctx.slots["entitySet"]) == 2:
             if diff_concept(ctx.slots["entitySet"][0], ctx.slots["entitySet"][1]):
-                ctx.slots["entitySet"][1] = replace_variable(ctx.slots["entitySet"][1], "?c")
+                ctx.slots["entitySet"][1], _ = replace_variable(ctx.slots["entitySet"][1], "?c")
             sbj_variable, obj_variable = '?e_1', '?e_2'
             # ctx.slots["entitySet"][1], obj_variable = replace_variable(ctx.slots["entitySet"][1], "?e")
-            subqueries += gen_relation_query(sbj_sparql=ctx.slots["entitySet"][0], sbj_variable=sbj_variable, obj_sparql=ctx.slots["entitySet"][1], obj_variable=obj_variable, pred=ctx.slots["predicate"], direction=ctx.slots["direction"])
+            try:
+                subqueries += gen_relation_query(sbj_sparql=ctx.slots["entitySet"][0], sbj_variable=sbj_variable, obj_sparql=ctx.slots["entitySet"][1], obj_variable=obj_variable, pred=ctx.slots["predicate"], direction=ctx.slots["direction"])
+            except AttributeError:
+                print("First ES: ", ctx.slots["entitySet"][0])
+                print("Second ES: ", ctx.slots["entitySet"][1])
         elif len(ctx.slots["entitySet"]) == 1:
             if diff_concept(ctx.slots["concept"], ctx.slots["entitySet"][0]):
                 ctx.slots["entitySet"][0], _ = replace_variable(ctx.slots["entitySet"][0], "?c")
@@ -304,6 +309,8 @@ class SparqlEmitter(UnifiedIRParserListener):
             subqueries += gen_attribute_query(ctx.slots["qualifierFilter"]["qualifier"], ctx.slots["qualifierFilter"]["value"], ctx.slots["qualifierFilter"]["valueType"], qv_unit, ctx.slots["qualifierFilter"]["op"], e=fact_node, in_qualifier=True)
 
         insert(ctx.parentCtx, subqueries, concept=ctx.slots["concept"])
+        if ctx.slots["orderBy"] != "":
+            ctx.parentCtx.slots["orderBy"] = ctx.slots["orderBy"]
         return super().exitEntitySetByPredicate(ctx)
     
     def enterEntitySetByConcept(self, ctx: UnifiedIRParser.EntitySetByConceptContext):
@@ -318,8 +325,18 @@ class SparqlEmitter(UnifiedIRParserListener):
         else:
             insert(ctx.parentCtx, subqueries, concept=ctx.slots["concept"])
         return super().exitEntitySetByConcept(ctx)
-    
 
+    def enterEntitySetByRank(self, ctx: UnifiedIRParser.EntitySetByRankContext):
+        ctx.slots = strictDict({"entitySet": entitySet(), "number": "1", "attribute": "", "orderBy": ""})
+        return super().enterEntitySetByRank(ctx)
+
+    def exitEntitySetByRank(self, ctx: UnifiedIRParser.EntitySetByRankContext):
+        insert(ctx.parentCtx,
+               append_attribute_value_query(ctx.slots["entitySet"], ctx.slots["attribute"], "quantity"),
+               concept=ctx.slots["entitySet"].concept)
+        if ctx.slots["orderBy"] != "":
+            ctx.parentCtx.slots["orderBy"] = ctx.slots["orderBy"]
+        return super().exitEntitySetByRank(ctx)
 
     def enterFilterByRank(self, ctx: UnifiedIRParser.FilterByRankContext):
         ctx.slots = strictDict({"number": "1", "attribute": ""})
@@ -360,8 +377,6 @@ class SparqlEmitter(UnifiedIRParserListener):
         ctx.parentCtx.slots["qualifierFilter"]["valueType"] = ctx.slots["valueType"]
         ctx.parentCtx.slots["qualifierFilter"]["value"] = ctx.slots["value"]
         return super().exitFilterByQualifier(ctx)
-
-
 
     def enterValueAtom(self, ctx: UnifiedIRParser.ValueAtomContext):
         ctx.slots = strictDict({"valueType": "", "value": ""})
@@ -490,7 +505,6 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().exitSmallest(ctx)
 
 
-    
     # def enterTopK(self, ctx: UnifiedIRParser.TopKContext):
     #     ctx.slots = strictDict({"number": ""})
     #     return super().enterTopK(ctx)
