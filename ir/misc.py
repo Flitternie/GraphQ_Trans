@@ -253,7 +253,7 @@ def gen_relation_query(sbj_sparql, sbj_variable, obj_sparql, obj_variable, pred=
             query = '{} {} ?e . '.format(obj_variable, pred)
         return query + obj_sparql + ' '
     else:
-        sbj_sparql, obj_sparql =  replace_duplicate_variables(sbj_sparql, obj_sparql, same_sub=False)
+        sbj_sparql, obj_sparql = replace_duplicate_variables(sbj_sparql, obj_sparql, same_sub=False)
         if direction == 'forward':
             query = '{} {} {} . '.format(sbj_variable, pred, obj_variable)
         else:
