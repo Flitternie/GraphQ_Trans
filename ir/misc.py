@@ -5,6 +5,7 @@ PRED_VALUE = 'pred:value'       # link packed value node to its literal value
 PRED_UNIT = 'pred:unit'         # link packed value node to its unit
 PRED_YEAR = 'pred:year'         # link packed value node to its year value, which is an integer
 PRED_DATE = 'pred:date'         # link packed value node to its date value, which is a date
+PRED_TIME = 'pred:time'         # link packed value node to its date value, which is a time
 
 PRED_FACT_H = 'pred:fact_h'     # link qualifier node to its head
 PRED_FACT_R = 'pred:fact_r'
@@ -149,6 +150,18 @@ def gen_attribute_query(key, value, v_type, v_unit=None, op='=', e='?e', in_qual
                 PRED_YEAR,
                 op, value
                 )
+    elif v_type == 'month':
+        if op == '=':
+            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:gYearMonth . '.format(
+                k,
+                PRED_DATE, value
+                )
+        else:
+            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:gYearMonth ) . '.format(
+                k,
+                PRED_DATE,
+                op, value
+                )
     elif v_type == 'date':
         if op == '=':
             query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:date . '.format(
@@ -161,16 +174,16 @@ def gen_attribute_query(key, value, v_type, v_unit=None, op='=', e='?e', in_qual
                 PRED_DATE,
                 op, value
                 )
-    elif v_type == 'month':
+    elif v_type == 'time':
         if op == '=':
-            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:gYearMonth . '.format(
+            query = '?e <{}> ?pv . ?pv <{}> "{}"^^xsd:dateTime . '.format(
                 k,
-                PRED_DATE, value
+                PRED_TIME, value
                 )
         else:
-            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:gYearMonth ) . '.format(
+            query = '?e <{}> ?pv . ?pv <{}> ?v . FILTER ( ?v {} "{}"^^xsd:dateTime ) . '.format(
                 k,
-                PRED_DATE,
+                PRED_TIME,
                 op, value
                 )
     else:

@@ -481,6 +481,10 @@ class SparqlEmitter(UnifiedIRParserListener):
         ctx.parentCtx.slots["valueType"] = "year"
         return super().exitYear(ctx)
     
+    def exitTime(self, ctx: UnifiedIRParser.TimeContext):
+        ctx.parentCtx.slots["valueType"] = "time"
+        return super().exitTime(ctx)
+    
     def exitLargest(self, ctx: UnifiedIRParser.LargestContext):
         ctx.parentCtx.parentCtx.slots["orderBy"] = "DESC({})"
         return super().enterLargest(ctx)
