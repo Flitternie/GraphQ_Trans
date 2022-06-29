@@ -36,11 +36,3 @@ class Translator():
         ir = self.emitter.get_ir(tree)
         
         return ir
-
-if __name__ == '__main__':
-    translator = Translator()
-    ir = ''''''
-    ir = translator.to_ir(ir)
-    print(ir)
-
-    
