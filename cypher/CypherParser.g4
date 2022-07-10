@@ -19,33 +19,43 @@ limitClause
     ;
 
 path
-    : node ( (UND relationship? TORIGHT |TOLEFT relationship? UND | UND relationship? UND) node )*
+    : node ( (UND relation? TORIGHT | TOLEFT relation? UND | UND relation? UND) node )*
     ;
 
 node
-    : LP string? C string (LB attribute RB)? RP
-    | LP string (C string )? (LB attribute RB)? RP
+    : LP string? C string (LB attribute (COMMA attribute)* RB)? RP
+    | LP string (C string )? (LB attribute (COMMA attribute)* RB)? RP
     ;
 
-relationship
+relation
     : LSB string? C string (OR C string)? RSB
     | LSB string (C string (OR C string)? )? RSB
     ;
 
 constraint
-    : attribute EQUAL SEP string SEP
-    | attribute EQUAL string
+    : var symbolOP SEP string SEP
+    | var symbolOP string
+    ;
+
+symbolOP
+    : EQUAL
+    | INEQUAL
+    | LESS
+    | GREATER
+    | LOE
+    | GOE
+    ;
+
+
+var
+    : string # variable
+    | string DOT string # variableAttribute
     ;
 
 attribute
-    : var DOT string
+    : string C string
     ;
-
-var
-    : string
-    ;
-
 
 string
-    : ( STRING_LITERAL | INTEGER | DOT | UND )+
+    : ( STRING_LITERAL | INTEGER | UND )+
     ;

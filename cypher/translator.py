@@ -6,6 +6,7 @@ from .CypherParser import CypherParser
 from .CypherParserListener import CypherParserListener
 from .IREmitter import IREmitter
 
+
 class Translator():
     def __init__(self):
         self.emitter = IREmitter()

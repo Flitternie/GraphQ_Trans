@@ -62,12 +62,12 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CypherParser#relationship.
-    def enterRelationship(self, ctx:CypherParser.RelationshipContext):
+    # Enter a parse tree produced by CypherParser#relation.
+    def enterRelation(self, ctx:CypherParser.RelationContext):
         pass
 
-    # Exit a parse tree produced by CypherParser#relationship.
-    def exitRelationship(self, ctx:CypherParser.RelationshipContext):
+    # Exit a parse tree produced by CypherParser#relation.
+    def exitRelation(self, ctx:CypherParser.RelationContext):
         pass
 
 
@@ -80,21 +80,39 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CypherParser#symbolOP.
+    def enterSymbolOP(self, ctx:CypherParser.SymbolOPContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#symbolOP.
+    def exitSymbolOP(self, ctx:CypherParser.SymbolOPContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#variable.
+    def enterVariable(self, ctx:CypherParser.VariableContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#variable.
+    def exitVariable(self, ctx:CypherParser.VariableContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#variableAttribute.
+    def enterVariableAttribute(self, ctx:CypherParser.VariableAttributeContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#variableAttribute.
+    def exitVariableAttribute(self, ctx:CypherParser.VariableAttributeContext):
+        pass
+
+
     # Enter a parse tree produced by CypherParser#attribute.
     def enterAttribute(self, ctx:CypherParser.AttributeContext):
         pass
 
     # Exit a parse tree produced by CypherParser#attribute.
     def exitAttribute(self, ctx:CypherParser.AttributeContext):
-        pass
-
-
-    # Enter a parse tree produced by CypherParser#var.
-    def enterVar(self, ctx:CypherParser.VarContext):
-        pass
-
-    # Exit a parse tree produced by CypherParser#var.
-    def exitVar(self, ctx:CypherParser.VarContext):
         pass
 
 

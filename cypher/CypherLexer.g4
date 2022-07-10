@@ -84,6 +84,26 @@ EQUAL
     : '='
     ;
 
+INEQUAL
+    : '<>'
+    ;
+
+LESS
+    : '<'
+    ;
+
+GREATER
+    : '>'
+    ;
+
+LOE
+    : '<='
+    ;
+
+GOE
+    : '>='
+    ;
+
 DOT
     : '.'
     ;
@@ -98,6 +118,10 @@ STRING_LITERAL
 
 OR
     : '|'
+    ;
+
+COMMA
+    : ','
     ;
 
 SPACE
