@@ -1,5 +1,9 @@
 lexer grammar CypherLexer;
 
+Call
+    : 'CALL'
+    ;
+    
 Match
     : 'MATCH'
     ;
@@ -37,7 +41,7 @@ WS
     ;
 
 SEP
-    : '"'
+    : '"' | '\''
     ;
 
 LP
@@ -52,7 +56,7 @@ LB
     : '{'
     ;
 
-C
+COL
     : ':'
     ;
 
@@ -80,28 +84,28 @@ RSB
     : ']'
     ;
 
-EQUAL
+EQ
     : '='
     ;
 
-INEQUAL
+NEQ
     : '<>'
     ;
 
-LESS
-    : '<'
+GTE
+    : '>='
     ;
 
-GREATER
+GT
     : '>'
     ;
 
-LOE
+LTE
     : '<='
     ;
 
-GOE
-    : '>='
+LT
+    : '<'
     ;
 
 DOT
