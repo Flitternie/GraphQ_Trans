@@ -58,7 +58,6 @@ class IREmitter(CypherParserListener):
             for i in range(len(ctx.slots["var_list"])):
                 if ctx.slots["var_list"][i].var == key:
                     if ctx.slots["constraint_table"][key]["es_attr"] == "name":
-                        print(ctx.slots["constraint_table"][key]["value"])
                         ctx.slots["var_list"][i].set_label(ctx.slots["constraint_table"][key]["value"])
                     else:
                         ctx.slots["var_list"][i].add_related_attr(
@@ -101,19 +100,19 @@ class IREmitter(CypherParserListener):
 
     # Enter a parse tree produced by CypherParser#orderByClause.
     def enterOrderByClause(self, ctx: CypherParser.OrderByClauseContext):
-        return super().enterOrderByClause(ctx)
+        return super().enterNode(ctx)
 
     # Exit a parse tree produced by CypherParser#orderByClause.
     def exitOrderByClause(self, ctx: CypherParser.OrderByClauseContext):
-        return super().exitOrderByClause(ctx)
+        return super().enterNode(ctx)
 
     # Enter a parse tree produced by CypherParser#limitClause.
     def enterLimitClause(self, ctx: CypherParser.LimitClauseContext):
-        return super().enterLimitClause(ctx)
+        return super().enterNode(ctx)
 
     # Exit a parse tree produced by CypherParser#limitClause.
     def exitLimitClause(self, ctx: CypherParser.LimitClauseContext):
-        return super().exitLimitClause(ctx)
+        return super().enterNode(ctx)
 
     # Enter a parse tree produced by CypherParser#path.
     def enterPath(self, ctx: CypherParser.PathContext):
@@ -129,7 +128,7 @@ class IREmitter(CypherParserListener):
         for i in range(len(paths)):
             if isinstance(paths[i], CypherParser.NodeContext):
                 ctx.slots["var_table"][i] = EntitySet(
-                    paths[i].slots["var"], paths[i].slots["label"], paths[i].slots["concept"]
+                    paths[i].slots["var"], paths[i].slots["name"], paths[i].slots["label"]
                 )
                 if previous_node_idxs is not None:
                     if edge_direction == "right":
@@ -163,28 +162,54 @@ class IREmitter(CypherParserListener):
                     edge_direction = "left"
                 elif paths[i].getText() == "->":
                     edge_direction = "right"
-            elif isinstance(paths[i], CypherParser.RelationContext):
+            elif isinstance(paths[i], CypherParser.RelationshipContext):
                 edge = paths[i].slots["label"]
         ctx.parentCtx.slots["var_list"] = list(ctx.slots["var_table"].values())
         return super().exitPath(ctx)
 
     # Enter a parse tree produced by CypherParser#node.
     def enterNode(self, ctx: CypherParser.NodeContext):
-        ctx.slots = strictDict({"var": None, "label": None, "concept": None})
+        ctx.slots = strictDict({"var": None, "name": None, "label": None})
         return super().enterNode(ctx)
 
     # Exit a parse tree produced by CypherParser#node.
     def exitNode(self, ctx: CypherParser.NodeContext):
         return super().exitNode(ctx)
 
-    # Enter a parse tree produced by CypherParser#relation.
-    def enterRelation(self, ctx: CypherParser.RelationContext):
-        ctx.slots = strictDict({"label": None})
-        return super().enterRelation(ctx)
+    # Enter a parse tree produced by CypherParser#nodeLabel.
+    def enterNodeLabel(self, ctx: CypherParser.NodeLabelContext):
+        return super().enterNodeLabel(ctx)
 
-    # Exit a parse tree produced by CypherParser#relation.
-    def exitRelation(self, ctx: CypherParser.RelationContext):
-        return super().exitRelation(ctx)
+    # Exit a parse tree produced by CypherParser#nodeLabel.
+    def exitNodeLabel(self, ctx: CypherParser.NodeLabelContext):
+        return super().exitNodeLabel(ctx)
+
+    # Enter a parse tree produced by CypherParser#nodePropertyConstraint.
+    def enterNodePropertyConstraint(self, ctx: CypherParser.NodePropertyConstraintContext):
+        return super().enterNodePropertyConstraint(ctx)
+
+    # Exit a parse tree produced by CypherParser#nodePropertyConstraint.
+    def exitNodePropertyConstraint(self, ctx: CypherParser.NodePropertyConstraintContext):
+        return super().exitNodePropertyConstraint(ctx)
+
+    # Enter a parse tree produced by CypherParser#relationship.
+    def enterRelationship(self, ctx: CypherParser.RelationshipContext):
+        ctx.slots = strictDict({"label": None})
+        return super().enterRelationship(ctx)
+
+    # Exit a parse tree produced by CypherParser#relationship.
+    def exitRelationship(self, ctx: CypherParser.RelationshipContext):
+        return super().exitRelationship(ctx)
+
+    # Enter a parse tree produced by CypherParser#relationshipLabel.
+    def enterRelationshipLabel(self, ctx: CypherParser.RelationshipLabelContext):
+        ctx.slots = strictDict({"label": None})
+        return super().enterRelationshipLabel(ctx)
+
+    # Exit a parse tree produced by CypherParser#relationshipLabel.
+    def exitRelationshipLabel(self, ctx: CypherParser.RelationshipLabelContext):
+        ctx.parentCtx.slots["label"] = ctx.slots["label"]
+        return super().exitRelationshipLabel(ctx)
 
     # Enter a parse tree produced by CypherParser#constraint.
     def enterConstraint(self, ctx: CypherParser.ConstraintContext):
@@ -203,25 +228,27 @@ class IREmitter(CypherParserListener):
 
     # Enter a parse tree produced by CypherParser#symbolOP.
     def enterSymbolOP(self, ctx: CypherParser.SymbolOPContext):
+        ctx.slots = strictDict({"OP": None})
+        ctx.slots["OP"] = ctx.getText()
         return super().enterSymbolOP(ctx)
 
     # Exit a parse tree produced by CypherParser#symbolOP.
     def exitSymbolOP(self, ctx: CypherParser.SymbolOPContext):
         if isinstance(ctx.parentCtx, CypherParser.ConstraintContext):
-            ctx.parentCtx.slots["symOP"] = ctx.getText()
+            ctx.parentCtx.slots["symOP"] = ctx.slots["OP"]
+        else:
+            pass
         return super().exitSymbolOP(ctx)
 
     # Enter a parse tree produced by CypherParser#variable.
     def enterVariable(self, ctx: CypherParser.VariableContext):
-        ctx.slots = strictDict({"var": None})
+        ctx.slots = strictDict({"string": None})
         return super().enterVariable(ctx)
 
     # Exit a parse tree produced by CypherParser#variable.
     def exitVariable(self, ctx: CypherParser.VariableContext):
-        if isinstance(ctx.parentCtx, CypherParser.RootContext):
-            ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, CypherParser.ConstraintContext):
-            ctx.parentCtx.slots["es_var"] = ctx.slots["var"]
+        if isinstance(ctx.parentCtx, CypherParser.NodeContext):
+            ctx.parentCtx.slots["var"] = ctx.slots["string"]
         return super().exitVariable(ctx)
 
     # Enter a parse tree produced by CypherParser#variableAttribute.
@@ -231,8 +258,8 @@ class IREmitter(CypherParserListener):
 
     # Exit a parse tree produced by CypherParser#variableAttribute.
     def exitVariableAttribute(self, ctx: CypherParser.VariableAttributeContext):
-        ctx.slots["var"] = list(ctx.getChildren())[0].getText()
-        ctx.slots["attr"] = list(ctx.getChildren())[2].getText()
+        ctx.slots["var"] = list(ctx.getChildren())[0].slots["string"]
+        ctx.slots["attr"] = list(ctx.getChildren())[2].slots["string"]
         if isinstance(ctx.parentCtx, CypherParser.RootContext):
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
             ctx.parentCtx.slots["query_attr"] = ctx.slots["attr"]
@@ -241,13 +268,40 @@ class IREmitter(CypherParserListener):
             ctx.parentCtx.slots["es_attr"] = ctx.slots["attr"]
         return super().exitVariableAttribute(ctx)
 
-    # Enter a parse tree produced by CypherParser#attribute.
-    def enterAttribute(self, ctx: CypherParser.AttributeContext):
-        return super().enterAttribute(ctx)
+    # Enter a parse tree produced by CypherParser#nodeProperty.
+    def enterNodeProperty(self, ctx: CypherParser.NodePropertyContext):
+        pass
 
-    # Exit a parse tree produced by CypherParser#attribute.
-    def exitAttribute(self, ctx: CypherParser.AttributeContext):
-        return super().exitAttribute(ctx)
+    # Exit a parse tree produced by CypherParser#nodeProperty.
+    def exitNodeProperty(self, ctx: CypherParser.NodePropertyContext):
+        pass
+
+    # Enter a parse tree produced by CypherParser#value.
+    def enterValue(self, ctx: CypherParser.ValueContext):
+        ctx.slots = strictDict({"value": None, "dtype": None})
+        return super().enterValue(ctx)
+
+    # Exit a parse tree produced by CypherParser#value.
+    def exitValue(self, ctx: CypherParser.ValueContext):
+        if isinstance(ctx.parentCtx, CypherParser.ConstraintContext):
+            ctx.parentCtx.slots['value'] = ctx.getText()
+        elif isinstance(ctx.parentCtx, CypherParser.NodePropertyContext):
+            pass
+        else:
+            pass
+        return super().exitValue(ctx)
+
+    # Enter a parse tree produced by CypherParser#varString.
+    def enterVarString(self, ctx: CypherParser.VarStringContext):
+        return super().enterVarString(ctx)
+
+    # Exit a parse tree produced by CypherParser#varString.
+    def exitVarString(self, ctx: CypherParser.VarStringContext):
+        if isinstance(ctx.parentCtx, CypherParser.VariableContext):
+            ctx.parentCtx.slots['string'] = ctx.getText()
+        elif isinstance(ctx.parentCtx, CypherParser.RelationshipLabelContext):
+            ctx.parentCtx.slots['label'] = ctx.getText()
+        return super().exitVarString(ctx)
 
     # Enter a parse tree produced by CypherParser#string.
     def enterString(self, ctx: CypherParser.StringContext):
@@ -255,12 +309,9 @@ class IREmitter(CypherParserListener):
 
     # Exit a parse tree produced by CypherParser#string.
     def exitString(self, ctx: CypherParser.StringContext):
-        if isinstance(ctx.parentCtx, CypherParser.NodeContext):
-            ctx.parentCtx.slots["var"] = ctx.getText()
-        elif isinstance(ctx.parentCtx, CypherParser.RelationContext):
-            ctx.parentCtx.slots["label"] = ctx.getText()
-        elif isinstance(ctx.parentCtx, CypherParser.VariableContext):
-            ctx.parentCtx.slots["var"] = ctx.getText()
-        elif isinstance(ctx.parentCtx, CypherParser.ConstraintContext):
-            ctx.parentCtx.slots["value"] = ctx.getText()
+        if isinstance(ctx.parentCtx, CypherParser.ValueContext):
+            ctx.parentCtx.slots['value'] = ctx.getText()
+        else:
+            pass
         return super().exitString(ctx)
+

@@ -62,12 +62,39 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CypherParser#relation.
-    def enterRelation(self, ctx:CypherParser.RelationContext):
+    # Enter a parse tree produced by CypherParser#nodeLabel.
+    def enterNodeLabel(self, ctx:CypherParser.NodeLabelContext):
         pass
 
-    # Exit a parse tree produced by CypherParser#relation.
-    def exitRelation(self, ctx:CypherParser.RelationContext):
+    # Exit a parse tree produced by CypherParser#nodeLabel.
+    def exitNodeLabel(self, ctx:CypherParser.NodeLabelContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#nodePropertyConstraint.
+    def enterNodePropertyConstraint(self, ctx:CypherParser.NodePropertyConstraintContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#nodePropertyConstraint.
+    def exitNodePropertyConstraint(self, ctx:CypherParser.NodePropertyConstraintContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#relationship.
+    def enterRelationship(self, ctx:CypherParser.RelationshipContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#relationship.
+    def exitRelationship(self, ctx:CypherParser.RelationshipContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#relationshipLabel.
+    def enterRelationshipLabel(self, ctx:CypherParser.RelationshipLabelContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#relationshipLabel.
+    def exitRelationshipLabel(self, ctx:CypherParser.RelationshipLabelContext):
         pass
 
 
@@ -107,12 +134,30 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CypherParser#attribute.
-    def enterAttribute(self, ctx:CypherParser.AttributeContext):
+    # Enter a parse tree produced by CypherParser#nodeProperty.
+    def enterNodeProperty(self, ctx:CypherParser.NodePropertyContext):
         pass
 
-    # Exit a parse tree produced by CypherParser#attribute.
-    def exitAttribute(self, ctx:CypherParser.AttributeContext):
+    # Exit a parse tree produced by CypherParser#nodeProperty.
+    def exitNodeProperty(self, ctx:CypherParser.NodePropertyContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#value.
+    def enterValue(self, ctx:CypherParser.ValueContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#value.
+    def exitValue(self, ctx:CypherParser.ValueContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#varString.
+    def enterVarString(self, ctx:CypherParser.VarStringContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#varString.
+    def exitVarString(self, ctx:CypherParser.VarStringContext):
         pass
 
 

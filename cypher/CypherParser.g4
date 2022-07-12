@@ -3,7 +3,7 @@ parser grammar CypherParser;
 options { tokenVocab = CypherLexer; }
 
 root
-    : matchClause+ Return Distinct? var orderByClause? limitClause? EOF
+    : matchClause+ Return Distinct? (variable | variableAttribute) orderByClause? limitClause? EOF
     ;
 
 matchClause
@@ -11,7 +11,7 @@ matchClause
     ;
 
 orderByClause
-    : OrderBy var
+    : OrderBy (variable | variableAttribute)
     ;
 
 limitClause
@@ -19,26 +19,34 @@ limitClause
     ;
 
 path
-    : node ( ( ( UND | TOLEFT ) relation? ( UND | TORIGHT ) ) node )*
+    : node ( ( ( TOLEFT relationship? UND ) | ( UND relationship? UND ) | ( UND relationship? TORIGHT ) ) node )*
     ;
 
 node
-    : LP string? COL string nodePropertyConstraint? RP
-    | LP string ( COL string )? nodePropertyConstraint? RP
+    : LP variable? ( COL nodeLabel )+ nodePropertyConstraint? RP
+    | LP variable ( COL nodeLabel )* nodePropertyConstraint? RP
+    ;
+
+nodeLabel
+    : varString
     ;
 
 nodePropertyConstraint
-    : ( LB attribute ( COMMA attribute )* RB )
+    : ( LB nodeProperty ( COMMA nodeProperty )* RB )
     ;
 
-relation
-    : LSB string? COL string ( OR COL string )? RSB
-    | LSB string ( COL string ( OR COL string )? )? RSB
+relationship
+    : LSB variable? COL relationshipLabel ( OR COL relationshipLabel )? RSB
+    | LSB variable ( COL relationshipLabel ( OR COL relationshipLabel )? )? RSB
+    ;
+
+relationshipLabel
+    : varString
     ;
 
 constraint
-    : var symbolOP SEP string SEP
-    | var symbolOP string
+    : (variable | variableAttribute) symbolOP SEP value SEP
+    | (variable | variableAttribute) symbolOP value
     ;
 
 symbolOP
@@ -50,15 +58,26 @@ symbolOP
     | LT
     ;
 
-var
-    : string # variable
-    | string DOT string # variableAttribute
+variable
+    : varString
     ;
 
-attribute
-    : string COL string
+variableAttribute
+    : variable DOT variable
+    ;
+
+nodeProperty
+    : variable COL value
+    ;
+
+value
+    : string
+    ;
+
+varString
+    : ( VAR_STRING_LITERAL | INTEGER )+
     ;
 
 string
-    : ( STRING_LITERAL | INTEGER | UND )+
+    : ( VAR_STRING_LITERAL | STRING_LITERAL | INTEGER | DOT )+
     ;
