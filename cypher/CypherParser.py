@@ -12,91 +12,92 @@ else:
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#")
-        buf.write("\u00d6\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\u00d7\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
-        buf.write("\3\2\6\2(\n\2\r\2\16\2)\3\2\3\2\5\2.\n\2\3\2\3\2\5\2\62")
-        buf.write("\n\2\3\2\5\2\65\n\2\3\2\5\28\n\2\3\2\3\2\3\3\3\3\3\3\3")
-        buf.write("\3\5\3@\n\3\3\4\3\4\3\4\5\4E\n\4\3\5\3\5\3\5\3\6\3\6\3")
-        buf.write("\6\5\6M\n\6\3\6\3\6\3\6\5\6R\n\6\3\6\3\6\3\6\5\6W\n\6")
-        buf.write("\3\6\5\6Z\n\6\3\6\7\6]\n\6\f\6\16\6`\13\6\3\7\3\7\5\7")
-        buf.write("d\n\7\3\7\3\7\6\7h\n\7\r\7\16\7i\3\7\5\7m\n\7\3\7\3\7")
-        buf.write("\3\7\3\7\3\7\3\7\7\7u\n\7\f\7\16\7x\13\7\3\7\5\7{\n\7")
-        buf.write("\3\7\3\7\5\7\177\n\7\3\b\3\b\3\t\3\t\3\t\3\t\7\t\u0087")
-        buf.write("\n\t\f\t\16\t\u008a\13\t\3\t\3\t\3\n\3\n\5\n\u0090\n\n")
-        buf.write("\3\n\3\n\3\n\3\n\3\n\5\n\u0097\n\n\3\n\3\n\3\n\3\n\3\n")
-        buf.write("\3\n\3\n\3\n\3\n\5\n\u00a2\n\n\5\n\u00a4\n\n\3\n\3\n\5")
-        buf.write("\n\u00a8\n\n\3\13\3\13\3\f\3\f\5\f\u00ae\n\f\3\f\3\f\3")
-        buf.write("\f\3\f\3\f\3\f\3\f\5\f\u00b7\n\f\3\f\3\f\3\f\5\f\u00bc")
-        buf.write("\n\f\3\r\3\r\3\16\3\16\3\17\3\17\3\17\3\17\3\20\3\20\3")
-        buf.write("\20\3\20\3\21\3\21\3\22\6\22\u00cd\n\22\r\22\16\22\u00ce")
-        buf.write("\3\23\6\23\u00d2\n\23\r\23\16\23\u00d3\3\23\2\2\24\2\4")
-        buf.write("\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$\2\5\3\2\27\34")
-        buf.write("\3\2\36\37\3\2\35 \2\u00e1\2\'\3\2\2\2\4;\3\2\2\2\6A\3")
-        buf.write("\2\2\2\bF\3\2\2\2\nI\3\2\2\2\f~\3\2\2\2\16\u0080\3\2\2")
-        buf.write("\2\20\u0082\3\2\2\2\22\u00a7\3\2\2\2\24\u00a9\3\2\2\2")
-        buf.write("\26\u00bb\3\2\2\2\30\u00bd\3\2\2\2\32\u00bf\3\2\2\2\34")
-        buf.write("\u00c1\3\2\2\2\36\u00c5\3\2\2\2 \u00c9\3\2\2\2\"\u00cc")
-        buf.write("\3\2\2\2$\u00d1\3\2\2\2&(\5\4\3\2\'&\3\2\2\2()\3\2\2\2")
-        buf.write(")\'\3\2\2\2)*\3\2\2\2*+\3\2\2\2+-\7\6\2\2,.\7\13\2\2-")
-        buf.write(",\3\2\2\2-.\3\2\2\2.\61\3\2\2\2/\62\5\32\16\2\60\62\5")
-        buf.write("\34\17\2\61/\3\2\2\2\61\60\3\2\2\2\62\64\3\2\2\2\63\65")
-        buf.write("\5\6\4\2\64\63\3\2\2\2\64\65\3\2\2\2\65\67\3\2\2\2\66")
-        buf.write("8\5\b\5\2\67\66\3\2\2\2\678\3\2\2\289\3\2\2\29:\7\2\2")
-        buf.write("\3:\3\3\2\2\2;<\7\4\2\2<?\5\n\6\2=>\7\5\2\2>@\5\26\f\2")
-        buf.write("?=\3\2\2\2?@\3\2\2\2@\5\3\2\2\2AD\7\t\2\2BE\5\32\16\2")
-        buf.write("CE\5\34\17\2DB\3\2\2\2DC\3\2\2\2E\7\3\2\2\2FG\7\n\2\2")
-        buf.write("GH\7\36\2\2H\t\3\2\2\2I^\5\f\7\2JL\7\22\2\2KM\5\22\n\2")
-        buf.write("LK\3\2\2\2LM\3\2\2\2MN\3\2\2\2NZ\7\23\2\2OQ\7\23\2\2P")
-        buf.write("R\5\22\n\2QP\3\2\2\2QR\3\2\2\2RS\3\2\2\2SZ\7\23\2\2TV")
-        buf.write("\7\23\2\2UW\5\22\n\2VU\3\2\2\2VW\3\2\2\2WX\3\2\2\2XZ\7")
-        buf.write("\21\2\2YJ\3\2\2\2YO\3\2\2\2YT\3\2\2\2Z[\3\2\2\2[]\5\f")
-        buf.write("\7\2\\Y\3\2\2\2]`\3\2\2\2^\\\3\2\2\2^_\3\2\2\2_\13\3\2")
-        buf.write("\2\2`^\3\2\2\2ac\7\r\2\2bd\5\32\16\2cb\3\2\2\2cd\3\2\2")
-        buf.write("\2dg\3\2\2\2ef\7\20\2\2fh\5\16\b\2ge\3\2\2\2hi\3\2\2\2")
-        buf.write("ig\3\2\2\2ij\3\2\2\2jl\3\2\2\2km\5\20\t\2lk\3\2\2\2lm")
-        buf.write("\3\2\2\2mn\3\2\2\2no\7\16\2\2o\177\3\2\2\2pq\7\r\2\2q")
-        buf.write("v\5\32\16\2rs\7\20\2\2su\5\16\b\2tr\3\2\2\2ux\3\2\2\2")
-        buf.write("vt\3\2\2\2vw\3\2\2\2wz\3\2\2\2xv\3\2\2\2y{\5\20\t\2zy")
-        buf.write("\3\2\2\2z{\3\2\2\2{|\3\2\2\2|}\7\16\2\2}\177\3\2\2\2~")
-        buf.write("a\3\2\2\2~p\3\2\2\2\177\r\3\2\2\2\u0080\u0081\5\"\22\2")
-        buf.write("\u0081\17\3\2\2\2\u0082\u0083\7\17\2\2\u0083\u0088\5\36")
-        buf.write("\20\2\u0084\u0085\7\"\2\2\u0085\u0087\5\36\20\2\u0086")
-        buf.write("\u0084\3\2\2\2\u0087\u008a\3\2\2\2\u0088\u0086\3\2\2\2")
-        buf.write("\u0088\u0089\3\2\2\2\u0089\u008b\3\2\2\2\u008a\u0088\3")
-        buf.write("\2\2\2\u008b\u008c\7\24\2\2\u008c\21\3\2\2\2\u008d\u008f")
-        buf.write("\7\25\2\2\u008e\u0090\5\32\16\2\u008f\u008e\3\2\2\2\u008f")
-        buf.write("\u0090\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0092\7\20\2")
-        buf.write("\2\u0092\u0096\5\24\13\2\u0093\u0094\7!\2\2\u0094\u0095")
-        buf.write("\7\20\2\2\u0095\u0097\5\24\13\2\u0096\u0093\3\2\2\2\u0096")
-        buf.write("\u0097\3\2\2\2\u0097\u0098\3\2\2\2\u0098\u0099\7\26\2")
-        buf.write("\2\u0099\u00a8\3\2\2\2\u009a\u009b\7\25\2\2\u009b\u00a3")
-        buf.write("\5\32\16\2\u009c\u009d\7\20\2\2\u009d\u00a1\5\24\13\2")
-        buf.write("\u009e\u009f\7!\2\2\u009f\u00a0\7\20\2\2\u00a0\u00a2\5")
-        buf.write("\24\13\2\u00a1\u009e\3\2\2\2\u00a1\u00a2\3\2\2\2\u00a2")
-        buf.write("\u00a4\3\2\2\2\u00a3\u009c\3\2\2\2\u00a3\u00a4\3\2\2\2")
-        buf.write("\u00a4\u00a5\3\2\2\2\u00a5\u00a6\7\26\2\2\u00a6\u00a8")
-        buf.write("\3\2\2\2\u00a7\u008d\3\2\2\2\u00a7\u009a\3\2\2\2\u00a8")
-        buf.write("\23\3\2\2\2\u00a9\u00aa\5\"\22\2\u00aa\25\3\2\2\2\u00ab")
-        buf.write("\u00ae\5\32\16\2\u00ac\u00ae\5\34\17\2\u00ad\u00ab\3\2")
-        buf.write("\2\2\u00ad\u00ac\3\2\2\2\u00ae\u00af\3\2\2\2\u00af\u00b0")
-        buf.write("\5\30\r\2\u00b0\u00b1\7\f\2\2\u00b1\u00b2\5 \21\2\u00b2")
-        buf.write("\u00b3\7\f\2\2\u00b3\u00bc\3\2\2\2\u00b4\u00b7\5\32\16")
-        buf.write("\2\u00b5\u00b7\5\34\17\2\u00b6\u00b4\3\2\2\2\u00b6\u00b5")
-        buf.write("\3\2\2\2\u00b7\u00b8\3\2\2\2\u00b8\u00b9\5\30\r\2\u00b9")
-        buf.write("\u00ba\5 \21\2\u00ba\u00bc\3\2\2\2\u00bb\u00ad\3\2\2\2")
-        buf.write("\u00bb\u00b6\3\2\2\2\u00bc\27\3\2\2\2\u00bd\u00be\t\2")
-        buf.write("\2\2\u00be\31\3\2\2\2\u00bf\u00c0\5\"\22\2\u00c0\33\3")
-        buf.write("\2\2\2\u00c1\u00c2\5\32\16\2\u00c2\u00c3\7\35\2\2\u00c3")
-        buf.write("\u00c4\5\32\16\2\u00c4\35\3\2\2\2\u00c5\u00c6\5\32\16")
-        buf.write("\2\u00c6\u00c7\7\20\2\2\u00c7\u00c8\5 \21\2\u00c8\37\3")
-        buf.write("\2\2\2\u00c9\u00ca\5$\23\2\u00ca!\3\2\2\2\u00cb\u00cd")
-        buf.write("\t\3\2\2\u00cc\u00cb\3\2\2\2\u00cd\u00ce\3\2\2\2\u00ce")
-        buf.write("\u00cc\3\2\2\2\u00ce\u00cf\3\2\2\2\u00cf#\3\2\2\2\u00d0")
-        buf.write("\u00d2\t\4\2\2\u00d1\u00d0\3\2\2\2\u00d2\u00d3\3\2\2\2")
-        buf.write("\u00d3\u00d1\3\2\2\2\u00d3\u00d4\3\2\2\2\u00d4%\3\2\2")
-        buf.write("\2\37)-\61\64\67?DLQVY^cilvz~\u0088\u008f\u0096\u00a1")
-        buf.write("\u00a3\u00a7\u00ad\u00b6\u00bb\u00ce\u00d3")
+        buf.write("\4\24\t\24\3\2\6\2*\n\2\r\2\16\2+\3\2\3\2\5\2\60\n\2\3")
+        buf.write("\2\5\2\63\n\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3;\n\3\3\4\3\4")
+        buf.write("\5\4?\n\4\3\4\3\4\5\4C\n\4\3\4\3\4\5\4G\n\4\3\5\3\5\3")
+        buf.write("\5\5\5L\n\5\3\6\3\6\3\6\3\7\3\7\3\7\5\7T\n\7\3\7\3\7\3")
+        buf.write("\7\5\7Y\n\7\3\7\3\7\3\7\5\7^\n\7\3\7\5\7a\n\7\3\7\7\7")
+        buf.write("d\n\7\f\7\16\7g\13\7\3\b\3\b\5\bk\n\b\3\b\3\b\6\bo\n\b")
+        buf.write("\r\b\16\bp\3\b\5\bt\n\b\3\b\3\b\3\b\3\b\3\b\3\b\7\b|\n")
+        buf.write("\b\f\b\16\b\177\13\b\3\b\5\b\u0082\n\b\3\b\3\b\5\b\u0086")
+        buf.write("\n\b\3\t\3\t\3\n\3\n\3\n\3\n\7\n\u008e\n\n\f\n\16\n\u0091")
+        buf.write("\13\n\3\n\3\n\3\13\3\13\5\13\u0097\n\13\3\13\3\13\3\13")
+        buf.write("\3\13\3\13\5\13\u009e\n\13\3\13\3\13\3\13\3\13\3\13\3")
+        buf.write("\13\3\13\3\13\3\13\5\13\u00a9\n\13\5\13\u00ab\n\13\3\13")
+        buf.write("\3\13\5\13\u00af\n\13\3\f\3\f\3\r\3\r\5\r\u00b5\n\r\3")
+        buf.write("\r\3\r\3\r\3\16\3\16\3\17\3\17\3\20\3\20\3\20\3\20\3\21")
+        buf.write("\3\21\3\21\3\21\3\22\3\22\3\22\3\22\3\22\5\22\u00cb\n")
+        buf.write("\22\3\23\6\23\u00ce\n\23\r\23\16\23\u00cf\3\24\6\24\u00d3")
+        buf.write("\n\24\r\24\16\24\u00d4\3\24\2\2\25\2\4\6\b\n\f\16\20\22")
+        buf.write("\24\26\30\32\34\36 \"$&\2\5\3\2\27\34\4\2\36\36  \3\2")
+        buf.write("\35 \2\u00e1\2)\3\2\2\2\4\66\3\2\2\2\6<\3\2\2\2\bH\3\2")
+        buf.write("\2\2\nM\3\2\2\2\fP\3\2\2\2\16\u0085\3\2\2\2\20\u0087\3")
+        buf.write("\2\2\2\22\u0089\3\2\2\2\24\u00ae\3\2\2\2\26\u00b0\3\2")
+        buf.write("\2\2\30\u00b4\3\2\2\2\32\u00b9\3\2\2\2\34\u00bb\3\2\2")
+        buf.write("\2\36\u00bd\3\2\2\2 \u00c1\3\2\2\2\"\u00ca\3\2\2\2$\u00cd")
+        buf.write("\3\2\2\2&\u00d2\3\2\2\2(*\5\4\3\2)(\3\2\2\2*+\3\2\2\2")
+        buf.write("+)\3\2\2\2+,\3\2\2\2,-\3\2\2\2-/\5\6\4\2.\60\5\b\5\2/")
+        buf.write(".\3\2\2\2/\60\3\2\2\2\60\62\3\2\2\2\61\63\5\n\6\2\62\61")
+        buf.write("\3\2\2\2\62\63\3\2\2\2\63\64\3\2\2\2\64\65\7\2\2\3\65")
+        buf.write("\3\3\2\2\2\66\67\7\4\2\2\67:\5\f\7\289\7\5\2\29;\5\30")
+        buf.write("\r\2:8\3\2\2\2:;\3\2\2\2;\5\3\2\2\2<>\7\6\2\2=?\7\13\2")
+        buf.write("\2>=\3\2\2\2>?\3\2\2\2?B\3\2\2\2@C\5\34\17\2AC\5\36\20")
+        buf.write("\2B@\3\2\2\2BA\3\2\2\2CF\3\2\2\2DE\7\b\2\2EG\5\34\17\2")
+        buf.write("FD\3\2\2\2FG\3\2\2\2G\7\3\2\2\2HK\7\t\2\2IL\5\34\17\2")
+        buf.write("JL\5\36\20\2KI\3\2\2\2KJ\3\2\2\2L\t\3\2\2\2MN\7\n\2\2")
+        buf.write("NO\7\36\2\2O\13\3\2\2\2Pe\5\16\b\2QS\7\22\2\2RT\5\24\13")
+        buf.write("\2SR\3\2\2\2ST\3\2\2\2TU\3\2\2\2Ua\7\23\2\2VX\7\23\2\2")
+        buf.write("WY\5\24\13\2XW\3\2\2\2XY\3\2\2\2YZ\3\2\2\2Za\7\23\2\2")
+        buf.write("[]\7\23\2\2\\^\5\24\13\2]\\\3\2\2\2]^\3\2\2\2^_\3\2\2")
+        buf.write("\2_a\7\21\2\2`Q\3\2\2\2`V\3\2\2\2`[\3\2\2\2ab\3\2\2\2")
+        buf.write("bd\5\16\b\2c`\3\2\2\2dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2f\r")
+        buf.write("\3\2\2\2ge\3\2\2\2hj\7\r\2\2ik\5\34\17\2ji\3\2\2\2jk\3")
+        buf.write("\2\2\2kn\3\2\2\2lm\7\20\2\2mo\5\20\t\2nl\3\2\2\2op\3\2")
+        buf.write("\2\2pn\3\2\2\2pq\3\2\2\2qs\3\2\2\2rt\5\22\n\2sr\3\2\2")
+        buf.write("\2st\3\2\2\2tu\3\2\2\2uv\7\16\2\2v\u0086\3\2\2\2wx\7\r")
+        buf.write("\2\2x}\5\34\17\2yz\7\20\2\2z|\5\20\t\2{y\3\2\2\2|\177")
+        buf.write("\3\2\2\2}{\3\2\2\2}~\3\2\2\2~\u0081\3\2\2\2\177}\3\2\2")
+        buf.write("\2\u0080\u0082\5\22\n\2\u0081\u0080\3\2\2\2\u0081\u0082")
+        buf.write("\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0084\7\16\2\2\u0084")
+        buf.write("\u0086\3\2\2\2\u0085h\3\2\2\2\u0085w\3\2\2\2\u0086\17")
+        buf.write("\3\2\2\2\u0087\u0088\5$\23\2\u0088\21\3\2\2\2\u0089\u008a")
+        buf.write("\7\17\2\2\u008a\u008f\5 \21\2\u008b\u008c\7\"\2\2\u008c")
+        buf.write("\u008e\5 \21\2\u008d\u008b\3\2\2\2\u008e\u0091\3\2\2\2")
+        buf.write("\u008f\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0092\3")
+        buf.write("\2\2\2\u0091\u008f\3\2\2\2\u0092\u0093\7\24\2\2\u0093")
+        buf.write("\23\3\2\2\2\u0094\u0096\7\25\2\2\u0095\u0097\5\34\17\2")
+        buf.write("\u0096\u0095\3\2\2\2\u0096\u0097\3\2\2\2\u0097\u0098\3")
+        buf.write("\2\2\2\u0098\u0099\7\20\2\2\u0099\u009d\5\26\f\2\u009a")
+        buf.write("\u009b\7!\2\2\u009b\u009c\7\20\2\2\u009c\u009e\5\26\f")
+        buf.write("\2\u009d\u009a\3\2\2\2\u009d\u009e\3\2\2\2\u009e\u009f")
+        buf.write("\3\2\2\2\u009f\u00a0\7\26\2\2\u00a0\u00af\3\2\2\2\u00a1")
+        buf.write("\u00a2\7\25\2\2\u00a2\u00aa\5\34\17\2\u00a3\u00a4\7\20")
+        buf.write("\2\2\u00a4\u00a8\5\26\f\2\u00a5\u00a6\7!\2\2\u00a6\u00a7")
+        buf.write("\7\20\2\2\u00a7\u00a9\5\26\f\2\u00a8\u00a5\3\2\2\2\u00a8")
+        buf.write("\u00a9\3\2\2\2\u00a9\u00ab\3\2\2\2\u00aa\u00a3\3\2\2\2")
+        buf.write("\u00aa\u00ab\3\2\2\2\u00ab\u00ac\3\2\2\2\u00ac\u00ad\7")
+        buf.write("\26\2\2\u00ad\u00af\3\2\2\2\u00ae\u0094\3\2\2\2\u00ae")
+        buf.write("\u00a1\3\2\2\2\u00af\25\3\2\2\2\u00b0\u00b1\5$\23\2\u00b1")
+        buf.write("\27\3\2\2\2\u00b2\u00b5\5\34\17\2\u00b3\u00b5\5\36\20")
+        buf.write("\2\u00b4\u00b2\3\2\2\2\u00b4\u00b3\3\2\2\2\u00b5\u00b6")
+        buf.write("\3\2\2\2\u00b6\u00b7\5\32\16\2\u00b7\u00b8\5\"\22\2\u00b8")
+        buf.write("\31\3\2\2\2\u00b9\u00ba\t\2\2\2\u00ba\33\3\2\2\2\u00bb")
+        buf.write("\u00bc\5$\23\2\u00bc\35\3\2\2\2\u00bd\u00be\5\34\17\2")
+        buf.write("\u00be\u00bf\7\35\2\2\u00bf\u00c0\5\34\17\2\u00c0\37\3")
+        buf.write("\2\2\2\u00c1\u00c2\5\34\17\2\u00c2\u00c3\7\20\2\2\u00c3")
+        buf.write("\u00c4\5\"\22\2\u00c4!\3\2\2\2\u00c5\u00cb\5&\24\2\u00c6")
+        buf.write("\u00c7\7\f\2\2\u00c7\u00c8\5&\24\2\u00c8\u00c9\7\f\2\2")
+        buf.write("\u00c9\u00cb\3\2\2\2\u00ca\u00c5\3\2\2\2\u00ca\u00c6\3")
+        buf.write("\2\2\2\u00cb#\3\2\2\2\u00cc\u00ce\t\3\2\2\u00cd\u00cc")
+        buf.write("\3\2\2\2\u00ce\u00cf\3\2\2\2\u00cf\u00cd\3\2\2\2\u00cf")
+        buf.write("\u00d0\3\2\2\2\u00d0%\3\2\2\2\u00d1\u00d3\t\4\2\2\u00d2")
+        buf.write("\u00d1\3\2\2\2\u00d3\u00d4\3\2\2\2\u00d4\u00d2\3\2\2\2")
+        buf.write("\u00d4\u00d5\3\2\2\2\u00d5\'\3\2\2\2\37+/\62:>BFKSX]`")
+        buf.write("ejps}\u0081\u0085\u008f\u0096\u009d\u00a8\u00aa\u00ae")
+        buf.write("\u00b4\u00ca\u00cf\u00d4")
         return buf.getvalue()
 
 
@@ -121,30 +122,31 @@ class CypherParser ( Parser ):
                       "As", "OrderBy", "Limit", "Distinct", "SEP", "LP", 
                       "RP", "LB", "COL", "TORIGHT", "TOLEFT", "UND", "RB", 
                       "LSB", "RSB", "EQ", "NEQ", "GTE", "GT", "LTE", "LT", 
-                      "DOT", "INTEGER", "VAR_STRING_LITERAL", "STRING_LITERAL", 
+                      "DOT", "INTEGER", "STRING_SYMBOL", "STRING_LITERAL", 
                       "OR", "COMMA", "WS" ]
 
     RULE_root = 0
     RULE_matchClause = 1
-    RULE_orderByClause = 2
-    RULE_limitClause = 3
-    RULE_path = 4
-    RULE_node = 5
-    RULE_nodeLabel = 6
-    RULE_nodePropertyConstraint = 7
-    RULE_relationship = 8
-    RULE_relationshipLabel = 9
-    RULE_constraint = 10
-    RULE_symbolOP = 11
-    RULE_variable = 12
-    RULE_variableAttribute = 13
-    RULE_nodeProperty = 14
-    RULE_value = 15
-    RULE_varString = 16
-    RULE_string = 17
+    RULE_returnClause = 2
+    RULE_orderByClause = 3
+    RULE_limitClause = 4
+    RULE_path = 5
+    RULE_node = 6
+    RULE_nodeLabel = 7
+    RULE_nodePropertyConstraint = 8
+    RULE_relationship = 9
+    RULE_relationshipLabel = 10
+    RULE_constraint = 11
+    RULE_symbolOP = 12
+    RULE_variable = 13
+    RULE_variableAttribute = 14
+    RULE_nodeProperty = 15
+    RULE_value = 16
+    RULE_varString = 17
+    RULE_string = 18
 
-    ruleNames =  [ "root", "matchClause", "orderByClause", "limitClause", 
-                   "path", "node", "nodeLabel", "nodePropertyConstraint", 
+    ruleNames =  [ "root", "matchClause", "returnClause", "orderByClause", 
+                   "limitClause", "path", "node", "nodeLabel", "nodePropertyConstraint", 
                    "relationship", "relationshipLabel", "constraint", "symbolOP", 
                    "variable", "variableAttribute", "nodeProperty", "value", 
                    "varString", "string" ]
@@ -178,7 +180,7 @@ class CypherParser ( Parser ):
     LT=26
     DOT=27
     INTEGER=28
-    VAR_STRING_LITERAL=29
+    STRING_SYMBOL=29
     STRING_LITERAL=30
     OR=31
     COMMA=32
@@ -200,19 +202,12 @@ class CypherParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def Return(self):
-            return self.getToken(CypherParser.Return, 0)
+        def returnClause(self):
+            return self.getTypedRuleContext(CypherParser.ReturnClauseContext,0)
+
 
         def EOF(self):
             return self.getToken(CypherParser.EOF, 0)
-
-        def variable(self):
-            return self.getTypedRuleContext(CypherParser.VariableContext,0)
-
-
-        def variableAttribute(self):
-            return self.getTypedRuleContext(CypherParser.VariableAttributeContext,0)
-
 
         def matchClause(self, i:int=None):
             if i is None:
@@ -220,9 +215,6 @@ class CypherParser ( Parser ):
             else:
                 return self.getTypedRuleContext(CypherParser.MatchClauseContext,i)
 
-
-        def Distinct(self):
-            return self.getToken(CypherParser.Distinct, 0)
 
         def orderByClause(self):
             return self.getTypedRuleContext(CypherParser.OrderByClauseContext,0)
@@ -253,59 +245,37 @@ class CypherParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 37 
+            self.state = 39 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 36
+                self.state = 38
                 self.matchClause()
-                self.state = 39 
+                self.state = 41 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==CypherParser.Match):
                     break
 
-            self.state = 41
-            self.match(CypherParser.Return)
             self.state = 43
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==CypherParser.Distinct:
-                self.state = 42
-                self.match(CypherParser.Distinct)
-
-
-            self.state = 47
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
-            if la_ == 1:
-                self.state = 45
-                self.variable()
-                pass
-
-            elif la_ == 2:
-                self.state = 46
-                self.variableAttribute()
-                pass
-
-
-            self.state = 50
+            self.returnClause()
+            self.state = 45
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==CypherParser.OrderBy:
-                self.state = 49
+                self.state = 44
                 self.orderByClause()
 
 
-            self.state = 53
+            self.state = 48
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==CypherParser.Limit:
-                self.state = 52
+                self.state = 47
                 self.limitClause()
 
 
-            self.state = 55
+            self.state = 50
             self.match(CypherParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -358,18 +328,109 @@ class CypherParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 57
+            self.state = 52
             self.match(CypherParser.Match)
-            self.state = 58
+            self.state = 53
             self.path()
-            self.state = 61
+            self.state = 56
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==CypherParser.Where:
-                self.state = 59
+                self.state = 54
                 self.match(CypherParser.Where)
-                self.state = 60
+                self.state = 55
                 self.constraint()
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ReturnClauseContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def Return(self):
+            return self.getToken(CypherParser.Return, 0)
+
+        def variable(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(CypherParser.VariableContext)
+            else:
+                return self.getTypedRuleContext(CypherParser.VariableContext,i)
+
+
+        def variableAttribute(self):
+            return self.getTypedRuleContext(CypherParser.VariableAttributeContext,0)
+
+
+        def Distinct(self):
+            return self.getToken(CypherParser.Distinct, 0)
+
+        def As(self):
+            return self.getToken(CypherParser.As, 0)
+
+        def getRuleIndex(self):
+            return CypherParser.RULE_returnClause
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterReturnClause" ):
+                listener.enterReturnClause(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitReturnClause" ):
+                listener.exitReturnClause(self)
+
+
+
+
+    def returnClause(self):
+
+        localctx = CypherParser.ReturnClauseContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_returnClause)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 58
+            self.match(CypherParser.Return)
+            self.state = 60
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==CypherParser.Distinct:
+                self.state = 59
+                self.match(CypherParser.Distinct)
+
+
+            self.state = 64
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
+            if la_ == 1:
+                self.state = 62
+                self.variable()
+                pass
+
+            elif la_ == 2:
+                self.state = 63
+                self.variableAttribute()
+                pass
+
+
+            self.state = 68
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==CypherParser.As:
+                self.state = 66
+                self.match(CypherParser.As)
+                self.state = 67
+                self.variable()
 
 
         except RecognitionException as re:
@@ -416,21 +477,21 @@ class CypherParser ( Parser ):
     def orderByClause(self):
 
         localctx = CypherParser.OrderByClauseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_orderByClause)
+        self.enterRule(localctx, 6, self.RULE_orderByClause)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 63
+            self.state = 70
             self.match(CypherParser.OrderBy)
-            self.state = 66
+            self.state = 73
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
             if la_ == 1:
-                self.state = 64
+                self.state = 71
                 self.variable()
                 pass
 
             elif la_ == 2:
-                self.state = 65
+                self.state = 72
                 self.variableAttribute()
                 pass
 
@@ -474,12 +535,12 @@ class CypherParser ( Parser ):
     def limitClause(self):
 
         localctx = CypherParser.LimitClauseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_limitClause)
+        self.enterRule(localctx, 8, self.RULE_limitClause)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 68
+            self.state = 75
             self.match(CypherParser.Limit)
-            self.state = 69
+            self.state = 76
             self.match(CypherParser.INTEGER)
         except RecognitionException as re:
             localctx.exception = re
@@ -546,68 +607,68 @@ class CypherParser ( Parser ):
     def path(self):
 
         localctx = CypherParser.PathContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_path)
+        self.enterRule(localctx, 10, self.RULE_path)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 71
+            self.state = 78
             self.node()
-            self.state = 92
+            self.state = 99
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==CypherParser.TOLEFT or _la==CypherParser.UND:
-                self.state = 87
+                self.state = 94
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,11,self._ctx)
                 if la_ == 1:
-                    self.state = 72
+                    self.state = 79
                     self.match(CypherParser.TOLEFT)
-                    self.state = 74
+                    self.state = 81
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if _la==CypherParser.LSB:
-                        self.state = 73
+                        self.state = 80
                         self.relationship()
 
 
-                    self.state = 76
+                    self.state = 83
                     self.match(CypherParser.UND)
                     pass
 
                 elif la_ == 2:
-                    self.state = 77
+                    self.state = 84
                     self.match(CypherParser.UND)
-                    self.state = 79
+                    self.state = 86
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if _la==CypherParser.LSB:
-                        self.state = 78
+                        self.state = 85
                         self.relationship()
 
 
-                    self.state = 81
+                    self.state = 88
                     self.match(CypherParser.UND)
                     pass
 
                 elif la_ == 3:
-                    self.state = 82
+                    self.state = 89
                     self.match(CypherParser.UND)
-                    self.state = 84
+                    self.state = 91
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if _la==CypherParser.LSB:
-                        self.state = 83
+                        self.state = 90
                         self.relationship()
 
 
-                    self.state = 86
+                    self.state = 93
                     self.match(CypherParser.TORIGHT)
                     pass
 
 
-                self.state = 89
+                self.state = 96
                 self.node()
-                self.state = 94
+                self.state = 101
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -671,77 +732,77 @@ class CypherParser ( Parser ):
     def node(self):
 
         localctx = CypherParser.NodeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_node)
+        self.enterRule(localctx, 12, self.RULE_node)
         self._la = 0 # Token type
         try:
-            self.state = 124
+            self.state = 131
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 95
+                self.state = 102
                 self.match(CypherParser.LP)
-                self.state = 97
+                self.state = 104
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==CypherParser.INTEGER or _la==CypherParser.VAR_STRING_LITERAL:
-                    self.state = 96
+                if _la==CypherParser.INTEGER or _la==CypherParser.STRING_LITERAL:
+                    self.state = 103
                     self.variable()
 
 
-                self.state = 101 
+                self.state = 108 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 99
+                    self.state = 106
                     self.match(CypherParser.COL)
-                    self.state = 100
+                    self.state = 107
                     self.nodeLabel()
-                    self.state = 103 
+                    self.state = 110 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==CypherParser.COL):
                         break
 
-                self.state = 106
+                self.state = 113
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==CypherParser.LB:
-                    self.state = 105
+                    self.state = 112
                     self.nodePropertyConstraint()
 
 
-                self.state = 108
+                self.state = 115
                 self.match(CypherParser.RP)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 110
+                self.state = 117
                 self.match(CypherParser.LP)
-                self.state = 111
+                self.state = 118
                 self.variable()
-                self.state = 116
+                self.state = 123
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==CypherParser.COL:
-                    self.state = 112
+                    self.state = 119
                     self.match(CypherParser.COL)
-                    self.state = 113
+                    self.state = 120
                     self.nodeLabel()
-                    self.state = 118
+                    self.state = 125
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 120
+                self.state = 127
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==CypherParser.LB:
-                    self.state = 119
+                    self.state = 126
                     self.nodePropertyConstraint()
 
 
-                self.state = 122
+                self.state = 129
                 self.match(CypherParser.RP)
                 pass
 
@@ -783,10 +844,10 @@ class CypherParser ( Parser ):
     def nodeLabel(self):
 
         localctx = CypherParser.NodeLabelContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_nodeLabel)
+        self.enterRule(localctx, 14, self.RULE_nodeLabel)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 126
+            self.state = 133
             self.varString()
         except RecognitionException as re:
             localctx.exception = re
@@ -840,27 +901,27 @@ class CypherParser ( Parser ):
     def nodePropertyConstraint(self):
 
         localctx = CypherParser.NodePropertyConstraintContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_nodePropertyConstraint)
+        self.enterRule(localctx, 16, self.RULE_nodePropertyConstraint)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 128
+            self.state = 135
             self.match(CypherParser.LB)
-            self.state = 129
+            self.state = 136
             self.nodeProperty()
-            self.state = 134
+            self.state = 141
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==CypherParser.COMMA:
-                self.state = 130
+                self.state = 137
                 self.match(CypherParser.COMMA)
-                self.state = 131
+                self.state = 138
                 self.nodeProperty()
-                self.state = 136
+                self.state = 143
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 137
+            self.state = 144
             self.match(CypherParser.RB)
         except RecognitionException as re:
             localctx.exception = re
@@ -921,73 +982,73 @@ class CypherParser ( Parser ):
     def relationship(self):
 
         localctx = CypherParser.RelationshipContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_relationship)
+        self.enterRule(localctx, 18, self.RULE_relationship)
         self._la = 0 # Token type
         try:
-            self.state = 165
+            self.state = 172
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,23,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,24,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 139
+                self.state = 146
                 self.match(CypherParser.LSB)
-                self.state = 141
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==CypherParser.INTEGER or _la==CypherParser.VAR_STRING_LITERAL:
-                    self.state = 140
-                    self.variable()
-
-
-                self.state = 143
-                self.match(CypherParser.COL)
-                self.state = 144
-                self.relationshipLabel()
                 self.state = 148
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==CypherParser.OR:
-                    self.state = 145
-                    self.match(CypherParser.OR)
-                    self.state = 146
-                    self.match(CypherParser.COL)
+                if _la==CypherParser.INTEGER or _la==CypherParser.STRING_LITERAL:
                     self.state = 147
-                    self.relationshipLabel()
+                    self.variable()
 
 
                 self.state = 150
+                self.match(CypherParser.COL)
+                self.state = 151
+                self.relationshipLabel()
+                self.state = 155
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==CypherParser.OR:
+                    self.state = 152
+                    self.match(CypherParser.OR)
+                    self.state = 153
+                    self.match(CypherParser.COL)
+                    self.state = 154
+                    self.relationshipLabel()
+
+
+                self.state = 157
                 self.match(CypherParser.RSB)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 152
+                self.state = 159
                 self.match(CypherParser.LSB)
-                self.state = 153
+                self.state = 160
                 self.variable()
-                self.state = 161
+                self.state = 168
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==CypherParser.COL:
-                    self.state = 154
+                    self.state = 161
                     self.match(CypherParser.COL)
-                    self.state = 155
+                    self.state = 162
                     self.relationshipLabel()
-                    self.state = 159
+                    self.state = 166
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if _la==CypherParser.OR:
-                        self.state = 156
+                        self.state = 163
                         self.match(CypherParser.OR)
-                        self.state = 157
+                        self.state = 164
                         self.match(CypherParser.COL)
-                        self.state = 158
+                        self.state = 165
                         self.relationshipLabel()
 
 
 
 
-                self.state = 163
+                self.state = 170
                 self.match(CypherParser.RSB)
                 pass
 
@@ -1029,10 +1090,10 @@ class CypherParser ( Parser ):
     def relationshipLabel(self):
 
         localctx = CypherParser.RelationshipLabelContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_relationshipLabel)
+        self.enterRule(localctx, 20, self.RULE_relationshipLabel)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 167
+            self.state = 174
             self.varString()
         except RecognitionException as re:
             localctx.exception = re
@@ -1053,12 +1114,6 @@ class CypherParser ( Parser ):
         def symbolOP(self):
             return self.getTypedRuleContext(CypherParser.SymbolOPContext,0)
 
-
-        def SEP(self, i:int=None):
-            if i is None:
-                return self.getTokens(CypherParser.SEP)
-            else:
-                return self.getToken(CypherParser.SEP, i)
 
         def value(self):
             return self.getTypedRuleContext(CypherParser.ValueContext,0)
@@ -1089,60 +1144,27 @@ class CypherParser ( Parser ):
     def constraint(self):
 
         localctx = CypherParser.ConstraintContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_constraint)
+        self.enterRule(localctx, 22, self.RULE_constraint)
         try:
-            self.state = 185
+            self.enterOuterAlt(localctx, 1)
+            self.state = 178
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,26,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
             if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 171
-                self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,24,self._ctx)
-                if la_ == 1:
-                    self.state = 169
-                    self.variable()
-                    pass
-
-                elif la_ == 2:
-                    self.state = 170
-                    self.variableAttribute()
-                    pass
-
-
-                self.state = 173
-                self.symbolOP()
-                self.state = 174
-                self.match(CypherParser.SEP)
-                self.state = 175
-                self.value()
                 self.state = 176
-                self.match(CypherParser.SEP)
+                self.variable()
                 pass
 
             elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 180
-                self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
-                if la_ == 1:
-                    self.state = 178
-                    self.variable()
-                    pass
-
-                elif la_ == 2:
-                    self.state = 179
-                    self.variableAttribute()
-                    pass
-
-
-                self.state = 182
-                self.symbolOP()
-                self.state = 183
-                self.value()
+                self.state = 177
+                self.variableAttribute()
                 pass
 
 
+            self.state = 180
+            self.symbolOP()
+            self.state = 181
+            self.value()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1194,11 +1216,11 @@ class CypherParser ( Parser ):
     def symbolOP(self):
 
         localctx = CypherParser.SymbolOPContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_symbolOP)
+        self.enterRule(localctx, 24, self.RULE_symbolOP)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 187
+            self.state = 183
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << CypherParser.EQ) | (1 << CypherParser.NEQ) | (1 << CypherParser.GTE) | (1 << CypherParser.GT) | (1 << CypherParser.LTE) | (1 << CypherParser.LT))) != 0)):
                 self._errHandler.recoverInline(self)
@@ -1242,10 +1264,10 @@ class CypherParser ( Parser ):
     def variable(self):
 
         localctx = CypherParser.VariableContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 24, self.RULE_variable)
+        self.enterRule(localctx, 26, self.RULE_variable)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 189
+            self.state = 185
             self.varString()
         except RecognitionException as re:
             localctx.exception = re
@@ -1290,14 +1312,14 @@ class CypherParser ( Parser ):
     def variableAttribute(self):
 
         localctx = CypherParser.VariableAttributeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_variableAttribute)
+        self.enterRule(localctx, 28, self.RULE_variableAttribute)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 191
+            self.state = 187
             self.variable()
-            self.state = 192
+            self.state = 188
             self.match(CypherParser.DOT)
-            self.state = 193
+            self.state = 189
             self.variable()
         except RecognitionException as re:
             localctx.exception = re
@@ -1343,14 +1365,14 @@ class CypherParser ( Parser ):
     def nodeProperty(self):
 
         localctx = CypherParser.NodePropertyContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_nodeProperty)
+        self.enterRule(localctx, 30, self.RULE_nodeProperty)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 195
+            self.state = 191
             self.variable()
-            self.state = 196
+            self.state = 192
             self.match(CypherParser.COL)
-            self.state = 197
+            self.state = 193
             self.value()
         except RecognitionException as re:
             localctx.exception = re
@@ -1372,6 +1394,12 @@ class CypherParser ( Parser ):
             return self.getTypedRuleContext(CypherParser.StringContext,0)
 
 
+        def SEP(self, i:int=None):
+            if i is None:
+                return self.getTokens(CypherParser.SEP)
+            else:
+                return self.getToken(CypherParser.SEP, i)
+
         def getRuleIndex(self):
             return CypherParser.RULE_value
 
@@ -1389,11 +1417,28 @@ class CypherParser ( Parser ):
     def value(self):
 
         localctx = CypherParser.ValueContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 30, self.RULE_value)
+        self.enterRule(localctx, 32, self.RULE_value)
         try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 199
-            self.string()
+            self.state = 200
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [CypherParser.DOT, CypherParser.INTEGER, CypherParser.STRING_SYMBOL, CypherParser.STRING_LITERAL]:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 195
+                self.string()
+                pass
+            elif token in [CypherParser.SEP]:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 196
+                self.match(CypherParser.SEP)
+                self.state = 197
+                self.string()
+                self.state = 198
+                self.match(CypherParser.SEP)
+                pass
+            else:
+                raise NoViableAltException(self)
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1410,11 +1455,11 @@ class CypherParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def VAR_STRING_LITERAL(self, i:int=None):
+        def STRING_LITERAL(self, i:int=None):
             if i is None:
-                return self.getTokens(CypherParser.VAR_STRING_LITERAL)
+                return self.getTokens(CypherParser.STRING_LITERAL)
             else:
-                return self.getToken(CypherParser.VAR_STRING_LITERAL, i)
+                return self.getToken(CypherParser.STRING_LITERAL, i)
 
         def INTEGER(self, i:int=None):
             if i is None:
@@ -1439,25 +1484,25 @@ class CypherParser ( Parser ):
     def varString(self):
 
         localctx = CypherParser.VarStringContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 32, self.RULE_varString)
+        self.enterRule(localctx, 34, self.RULE_varString)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 202 
+            self.state = 203 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 201
+                self.state = 202
                 _la = self._input.LA(1)
-                if not(_la==CypherParser.INTEGER or _la==CypherParser.VAR_STRING_LITERAL):
+                if not(_la==CypherParser.INTEGER or _la==CypherParser.STRING_LITERAL):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 204 
+                self.state = 205 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==CypherParser.INTEGER or _la==CypherParser.VAR_STRING_LITERAL):
+                if not (_la==CypherParser.INTEGER or _la==CypherParser.STRING_LITERAL):
                     break
 
         except RecognitionException as re:
@@ -1476,17 +1521,17 @@ class CypherParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def VAR_STRING_LITERAL(self, i:int=None):
-            if i is None:
-                return self.getTokens(CypherParser.VAR_STRING_LITERAL)
-            else:
-                return self.getToken(CypherParser.VAR_STRING_LITERAL, i)
-
         def STRING_LITERAL(self, i:int=None):
             if i is None:
                 return self.getTokens(CypherParser.STRING_LITERAL)
             else:
                 return self.getToken(CypherParser.STRING_LITERAL, i)
+
+        def STRING_SYMBOL(self, i:int=None):
+            if i is None:
+                return self.getTokens(CypherParser.STRING_SYMBOL)
+            else:
+                return self.getToken(CypherParser.STRING_SYMBOL, i)
 
         def INTEGER(self, i:int=None):
             if i is None:
@@ -1517,25 +1562,25 @@ class CypherParser ( Parser ):
     def string(self):
 
         localctx = CypherParser.StringContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_string)
+        self.enterRule(localctx, 36, self.RULE_string)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 207 
+            self.state = 208 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 206
+                self.state = 207
                 _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << CypherParser.DOT) | (1 << CypherParser.INTEGER) | (1 << CypherParser.VAR_STRING_LITERAL) | (1 << CypherParser.STRING_LITERAL))) != 0)):
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << CypherParser.DOT) | (1 << CypherParser.INTEGER) | (1 << CypherParser.STRING_SYMBOL) | (1 << CypherParser.STRING_LITERAL))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 209 
+                self.state = 210 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << CypherParser.DOT) | (1 << CypherParser.INTEGER) | (1 << CypherParser.VAR_STRING_LITERAL) | (1 << CypherParser.STRING_LITERAL))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << CypherParser.DOT) | (1 << CypherParser.INTEGER) | (1 << CypherParser.STRING_SYMBOL) | (1 << CypherParser.STRING_LITERAL))) != 0)):
                     break
 
         except RecognitionException as re:

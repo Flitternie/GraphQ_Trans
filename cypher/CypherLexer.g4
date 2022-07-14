@@ -37,7 +37,7 @@ Distinct
     ;
 
 SEP
-    : '"' | '\''
+    : '\'' | '"'
     ;
 
 LP
@@ -112,8 +112,8 @@ INTEGER
     : DIGIT+
     ;
 
-VAR_STRING_LITERAL
-    : VAR_CHAR +
+STRING_SYMBOL
+    : SYMBOL+
     ;
 
 STRING_LITERAL
@@ -135,15 +135,13 @@ DIGIT
     ;
 
 fragment
-VAR_CHAR
-    : '_'
-    | [\p{Uppercase_Letter}\p{Lowercase_Letter}]
-    | [\p{Math_Symbol}\p{Currency_Symbol}]
+SYMBOL
+    : '!' | '/' | '?' | '%' | '*' | '¡' | ','
     ;
 
 fragment
 CHAR
-    : '!' | '/' | '\'' | '?' | '%' | '*' | '¡' | ',' | '_'
+    : '_'
     | [\p{Uppercase_Letter}\p{Lowercase_Letter}]
     | [\p{Math_Symbol}\p{Currency_Symbol}]
     ;

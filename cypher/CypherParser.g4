@@ -3,11 +3,15 @@ parser grammar CypherParser;
 options { tokenVocab = CypherLexer; }
 
 root
-    : matchClause+ Return Distinct? (variable | variableAttribute) orderByClause? limitClause? EOF
+    : matchClause+ returnClause orderByClause? limitClause? EOF
     ;
 
 matchClause
     : Match path ( Where constraint )?
+    ;
+
+returnClause
+    : Return Distinct? ( variable | variableAttribute ) ( As variable )?
     ;
 
 orderByClause
@@ -32,7 +36,7 @@ nodeLabel
     ;
 
 nodePropertyConstraint
-    : ( LB nodeProperty ( COMMA nodeProperty )* RB )
+    : LB nodeProperty ( COMMA nodeProperty )* RB
     ;
 
 relationship
@@ -45,8 +49,7 @@ relationshipLabel
     ;
 
 constraint
-    : (variable | variableAttribute) symbolOP SEP value SEP
-    | (variable | variableAttribute) symbolOP value
+    : ( variable | variableAttribute ) symbolOP value
     ;
 
 symbolOP
@@ -72,12 +75,13 @@ nodeProperty
 
 value
     : string
+    | SEP string SEP
     ;
 
 varString
-    : ( VAR_STRING_LITERAL | INTEGER )+
+    : ( STRING_LITERAL | INTEGER )+
     ;
 
 string
-    : ( VAR_STRING_LITERAL | STRING_LITERAL | INTEGER | DOT )+
+    : ( STRING_LITERAL | STRING_SYMBOL | INTEGER | DOT )+
     ;

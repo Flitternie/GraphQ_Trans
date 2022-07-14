@@ -26,6 +26,15 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CypherParser#returnClause.
+    def enterReturnClause(self, ctx:CypherParser.ReturnClauseContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#returnClause.
+    def exitReturnClause(self, ctx:CypherParser.ReturnClauseContext):
+        pass
+
+
     # Enter a parse tree produced by CypherParser#orderByClause.
     def enterOrderByClause(self, ctx:CypherParser.OrderByClauseContext):
         pass

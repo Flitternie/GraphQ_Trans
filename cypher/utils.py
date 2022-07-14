@@ -32,16 +32,19 @@ class EntitySet:
             raise Exception("this entitySet has already been added!")
 
     def add_related_attr(self, attr, symOP, val):
-        if attr not in self.related_attr.keys():
-            self.related_attr[attr] = []
-        self.related_attr[attr].append([attr, symOP, val])
+        if attr == "name":
+            self.set_label(val)
+        else:
+            if attr not in self.related_attr.keys():
+                self.related_attr[attr] = []
+            self.related_attr[attr].append([attr, symOP, val])
 
     def get_ir(self, forbidden=[]):
         atom = self.__atom
         filtersByAttr = sorted(list(self.related_attr.values()), key=lambda x: len(x), reverse=True)
         for filt in filtersByAttr:
             while len(filt) != 0:
-                atom = "<ES> " + atom + " whose {} {} {} </ES>".format(*filt.pop())
+                atom = "<ES> " + atom + " whose <A> {} </A> {} <V> {} </V> </ES>".format(*filt.pop())
 
         ir = ""
 
@@ -49,17 +52,18 @@ class EntitySet:
             if key not in forbidden:
                 if self.related_es[key]["direction"] in ["forward", "backward"]:
                     if ir == "":
-                        ir = "<ES> " + atom + " that {} {} to {} </ES>".format(
+                        ir = "<ES> " + atom + " that <R> {} </R> {} to {} </ES>".format(
                             self.related_es[key]["predicate"],
                             self.related_es[key]["direction"],
                             self.related_es[key]["entitySet"].get_ir([self])
                         )
                     else:
-                        ir = "<ES> " + ir + " and <ES> " + atom + " that {} {} to {} </ES> </ES>".format(
+                        ir = "<ES> " + ir + " and <ES> " + atom + " that <R> {} </R> {} to {} </ES> </ES>".format(
                             self.related_es[key]["predicate"],
                             self.related_es[key]["direction"],
                             self.related_es[key]["entitySet"].get_ir([self])
                         )
+                    break
                 else:
                     raise Exception("Current GraphQ IR does not support undirected edge!")
 
