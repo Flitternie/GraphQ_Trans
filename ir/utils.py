@@ -22,6 +22,7 @@ symbolOP_vocab = {
     "min": "least" 
 }
 
+
 def scoping(type, value):
     if type not in data_type.keys():
         raise TypeError("{} is not a valid type.".format(type))

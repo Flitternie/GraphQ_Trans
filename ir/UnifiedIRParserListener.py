@@ -511,6 +511,7 @@ class UnifiedIRParserListener(ParseTreeListener):
     def exitNumber(self, ctx:UnifiedIRParser.NumberContext):
         pass
 
+
     # Enter a parse tree produced by UnifiedIRParser#string.
     def enterString(self, ctx:UnifiedIRParser.StringContext):
         pass
