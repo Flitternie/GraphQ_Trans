@@ -16,12 +16,24 @@ Return
     : 'RETURN'
     ;
 
+Union
+    : 'UNION'
+    ;
+
 With
     : 'WITH'
     ;
 
 As
     : 'AS'
+    ;
+
+And
+    : 'AND'
+    ;
+
+Or
+    : 'OR'
     ;
 
 OrderBy
@@ -34,6 +46,18 @@ Limit
 
 Distinct
     : 'DISTINCT'
+    ;
+
+CountFunction
+    : 'count'
+    ;
+
+IsEmptyFunction
+    : 'isEmpty'
+    ;
+
+Desc
+    : 'DESC'
     ;
 
 SEP

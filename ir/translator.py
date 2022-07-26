@@ -19,9 +19,9 @@ def post_process_ir(ir):
 
 class Translator():
     def __init__(self, ungrounded=False):
-        # self.sparql_emitter = SparqlEmitter()
-        # self.kopl_emitter = KoplEmitter()
-        # self.overnight_emitter = OvernightEmitter(ungrounded)
+        self.sparql_emitter = SparqlEmitter()
+        self.kopl_emitter = KoplEmitter()
+        self.overnight_emitter = OvernightEmitter(ungrounded)
         self.cypher_emitter = CypherEmitter()
         self.walker = ParseTreeWalker() 
     
@@ -35,6 +35,11 @@ class Translator():
         token_stream = CommonTokenStream(lexer)
         parser = UnifiedIRParser(token_stream)
         return parser.root()
+        # return None
+
+    def verify(self, ir):
+        input_stream = InputStream(ir)
+
 
     def to_sparql(self, ir):
         ir = post_process_ir(ir)

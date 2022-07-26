@@ -3,19 +3,33 @@ parser grammar CypherParser;
 options { tokenVocab = CypherLexer; }
 
 root
-    : matchClause+ returnClause orderByClause? limitClause? EOF
+    : queryBlock (Union queryBlock)* limitClause? EOF
+    ;
+
+queryBlock
+    : matchClause+ returnClause orderByClause?
     ;
 
 matchClause
     : Match path ( Where constraint )?
+    | Match path ( Where LP constraint (logicOP constraint)+ RP )
     ;
 
 returnClause
-    : Return Distinct? ( variable | variableAttribute ) ( As variable )?
+    : Return Distinct? ( specialQuery | variableAttribute | variable ) ( As alias )?
+    ;
+
+specialQuery
+    : queryFunction LP ( variableAttribute | variable ) RP
+    ;
+
+queryFunction
+    : CountFunction
+    | IsEmptyFunction
     ;
 
 orderByClause
-    : OrderBy (variable | variableAttribute)
+    : OrderBy (variableAttribute | variable) Desc?
     ;
 
 limitClause
@@ -27,21 +41,21 @@ path
     ;
 
 node
-    : LP variable? ( COL nodeLabel )+ nodePropertyConstraint? RP
-    | LP variable ( COL nodeLabel )* nodePropertyConstraint? RP
+    : LP variable? ( COL nodeLabel )+ propertyConstraint? RP
+    | LP variable ( COL nodeLabel )* propertyConstraint? RP
     ;
 
 nodeLabel
     : varString
     ;
 
-nodePropertyConstraint
-    : LB nodeProperty ( COMMA nodeProperty )* RB
+propertyConstraint
+    : LB nodeOrRelationshipProperty ( COMMA nodeOrRelationshipProperty )* RB
     ;
 
 relationship
-    : LSB variable? COL relationshipLabel ( OR COL relationshipLabel )? RSB
-    | LSB variable ( COL relationshipLabel ( OR COL relationshipLabel )? )? RSB
+    : LSB variable? COL relationshipLabel ( OR COL relationshipLabel )? propertyConstraint? RSB
+    | LSB variable ( COL relationshipLabel ( OR COL relationshipLabel )? propertyConstraint? )? RSB
     ;
 
 relationshipLabel
@@ -49,9 +63,13 @@ relationshipLabel
     ;
 
 constraint
-    : ( variable | variableAttribute ) symbolOP value
+    : ( variableAttribute | variable ) symbolOP value
     ;
 
+alias
+    : variable
+    ;
+    
 symbolOP
     : EQ
     | NEQ
@@ -61,6 +79,10 @@ symbolOP
     | LT
     ;
 
+logicOP
+    : And
+    | Or
+    ;
 variable
     : varString
     ;
@@ -69,7 +91,7 @@ variableAttribute
     : variable DOT variable
     ;
 
-nodeProperty
+nodeOrRelationshipProperty
     : variable COL value
     ;
 

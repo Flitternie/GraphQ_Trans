@@ -17,6 +17,15 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CypherParser#queryBlock.
+    def enterQueryBlock(self, ctx:CypherParser.QueryBlockContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#queryBlock.
+    def exitQueryBlock(self, ctx:CypherParser.QueryBlockContext):
+        pass
+
+
     # Enter a parse tree produced by CypherParser#matchClause.
     def enterMatchClause(self, ctx:CypherParser.MatchClauseContext):
         pass
@@ -32,6 +41,24 @@ class CypherParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by CypherParser#returnClause.
     def exitReturnClause(self, ctx:CypherParser.ReturnClauseContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#specialQuery.
+    def enterSpecialQuery(self, ctx:CypherParser.SpecialQueryContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#specialQuery.
+    def exitSpecialQuery(self, ctx:CypherParser.SpecialQueryContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#queryFunction.
+    def enterQueryFunction(self, ctx:CypherParser.QueryFunctionContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#queryFunction.
+    def exitQueryFunction(self, ctx:CypherParser.QueryFunctionContext):
         pass
 
 
@@ -80,12 +107,12 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CypherParser#nodePropertyConstraint.
-    def enterNodePropertyConstraint(self, ctx:CypherParser.NodePropertyConstraintContext):
+    # Enter a parse tree produced by CypherParser#propertyConstraint.
+    def enterPropertyConstraint(self, ctx:CypherParser.PropertyConstraintContext):
         pass
 
-    # Exit a parse tree produced by CypherParser#nodePropertyConstraint.
-    def exitNodePropertyConstraint(self, ctx:CypherParser.NodePropertyConstraintContext):
+    # Exit a parse tree produced by CypherParser#propertyConstraint.
+    def exitPropertyConstraint(self, ctx:CypherParser.PropertyConstraintContext):
         pass
 
 
@@ -116,12 +143,30 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CypherParser#alias.
+    def enterAlias(self, ctx:CypherParser.AliasContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#alias.
+    def exitAlias(self, ctx:CypherParser.AliasContext):
+        pass
+
+
     # Enter a parse tree produced by CypherParser#symbolOP.
     def enterSymbolOP(self, ctx:CypherParser.SymbolOPContext):
         pass
 
     # Exit a parse tree produced by CypherParser#symbolOP.
     def exitSymbolOP(self, ctx:CypherParser.SymbolOPContext):
+        pass
+
+
+    # Enter a parse tree produced by CypherParser#logicOP.
+    def enterLogicOP(self, ctx:CypherParser.LogicOPContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#logicOP.
+    def exitLogicOP(self, ctx:CypherParser.LogicOPContext):
         pass
 
 
@@ -143,12 +188,12 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CypherParser#nodeProperty.
-    def enterNodeProperty(self, ctx:CypherParser.NodePropertyContext):
+    # Enter a parse tree produced by CypherParser#nodeOrRelationshipProperty.
+    def enterNodeOrRelationshipProperty(self, ctx:CypherParser.NodeOrRelationshipPropertyContext):
         pass
 
-    # Exit a parse tree produced by CypherParser#nodeProperty.
-    def exitNodeProperty(self, ctx:CypherParser.NodePropertyContext):
+    # Exit a parse tree produced by CypherParser#nodeOrRelationshipProperty.
+    def exitNodeOrRelationshipProperty(self, ctx:CypherParser.NodeOrRelationshipPropertyContext):
         pass
 
 
