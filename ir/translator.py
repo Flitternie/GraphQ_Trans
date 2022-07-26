@@ -9,12 +9,14 @@ from .OvernightEmitter import OvernightEmitter, overnight_domains
 from .CypherEmitter import CypherEmitter
 from .KoplEmitter import KoplEmitter
 
+from ..utils import ErrorHandler
+
 
 def post_process_ir(ir):
     for token in ["<E>","</E>","<ES>","</ES>","<A>","</A>","<R>","</R>","<V>","</V>","<Q>","</Q>","<C>","</C>"]:
         ir = ir.replace(" {}".format(token), token)
         ir = ir.replace("{} ".format(token), token)
-    return ir
+    return ir        
 
 
 class Translator():
@@ -24,6 +26,7 @@ class Translator():
         self.overnight_emitter = OvernightEmitter(ungrounded)
         self.cypher_emitter = CypherEmitter()
         self.walker = ParseTreeWalker() 
+        self.error_listener = ErrorHandler()
     
     def set_domain(self, domain_idx: int):
         assert domain_idx < len(overnight_domains)
@@ -31,15 +34,15 @@ class Translator():
     
     def parse(self, ir):
         input_stream = InputStream(ir)
-        lexer = UnifiedIRLexer(input_stream)       
+        lexer = UnifiedIRLexer(input_stream)
+        lexer.removeErrorListeners()
+        lexer.addErrorListener(self.error_listener)    
+           
         token_stream = CommonTokenStream(lexer)
         parser = UnifiedIRParser(token_stream)
+        parser.removeErrorListeners()
+        parser.addErrorListener(self.error_listener)
         return parser.root()
-        # return None
-
-    def verify(self, ir):
-        input_stream = InputStream(ir)
-
 
     def to_sparql(self, ir):
         ir = post_process_ir(ir)

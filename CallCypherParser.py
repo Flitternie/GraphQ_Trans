@@ -9,9 +9,9 @@ from string import Template
 from antlr4 import *
 from antlr4.InputStream import InputStream
 
-from .cypher.CypherLexer import CypherLexer
-from .cypher.CypherParser import CypherParser
-from .cypher.CypherListener import CypherListener
+from .cypher_test.CypherLexer import CypherLexer
+from .cypher_test.CypherParser import CypherParser
+from .cypher_test.CypherListener import CypherListener
 
 class Parser():
     def __init__(self):

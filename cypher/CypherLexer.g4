@@ -1,8 +1,4 @@
 lexer grammar CypherLexer;
-
-Call
-    : 'CALL'
-    ;
     
 Match
     : 'MATCH'
