@@ -1,17 +1,8 @@
-import sys
-import json
-from itertools import chain
-from tqdm import tqdm
-
-from collections import OrderedDict
-from string import Template
-
 from antlr4 import *
 from antlr4.InputStream import InputStream
 
-from .cypher_test.CypherLexer import CypherLexer
-from .cypher_test.CypherParser import CypherParser
-from .cypher_test.CypherListener import CypherListener
+from .cypher.CypherLexer import CypherLexer
+from .cypher.CypherParser import CypherParser
 
 class Parser():
     def __init__(self):
