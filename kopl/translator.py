@@ -36,8 +36,7 @@ class Translator():
         return parser.root()
 
     def to_ir(self, logical_form):
-        logical_form = get_program_seq(logical_form)
-        tree = self.parse(logical_form)
+        tree = self.parse(get_program_seq(logical_form))
         self.walker.walk(self.emitter, tree)
         ir = self.emitter.get_ir(tree)
         return ir

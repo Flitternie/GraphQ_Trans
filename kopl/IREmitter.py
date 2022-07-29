@@ -567,7 +567,13 @@ class IREmitter(KoplListener):
     
     def exitDirection(self, ctx: KoplParser.DirectionContext):
         if not isinstance(ctx.parentCtx, KoplParser.StringContext):
-            ctx.parentCtx.slots["direction"] = str(ctx.getText())
+            direction = str(ctx.getText())
+            if direction == "forward":
+                ctx.parentCtx.slots["direction"] = "backward"
+            elif direction == "backward":
+                ctx.parentCtx.slots["direction"] = "forward"
+            else:
+                raise ValueError("Direction must be either 'forward' or 'backward'") 
         return super().exitDirection(ctx)
 
     def enterString(self, ctx: KoplParser.StringContext):

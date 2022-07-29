@@ -8,16 +8,7 @@ class ErrorHandler(ErrorListener):
         self.file_name = file_name
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        raise SyntaxError(f"{self.file_name} {line}:{column} {msg}")
-        
-    def reportAmbiguity(self, recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs):
-        raise SyntaxError(f"{self.file_name} {startIndex}-{stopIndex} reportAmbiguity {ambigAlts}")
-
-    def reportAttemptingFullContext(self, recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs):
-        raise SyntaxError(f"{self.file_name} {startIndex}-{stopIndex} conflictingAlts {conflictingAlts}")
-
-    def reportContextSensitivity(self, recognizer, dfa, startIndex, stopIndex, prediction, configs):
-        raise SyntaxError(f"{self.file_name} {startIndex}-{stopIndex} ContextSensitivity {prediction}")
+        print(f"{self.file_name} {line}:{column} {msg}")
 
 class strictDict(dict):
     def __setitem__(self, key, value):

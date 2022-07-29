@@ -28,7 +28,7 @@ class Translator():
         parser = SparqlParser(token_stream)
         parser.removeErrorListeners()
         parser.addErrorListener(self.error_listener)
-        return parser.root()
+        return parser.query()
 
     def to_ir(self, logical_form):
         tree = self.parse(logical_form)

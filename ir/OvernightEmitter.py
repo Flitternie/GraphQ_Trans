@@ -290,13 +290,17 @@ class OvernightEmitter(UnifiedIRParserListener):
     def exitEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
         if ctx.slots["entitySet"][0].is_pop:
             ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign("( var s )")
-
         if ctx.slots["op"] == "" and ctx.slots["value"] == "":
             ctx.slots["gate"] = "=" if ctx.slots["gate"] else "! ="
             if len(ctx.slots["entitySet"]) == 1:
+                if ctx.slots["concept"]:
+                    subquery = entitySet("( getProperty ( singleton {} ) ( string ! type ) )".format(ctx.slots["concept"]))
+                    ctx.slots["entitySet"].insert(0, subquery)
                 # LB filterFunc constraintNP predicate RB
                 subquery = "( {} {} {} )".format(self.func["filter"], ctx.slots["entitySet"][0], ctx.slots["predicate"])
             else:
+                if ctx.slots["concept"]:
+                    ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign("( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"][0], self.func["reverse"], ctx.slots["concept"]))
                 # LB filterFunc constraintNP predicate op np RB
                 # LB filterFunc constraintNP reversePredicate op np RB
                 if ctx.slots["entitySet"][1].is_pop:
@@ -305,6 +309,9 @@ class OvernightEmitter(UnifiedIRParserListener):
                     subquery = "( {} {} {} ( string {} ) {} )".format(self.func["filter"], ctx.slots["entitySet"][0], ctx.slots["predicate"], ctx.slots["gate"], ctx.slots["entitySet"][1])
         
         elif "min" in ctx.slots["op"] or "max" in ctx.slots["op"] and ctx.slots["value"] == "":
+            if ctx.slots["concept"]:
+                    ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign("( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"][0], self.func["reverse"], ctx.slots["concept"]))
+            
             if len(ctx.slots["entitySet"]) == 1:
                 # LB countSuperlative constraintNP op relNP RB
                 subquery = "( {} {} {} {} )".format(self.func["countSuperlative"], ctx.slots["entitySet"][0], ctx.slots["op"], ctx.slots["predicate"])
@@ -317,6 +324,9 @@ class OvernightEmitter(UnifiedIRParserListener):
                
         elif ctx.slots["value"] != "":
             ctx.slots["op"] = "( string = )" if ctx.slots["op"] == "" else ctx.slots["op"]
+            if ctx.slots["concept"]:
+                    ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign("( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"][0], self.func["reverse"], ctx.slots["concept"]))
+                    
             if len(ctx.slots["entitySet"]) == 1:
                 # LB countComparative constraintNP relNP op value RB
                 subquery = "( {} {} {} {} {} )".format(self.func["countComparative"], ctx.slots["entitySet"][0], ctx.slots["predicate"], ctx.slots["op"], ctx.slots["value"])
