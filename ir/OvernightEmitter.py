@@ -243,7 +243,7 @@ class OvernightEmitter(UnifiedIRParserListener):
         elif ctx.slots["concept"] == "":
             subquery = "( {} {} {} {} {} )".format(self.func["filter"], ctx.slots["entitySet"], ctx.slots["attribute"], ctx.slots["op"], ctx.slots["value"])
         else:
-            subquery = "( {} ( getProperty ( singleton {} ) ( string ! type ) ) {} {} {} )".format(self.func["filter"], ctx.slots["concept"], ctx.slots["attribute"], ctx.slots["op"], ctx.slots["value"])
+            subquery = "( {} ( {} ( {} {} ) ( string ! type ) ) {} {} {} )".format(self.func["filter"], self.func["getProperty"], self.func["singleton"], ctx.slots["concept"], ctx.slots["attribute"], ctx.slots["op"], ctx.slots["value"])
         insert(ctx.parentCtx, subquery)
         return super().exitEntitySetByAttribute(ctx)
     
@@ -294,7 +294,7 @@ class OvernightEmitter(UnifiedIRParserListener):
             ctx.slots["gate"] = "=" if ctx.slots["gate"] else "! ="
             if len(ctx.slots["entitySet"]) == 1:
                 if ctx.slots["concept"]:
-                    subquery = entitySet("( getProperty ( singleton {} ) ( string ! type ) )".format(ctx.slots["concept"]))
+                    subquery = entitySet("( {} ( {} {} ) ( string ! type ) )".format(self.func["getProperty"], self.func["singleton"], ctx.slots["concept"]))
                     ctx.slots["entitySet"].insert(0, subquery)
                 # LB filterFunc constraintNP predicate RB
                 subquery = "( {} {} {} )".format(self.func["filter"], ctx.slots["entitySet"][0], ctx.slots["predicate"])

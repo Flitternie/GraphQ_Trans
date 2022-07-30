@@ -1,4 +1,4 @@
-# Generated from ./parser/overnight/Overnight.g4 by ANTLR 4.9.2
+# Generated from ./graphq_ir/overnight/Overnight.g4 by ANTLR 4.9.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .OvernightParser import OvernightParser
@@ -194,6 +194,15 @@ class OvernightListener(ParseTreeListener):
 
     # Exit a parse tree produced by OvernightParser#dateNP.
     def exitDateNP(self, ctx:OvernightParser.DateNPContext):
+        pass
+
+
+    # Enter a parse tree produced by OvernightParser#yearNP.
+    def enterYearNP(self, ctx:OvernightParser.YearNPContext):
+        pass
+
+    # Exit a parse tree produced by OvernightParser#yearNP.
+    def exitYearNP(self, ctx:OvernightParser.YearNPContext):
         pass
 
 
@@ -563,6 +572,15 @@ class OvernightListener(ParseTreeListener):
 
     # Exit a parse tree produced by OvernightParser#date.
     def exitDate(self, ctx:OvernightParser.DateContext):
+        pass
+
+
+    # Enter a parse tree produced by OvernightParser#year.
+    def enterYear(self, ctx:OvernightParser.YearContext):
+        pass
+
+    # Exit a parse tree produced by OvernightParser#year.
+    def exitYear(self, ctx:OvernightParser.YearContext):
         pass
 
 
