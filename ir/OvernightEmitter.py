@@ -110,7 +110,7 @@ class OvernightEmitter(UnifiedIRParserListener):
     def get_full_name_and_type(self, abbr, domain):
         results = {}
         if self.ungrounded:
-            return {"TypeNP": "( string {} )".format(abbr)}
+            return {"TypeNP": "( string {} )".format(abbr), "RelNP": "( string {} )".format(abbr)}
         if domain:
             for datatype in self.grammar[domain].keys():
                 # for name in self.grammar[domain][datatype].values():
