@@ -445,12 +445,12 @@ def find_min_unsused(clauses1: [str], clauses2: [str]):
 
 
 def valid_var(x: str):
-    return x.replace(" ", "_")
+    return x.strip().replace(" ", "_")
 
 
 def valid_str(x: str):
     # x = re.sub(r"[\{\}\\]", "", x)
-    return '"{}"'.format(x)
+    return '"{}"'.format(x.strip())
 
 
 # For Cypher -> IR

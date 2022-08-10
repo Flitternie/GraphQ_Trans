@@ -626,6 +626,7 @@ class IREmitter(CypherParserListener):
 
     # Exit a parse tree produced by CypherParser#string.
     def exitString(self, ctx: CypherParser.StringContext):
+        ctx.slots["string"] = (" ".join([c.getText() for c in list(ctx.getChildren())])).strip()
         ctx.parentCtx.slots['string'] = ctx.slots["string"]
         return super().exitString(ctx)
 
