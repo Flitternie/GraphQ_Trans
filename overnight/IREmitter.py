@@ -296,6 +296,20 @@ class IREmitter(OvernightListener):
             ctx.parentCtx.slots["valueType"] = "date"
         return super().exitDateNP(ctx)
     
+    def enterYearNP(self, ctx: OvernightParser.YearNPContext):
+        ctx.slots = strictDict({"year": ""})
+        return super().enterYearNP(ctx)
+    
+    def exitYearNP(self, ctx: OvernightParser.YearNPContext):
+        if isinstance(ctx.parentCtx, OvernightParser.ConcatValueNPContext):
+            assert ctx.parentCtx.slots["valueType"] == "" or ctx.parentCtx.slots["valueType"] == "year"
+            ctx.parentCtx.slots["value"].append(ctx.slots["year"])
+            ctx.parentCtx.slots["valueType"] = "year"
+        else:
+            ctx.parentCtx.slots["value"] = ctx.slots["year"]
+            ctx.parentCtx.slots["valueType"] = "year"
+        return super().exitYearNP(ctx)
+    
     def enterTimeNP(self, ctx: OvernightParser.TimeNPContext):
         ctx.slots = strictDict({"time": ""})
         return super().enterTimeNP(ctx)
@@ -446,6 +460,10 @@ class IREmitter(OvernightListener):
     
     def exitDate(self, ctx: OvernightParser.DateContext):
         ctx.parentCtx.slots["date"] = str(ctx.getText()).replace("date ", "")
+        return super().exitDate(ctx)
+    
+    def exitYear(self, ctx: OvernightParser.YearContext):
+        ctx.parentCtx.slots["year"] = str(ctx.getText()).replace("year ", "")
         return super().exitDate(ctx)
     
     def exitTime(self, ctx: OvernightParser.TimeContext):

@@ -3,15 +3,33 @@ parser grammar CypherParser;
 options { tokenVocab = CypherLexer; }
 
 root
-    : matchClause+ Return Distinct? var orderByClause? limitClause? EOF
+    : queryBlock (Union queryBlock)* limitClause? EOF
+    ;
+
+queryBlock
+    : matchClause+ returnClause orderByClause?
     ;
 
 matchClause
     : Match path ( Where constraint )?
+    | Match path ( Where LP constraint (logicOP constraint)+ RP )
+    ;
+
+returnClause
+    : Return Distinct? ( specialQuery | variableAttribute | variable ) ( As alias )?
+    ;
+
+specialQuery
+    : queryFunction LP ( variableAttribute | variable ) RP
+    ;
+
+queryFunction
+    : CountFunction
+    | IsEmptyFunction
     ;
 
 orderByClause
-    : OrderBy var
+    : OrderBy (variableAttribute | variable) Desc?
     ;
 
 limitClause
@@ -19,33 +37,73 @@ limitClause
     ;
 
 path
-    : node ( (UND relationship? TORIGHT |TOLEFT relationship? UND | UND relationship? UND) node )*
+    : node ( ( ( TOLEFT relationship? UND ) | ( UND relationship? UND ) | ( UND relationship? TORIGHT ) ) node )*
     ;
 
 node
-    : LP string? C string (LB attribute RB)? RP
-    | LP string (C string )? (LB attribute RB)? RP
+    : LP variable? ( COL nodeLabel )+ propertyConstraint? RP
+    | LP variable ( COL nodeLabel )* propertyConstraint? RP
+    ;
+
+nodeLabel
+    : varString
+    ;
+
+propertyConstraint
+    : LB nodeOrRelationshipProperty ( COMMA nodeOrRelationshipProperty )* RB
     ;
 
 relationship
-    : LSB string? C string (OR C string)? RSB
-    | LSB string (C string (OR C string)? )? RSB
+    : LSB variable? COL relationshipLabel ( OR COL relationshipLabel )? propertyConstraint? RSB
+    | LSB variable ( COL relationshipLabel ( OR COL relationshipLabel )? propertyConstraint? )? RSB
+    ;
+
+relationshipLabel
+    : varString
     ;
 
 constraint
-    : attribute EQUAL SEP string SEP
-    | attribute EQUAL string
+    : ( variableAttribute | variable ) symbolOP value
     ;
 
-attribute
-    : var DOT string
+alias
+    : variable
+    ;
+    
+symbolOP
+    : EQ
+    | NEQ
+    | GTE
+    | GT
+    | LTE    
+    | LT
     ;
 
-var
+logicOP
+    : And
+    | Or
+    ;
+variable
+    : varString
+    ;
+
+variableAttribute
+    : variable DOT variable
+    ;
+
+nodeOrRelationshipProperty
+    : variable COL value
+    ;
+
+value
     : string
+    | SEP string SEP
     ;
 
+varString
+    : ( STRING_LITERAL | INTEGER )+
+    ;
 
 string
-    : ( STRING_LITERAL | INTEGER | DOT | UND )+
+    : ( STRING_LITERAL | STRING_SYMBOL | INTEGER | DOT )+
     ;

@@ -6,20 +6,27 @@ from .UnifiedIRParser import UnifiedIRParser
 from .UnifiedIRParserListener import UnifiedIRParserListener
 from .SparqlEmitter import SparqlEmitter
 from .OvernightEmitter import OvernightEmitter, overnight_domains
+from .CypherEmitter import CypherEmitter
 from .KoplEmitter import KoplEmitter
+
+from ..utils import ErrorHandler
+
 
 def post_process_ir(ir):
     for token in ["<E>","</E>","<ES>","</ES>","<A>","</A>","<R>","</R>","<V>","</V>","<Q>","</Q>","<C>","</C>"]:
         ir = ir.replace(" {}".format(token), token)
         ir = ir.replace("{} ".format(token), token)
-    return ir
+    return ir        
+
 
 class Translator():
     def __init__(self, ungrounded=False):
         self.sparql_emitter = SparqlEmitter()
         self.kopl_emitter = KoplEmitter()
         self.overnight_emitter = OvernightEmitter(ungrounded)
+        self.cypher_emitter = CypherEmitter()
         self.walker = ParseTreeWalker() 
+        self.error_listener = ErrorHandler()
     
     def set_domain(self, domain_idx: int):
         assert domain_idx < len(overnight_domains)
@@ -27,9 +34,14 @@ class Translator():
     
     def parse(self, ir):
         input_stream = InputStream(ir)
-        lexer = UnifiedIRLexer(input_stream)       
+        lexer = UnifiedIRLexer(input_stream)
+        lexer.removeErrorListeners()
+        lexer.addErrorListener(self.error_listener)    
+           
         token_stream = CommonTokenStream(lexer)
         parser = UnifiedIRParser(token_stream)
+        parser.removeErrorListeners()
+        parser.addErrorListener(self.error_listener)
         return parser.root()
 
     def to_sparql(self, ir):
@@ -38,7 +50,7 @@ class Translator():
         self.walker.walk(self.sparql_emitter, tree)
         logical_form = self.sparql_emitter.get_logical_form(tree)
         return logical_form
-    
+
     def to_kopl(self, ir):
         ir = post_process_ir(ir)
         tree = self.parse(ir)
@@ -55,6 +67,9 @@ class Translator():
         return logical_form
     
     def to_cypher(self, ir):
-        raise NotImplementedError()
+        tree = self.parse(ir)
+        self.walker.walk(self.cypher_emitter, tree)
+        logical_form = self.cypher_emitter.get_logical_form(tree)
+        return logical_form
 
     

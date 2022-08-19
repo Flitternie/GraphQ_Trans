@@ -1,4 +1,4 @@
-# Generated from ./parser/overnight/Overnight.g4 by ANTLR 4.9.2
+# Generated from ./graphq_ir/overnight/Overnight.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -11,191 +11,193 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(")
-        buf.write("\u01ad\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3+")
+        buf.write("\u01b5\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
         buf.write("\t\31\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36")
-        buf.write("\4\37\t\37\4 \t \4!\t!\4\"\t\"\3\2\3\2\3\2\3\2\3\2\3\3")
+        buf.write("\4\37\t\37\4 \t \4!\t!\4\"\t\"\4#\t#\3\2\3\2\3\2\3\2\3")
+        buf.write("\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3")
         buf.write("\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3")
-        buf.write("\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3")
-        buf.write("\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3p\n\3\3\4")
-        buf.write("\5\4s\n\4\3\4\3\4\3\4\3\4\3\4\5\4z\n\4\3\5\5\5}\n\5\3")
-        buf.write("\5\3\5\3\5\5\5\u0082\n\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3")
-        buf.write("\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7\u0093\n\7\3\b\3\b\3")
-        buf.write("\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u009f\n\b\3\t\3\t\3")
-        buf.write("\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t")
-        buf.write("\3\t\3\t\3\t\3\t\3\t\5\t\u00b6\n\t\3\t\5\t\u00b9\n\t\3")
-        buf.write("\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00c5\n\t\3")
+        buf.write("\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3r\n")
+        buf.write("\3\3\4\5\4u\n\4\3\4\3\4\3\4\3\4\3\4\5\4|\n\4\3\5\5\5\177")
+        buf.write("\n\5\3\5\3\5\3\5\5\5\u0084\n\5\3\6\3\6\3\6\3\6\3\6\3\7")
+        buf.write("\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7\u0095\n\7\3\b")
+        buf.write("\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u00a1\n\b\3\t")
+        buf.write("\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3")
+        buf.write("\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00b8\n\t\3\t\5\t\u00bb")
+        buf.write("\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3")
+        buf.write("\t\3\t\5\t\u00cb\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3")
         buf.write("\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n")
-        buf.write("\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n\u00e0")
-        buf.write("\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13")
-        buf.write("\u00eb\n\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3")
-        buf.write("\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f")
-        buf.write("\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u010b\n\f\3\r\3\r\3\r\3\r")
-        buf.write("\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3")
-        buf.write("\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r")
-        buf.write("\u012b\n\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16")
+        buf.write("\3\n\3\n\3\n\5\n\u00e6\n\n\3\13\3\13\3\13\3\13\3\13\3")
+        buf.write("\13\3\13\3\13\3\13\5\13\u00f1\n\13\3\f\3\f\3\f\3\f\3\f")
+        buf.write("\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3")
+        buf.write("\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u0111")
+        buf.write("\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3")
+        buf.write("\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r")
+        buf.write("\3\r\3\r\3\r\3\r\5\r\u0131\n\r\3\16\3\16\3\16\3\16\3\16")
         buf.write("\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16")
-        buf.write("\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u0147\n\16\3\17\3")
+        buf.write("\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16")
+        buf.write("\u014d\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3")
         buf.write("\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17")
         buf.write("\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17")
-        buf.write("\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17")
-        buf.write("\3\17\5\17\u016c\n\17\3\20\3\20\3\20\3\20\3\20\3\20\3")
-        buf.write("\20\3\20\5\20\u0176\n\20\3\21\3\21\3\21\3\22\3\22\3\22")
-        buf.write("\3\23\3\23\3\23\3\24\3\24\3\24\3\25\3\25\3\25\3\26\3\26")
-        buf.write("\3\26\3\27\3\27\3\27\3\30\3\30\3\30\3\31\3\31\3\31\3\32")
-        buf.write("\3\32\3\32\3\33\3\33\3\33\3\34\3\34\3\34\3\35\3\35\3\35")
-        buf.write("\3\36\3\36\3\36\3\37\6\37\u01a3\n\37\r\37\16\37\u01a4")
-        buf.write("\3 \3 \3!\3!\3\"\3\"\3\"\2\2#\2\4\6\b\n\f\16\20\22\24")
-        buf.write("\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@B\2\3\5\2\23")
-        buf.write("\23  &\'\2\u01b7\2D\3\2\2\2\4o\3\2\2\2\6r\3\2\2\2\b|\3")
-        buf.write("\2\2\2\n\u0083\3\2\2\2\f\u0092\3\2\2\2\16\u009e\3\2\2")
-        buf.write("\2\20\u00c4\3\2\2\2\22\u00df\3\2\2\2\24\u00ea\3\2\2\2")
-        buf.write("\26\u010a\3\2\2\2\30\u012a\3\2\2\2\32\u0146\3\2\2\2\34")
-        buf.write("\u016b\3\2\2\2\36\u0175\3\2\2\2 \u0177\3\2\2\2\"\u017a")
-        buf.write("\3\2\2\2$\u017d\3\2\2\2&\u0180\3\2\2\2(\u0183\3\2\2\2")
-        buf.write("*\u0186\3\2\2\2,\u0189\3\2\2\2.\u018c\3\2\2\2\60\u018f")
-        buf.write("\3\2\2\2\62\u0192\3\2\2\2\64\u0195\3\2\2\2\66\u0198\3")
-        buf.write("\2\2\28\u019b\3\2\2\2:\u019e\3\2\2\2<\u01a2\3\2\2\2>\u01a6")
-        buf.write("\3\2\2\2@\u01a8\3\2\2\2B\u01aa\3\2\2\2DE\7\"\2\2EF\5 ")
-        buf.write("\21\2FG\5\4\3\2GH\7#\2\2H\3\3\2\2\2Ip\5\24\13\2Jp\5\6")
-        buf.write("\4\2KL\7\"\2\2LM\5*\26\2MN\5\4\3\2NO\5\f\7\2OP\7#\2\2")
-        buf.write("Pp\3\2\2\2Qp\5\20\t\2RS\7\"\2\2ST\5\64\33\2TU\5\4\3\2")
-        buf.write("UV\5\4\3\2VW\7#\2\2Wp\3\2\2\2XY\7\"\2\2YZ\5\62\32\2Z[")
-        buf.write("\5\36\20\2[\\\5\4\3\2\\p\3\2\2\2]^\7\"\2\2^_\5\"\22\2")
-        buf.write("_`\5\4\3\2`a\7#\2\2ap\3\2\2\2bc\7\"\2\2cd\5*\26\2de\7")
-        buf.write("\"\2\2ef\5\24\13\2fg\7\"\2\2gh\5$\23\2hi\5\f\7\2ij\7#")
-        buf.write("\2\2jk\7#\2\2kl\5\f\7\2lm\7#\2\2mp\3\2\2\2np\5\22\n\2")
-        buf.write("oI\3\2\2\2oJ\3\2\2\2oK\3\2\2\2oQ\3\2\2\2oR\3\2\2\2oX\3")
-        buf.write("\2\2\2o]\3\2\2\2ob\3\2\2\2on\3\2\2\2p\5\3\2\2\2qs\7\"")
-        buf.write("\2\2rq\3\2\2\2rs\3\2\2\2st\3\2\2\2tu\7\3\2\2uv\5<\37\2")
-        buf.write("vw\7\4\2\2wy\5<\37\2xz\7#\2\2yx\3\2\2\2yz\3\2\2\2z\7\3")
-        buf.write("\2\2\2{}\7\"\2\2|{\3\2\2\2|}\3\2\2\2}~\3\2\2\2~\177\7")
-        buf.write("\3\2\2\177\u0081\5<\37\2\u0080\u0082\7#\2\2\u0081\u0080")
-        buf.write("\3\2\2\2\u0081\u0082\3\2\2\2\u0082\t\3\2\2\2\u0083\u0084")
-        buf.write("\7\"\2\2\u0084\u0085\7\5\2\2\u0085\u0086\5<\37\2\u0086")
-        buf.write("\u0087\7#\2\2\u0087\13\3\2\2\2\u0088\u0089\7\"\2\2\u0089")
-        buf.write("\u008a\7\5\2\2\u008a\u008b\5<\37\2\u008b\u008c\7#\2\2")
-        buf.write("\u008c\u0093\3\2\2\2\u008d\u008e\7\"\2\2\u008e\u008f\5")
-        buf.write("8\35\2\u008f\u0090\5\f\7\2\u0090\u0091\7#\2\2\u0091\u0093")
-        buf.write("\3\2\2\2\u0092\u0088\3\2\2\2\u0092\u008d\3\2\2\2\u0093")
-        buf.write("\r\3\2\2\2\u0094\u0095\7\"\2\2\u0095\u0096\5\66\34\2\u0096")
-        buf.write("\u0097\5\n\6\2\u0097\u0098\7#\2\2\u0098\u009f\3\2\2\2")
-        buf.write("\u0099\u009a\7\"\2\2\u009a\u009b\5\66\34\2\u009b\u009c")
-        buf.write("\5\f\7\2\u009c\u009d\7#\2\2\u009d\u009f\3\2\2\2\u009e")
-        buf.write("\u0094\3\2\2\2\u009e\u0099\3\2\2\2\u009f\17\3\2\2\2\u00a0")
-        buf.write("\u00a1\7\"\2\2\u00a1\u00a2\5\64\33\2\u00a2\u00a3\5\20")
-        buf.write("\t\2\u00a3\u00a4\5\20\t\2\u00a4\u00a5\7#\2\2\u00a5\u00c5")
-        buf.write("\3\2\2\2\u00a6\u00a7\7\"\2\2\u00a7\u00a8\5*\26\2\u00a8")
-        buf.write("\u00a9\5\4\3\2\u00a9\u00aa\5\f\7\2\u00aa\u00ab\7#\2\2")
-        buf.write("\u00ab\u00c5\3\2\2\2\u00ac\u00ad\7\"\2\2\u00ad\u00ae\5")
-        buf.write(":\36\2\u00ae\u00af\5\4\3\2\u00af\u00b0\7#\2\2\u00b0\u00c5")
-        buf.write("\3\2\2\2\u00b1\u00b2\7\"\2\2\u00b2\u00b3\7\6\2\2\u00b3")
-        buf.write("\u00b8\5B\"\2\u00b4\u00b6\7\3\2\2\u00b5\u00b4\3\2\2\2")
-        buf.write("\u00b5\u00b6\3\2\2\2\u00b6\u00b7\3\2\2\2\u00b7\u00b9\5")
-        buf.write("<\37\2\u00b8\u00b5\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00ba")
-        buf.write("\3\2\2\2\u00ba\u00bb\7#\2\2\u00bb\u00c5\3\2\2\2\u00bc")
-        buf.write("\u00bd\7\"\2\2\u00bd\u00be\5> \2\u00be\u00bf\7#\2\2\u00bf")
-        buf.write("\u00c5\3\2\2\2\u00c0\u00c1\7\"\2\2\u00c1\u00c2\5@!\2\u00c2")
-        buf.write("\u00c3\7#\2\2\u00c3\u00c5\3\2\2\2\u00c4\u00a0\3\2\2\2")
-        buf.write("\u00c4\u00a6\3\2\2\2\u00c4\u00ac\3\2\2\2\u00c4\u00b1\3")
-        buf.write("\2\2\2\u00c4\u00bc\3\2\2\2\u00c4\u00c0\3\2\2\2\u00c5\21")
-        buf.write("\3\2\2\2\u00c6\u00c7\7\"\2\2\u00c7\u00c8\5*\26\2\u00c8")
-        buf.write("\u00c9\7\"\2\2\u00c9\u00ca\5&\24\2\u00ca\u00cb\5\b\5\2")
-        buf.write("\u00cb\u00cc\7#\2\2\u00cc\u00cd\7\"\2\2\u00cd\u00ce\7")
-        buf.write("\5\2\2\u00ce\u00cf\7\7\2\2\u00cf\u00d0\7\b\2\2\u00d0\u00d1")
-        buf.write("\7#\2\2\u00d1\u00d2\7#\2\2\u00d2\u00e0\3\2\2\2\u00d3\u00e0")
-        buf.write("\5\26\f\2\u00d4\u00d5\7\"\2\2\u00d5\u00d6\5*\26\2\u00d6")
-        buf.write("\u00d7\5\4\3\2\u00d7\u00d8\5\16\b\2\u00d8\u00d9\7#\2\2")
-        buf.write("\u00d9\u00e0\3\2\2\2\u00da\u00db\7\"\2\2\u00db\u00dc\7")
-        buf.write("\t\2\2\u00dc\u00dd\5<\37\2\u00dd\u00de\7#\2\2\u00de\u00e0")
-        buf.write("\3\2\2\2\u00df\u00c6\3\2\2\2\u00df\u00d3\3\2\2\2\u00df")
-        buf.write("\u00d4\3\2\2\2\u00df\u00da\3\2\2\2\u00e0\23\3\2\2\2\u00e1")
-        buf.write("\u00e2\7\"\2\2\u00e2\u00e3\7\n\2\2\u00e3\u00e4\5<\37\2")
-        buf.write("\u00e4\u00e5\5\24\13\2\u00e5\u00e6\7#\2\2\u00e6\u00eb")
-        buf.write("\3\2\2\2\u00e7\u00eb\5\26\f\2\u00e8\u00eb\5\30\r\2\u00e9")
-        buf.write("\u00eb\5\32\16\2\u00ea\u00e1\3\2\2\2\u00ea\u00e7\3\2\2")
-        buf.write("\2\u00ea\u00e8\3\2\2\2\u00ea\u00e9\3\2\2\2\u00eb\25\3")
-        buf.write("\2\2\2\u00ec\u00ed\7\"\2\2\u00ed\u00ee\5(\25\2\u00ee\u00ef")
-        buf.write("\5\22\n\2\u00ef\u00f0\5\n\6\2\u00f0\u00f1\7#\2\2\u00f1")
-        buf.write("\u010b\3\2\2\2\u00f2\u00f3\7\"\2\2\u00f3\u00f4\5(\25\2")
-        buf.write("\u00f4\u00f5\5\22\n\2\u00f5\u00f6\5\f\7\2\u00f6\u00f7")
-        buf.write("\5\34\17\2\u00f7\u00f8\5\20\t\2\u00f8\u00f9\7#\2\2\u00f9")
-        buf.write("\u010b\3\2\2\2\u00fa\u00fb\7\"\2\2\u00fb\u00fc\5(\25\2")
-        buf.write("\u00fc\u00fd\5\22\n\2\u00fd\u00fe\5\n\6\2\u00fe\u00ff")
-        buf.write("\5\34\17\2\u00ff\u0100\5\4\3\2\u0100\u0101\7#\2\2\u0101")
-        buf.write("\u010b\3\2\2\2\u0102\u0103\7\"\2\2\u0103\u0104\5(\25\2")
-        buf.write("\u0104\u0105\5\22\n\2\u0105\u0106\5\16\b\2\u0106\u0107")
-        buf.write("\5\34\17\2\u0107\u0108\5\4\3\2\u0108\u0109\7#\2\2\u0109")
-        buf.write("\u010b\3\2\2\2\u010a\u00ec\3\2\2\2\u010a\u00f2\3\2\2\2")
-        buf.write("\u010a\u00fa\3\2\2\2\u010a\u0102\3\2\2\2\u010b\27\3\2")
-        buf.write("\2\2\u010c\u010d\7\"\2\2\u010d\u010e\5,\27\2\u010e\u010f")
-        buf.write("\5\22\n\2\u010f\u0110\5\34\17\2\u0110\u0111\5\f\7\2\u0111")
-        buf.write("\u0112\7#\2\2\u0112\u012b\3\2\2\2\u0113\u0114\7\"\2\2")
-        buf.write("\u0114\u0115\5.\30\2\u0115\u0116\5\22\n\2\u0116\u0117")
-        buf.write("\5\34\17\2\u0117\u0118\5\f\7\2\u0118\u0119\7#\2\2\u0119")
-        buf.write("\u012b\3\2\2\2\u011a\u011b\7\"\2\2\u011b\u011c\5.\30\2")
-        buf.write("\u011c\u011d\5\22\n\2\u011d\u011e\5\34\17\2\u011e\u011f")
-        buf.write("\5\n\6\2\u011f\u0120\5\4\3\2\u0120\u0121\7#\2\2\u0121")
-        buf.write("\u012b\3\2\2\2\u0122\u0123\7\"\2\2\u0123\u0124\5.\30\2")
-        buf.write("\u0124\u0125\5\22\n\2\u0125\u0126\5\34\17\2\u0126\u0127")
-        buf.write("\5\16\b\2\u0127\u0128\5\4\3\2\u0128\u0129\7#\2\2\u0129")
-        buf.write("\u012b\3\2\2\2\u012a\u010c\3\2\2\2\u012a\u0113\3\2\2\2")
-        buf.write("\u012a\u011a\3\2\2\2\u012a\u0122\3\2\2\2\u012b\31\3\2")
-        buf.write("\2\2\u012c\u012d\7\"\2\2\u012d\u012e\5\60\31\2\u012e\u012f")
-        buf.write("\5\22\n\2\u012f\u0130\5\f\7\2\u0130\u0131\5\34\17\2\u0131")
-        buf.write("\u0132\5\20\t\2\u0132\u0133\7#\2\2\u0133\u0147\3\2\2\2")
-        buf.write("\u0134\u0135\7\"\2\2\u0135\u0136\5\60\31\2\u0136\u0137")
-        buf.write("\5\22\n\2\u0137\u0138\5\n\6\2\u0138\u0139\5\34\17\2\u0139")
-        buf.write("\u013a\5\20\t\2\u013a\u013b\5\4\3\2\u013b\u013c\7#\2\2")
-        buf.write("\u013c\u0147\3\2\2\2\u013d\u013e\7\"\2\2\u013e\u013f\5")
-        buf.write("\60\31\2\u013f\u0140\5\22\n\2\u0140\u0141\5\16\b\2\u0141")
-        buf.write("\u0142\5\34\17\2\u0142\u0143\5\20\t\2\u0143\u0144\5\4")
-        buf.write("\3\2\u0144\u0145\7#\2\2\u0145\u0147\3\2\2\2\u0146\u012c")
-        buf.write("\3\2\2\2\u0146\u0134\3\2\2\2\u0146\u013d\3\2\2\2\u0147")
-        buf.write("\33\3\2\2\2\u0148\u0149\7\"\2\2\u0149\u014a\7\5\2\2\u014a")
-        buf.write("\u014b\7\13\2\2\u014b\u016c\7#\2\2\u014c\u014d\7\"\2\2")
-        buf.write("\u014d\u014e\7\5\2\2\u014e\u014f\7\7\2\2\u014f\u0150\7")
-        buf.write("\13\2\2\u0150\u016c\7#\2\2\u0151\u0152\7\"\2\2\u0152\u0153")
-        buf.write("\7\5\2\2\u0153\u0154\7\f\2\2\u0154\u016c\7#\2\2\u0155")
-        buf.write("\u0156\7\"\2\2\u0156\u0157\7\5\2\2\u0157\u0158\7\r\2\2")
-        buf.write("\u0158\u016c\7#\2\2\u0159\u015a\7\"\2\2\u015a\u015b\7")
-        buf.write("\5\2\2\u015b\u015c\7\f\2\2\u015c\u015d\7\13\2\2\u015d")
-        buf.write("\u016c\7#\2\2\u015e\u015f\7\"\2\2\u015f\u0160\7\5\2\2")
-        buf.write("\u0160\u0161\7\r\2\2\u0161\u0162\7\13\2\2\u0162\u016c")
-        buf.write("\7#\2\2\u0163\u0164\7\"\2\2\u0164\u0165\7\5\2\2\u0165")
-        buf.write("\u0166\7\16\2\2\u0166\u016c\7#\2\2\u0167\u0168\7\"\2\2")
-        buf.write("\u0168\u0169\7\5\2\2\u0169\u016a\7\17\2\2\u016a\u016c")
-        buf.write("\7#\2\2\u016b\u0148\3\2\2\2\u016b\u014c\3\2\2\2\u016b")
-        buf.write("\u0151\3\2\2\2\u016b\u0155\3\2\2\2\u016b\u0159\3\2\2\2")
-        buf.write("\u016b\u015e\3\2\2\2\u016b\u0163\3\2\2\2\u016b\u0167\3")
-        buf.write("\2\2\2\u016c\35\3\2\2\2\u016d\u016e\7\"\2\2\u016e\u016f")
-        buf.write("\7\5\2\2\u016f\u0170\7\20\2\2\u0170\u0176\7#\2\2\u0171")
-        buf.write("\u0172\7\"\2\2\u0172\u0173\7\5\2\2\u0173\u0174\7\21\2")
-        buf.write("\2\u0174\u0176\7#\2\2\u0175\u016d\3\2\2\2\u0175\u0171")
-        buf.write("\3\2\2\2\u0176\37\3\2\2\2\u0177\u0178\7!\2\2\u0178\u0179")
-        buf.write("\7\22\2\2\u0179!\3\2\2\2\u017a\u017b\7!\2\2\u017b\u017c")
-        buf.write("\7\23\2\2\u017c#\3\2\2\2\u017d\u017e\7!\2\2\u017e\u017f")
-        buf.write("\7\24\2\2\u017f%\3\2\2\2\u0180\u0181\7!\2\2\u0181\u0182")
-        buf.write("\7\25\2\2\u0182\'\3\2\2\2\u0183\u0184\7!\2\2\u0184\u0185")
-        buf.write("\7\26\2\2\u0185)\3\2\2\2\u0186\u0187\7!\2\2\u0187\u0188")
-        buf.write("\7\27\2\2\u0188+\3\2\2\2\u0189\u018a\7!\2\2\u018a\u018b")
-        buf.write("\7\30\2\2\u018b-\3\2\2\2\u018c\u018d\7!\2\2\u018d\u018e")
-        buf.write("\7\31\2\2\u018e/\3\2\2\2\u018f\u0190\7!\2\2\u0190\u0191")
-        buf.write("\7\32\2\2\u0191\61\3\2\2\2\u0192\u0193\7!\2\2\u0193\u0194")
-        buf.write("\7\33\2\2\u0194\63\3\2\2\2\u0195\u0196\7!\2\2\u0196\u0197")
-        buf.write("\7\34\2\2\u0197\65\3\2\2\2\u0198\u0199\7!\2\2\u0199\u019a")
-        buf.write("\7\35\2\2\u019a\67\3\2\2\2\u019b\u019c\7!\2\2\u019c\u019d")
-        buf.write("\7\36\2\2\u019d9\3\2\2\2\u019e\u019f\7!\2\2\u019f\u01a0")
-        buf.write("\7\37\2\2\u01a0;\3\2\2\2\u01a1\u01a3\t\2\2\2\u01a2\u01a1")
-        buf.write("\3\2\2\2\u01a3\u01a4\3\2\2\2\u01a4\u01a2\3\2\2\2\u01a4")
-        buf.write("\u01a5\3\2\2\2\u01a5=\3\2\2\2\u01a6\u01a7\7$\2\2\u01a7")
-        buf.write("?\3\2\2\2\u01a8\u01a9\7%\2\2\u01a9A\3\2\2\2\u01aa\u01ab")
-        buf.write("\7&\2\2\u01abC\3\2\2\2\24ory|\u0081\u0092\u009e\u00b5")
-        buf.write("\u00b8\u00c4\u00df\u00ea\u010a\u012a\u0146\u016b\u0175")
-        buf.write("\u01a4")
+        buf.write("\3\17\3\17\3\17\3\17\3\17\5\17\u0172\n\17\3\20\3\20\3")
+        buf.write("\20\3\20\3\20\3\20\3\20\3\20\5\20\u017c\n\20\3\21\3\21")
+        buf.write("\3\21\3\22\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\24\3\25")
+        buf.write("\3\25\3\25\3\26\3\26\3\26\3\27\3\27\3\27\3\30\3\30\3\30")
+        buf.write("\3\31\3\31\3\31\3\32\3\32\3\32\3\33\3\33\3\33\3\34\3\34")
+        buf.write("\3\34\3\35\3\35\3\35\3\36\3\36\3\36\3\37\6\37\u01a9\n")
+        buf.write("\37\r\37\16\37\u01aa\3 \3 \3!\3!\3\"\3\"\3#\3#\3#\2\2")
+        buf.write("$\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62")
+        buf.write("\64\668:<>@BD\2\3\5\2\23\23 \")*\2\u01bf\2F\3\2\2\2\4")
+        buf.write("q\3\2\2\2\6t\3\2\2\2\b~\3\2\2\2\n\u0085\3\2\2\2\f\u0094")
+        buf.write("\3\2\2\2\16\u00a0\3\2\2\2\20\u00ca\3\2\2\2\22\u00e5\3")
+        buf.write("\2\2\2\24\u00f0\3\2\2\2\26\u0110\3\2\2\2\30\u0130\3\2")
+        buf.write("\2\2\32\u014c\3\2\2\2\34\u0171\3\2\2\2\36\u017b\3\2\2")
+        buf.write("\2 \u017d\3\2\2\2\"\u0180\3\2\2\2$\u0183\3\2\2\2&\u0186")
+        buf.write("\3\2\2\2(\u0189\3\2\2\2*\u018c\3\2\2\2,\u018f\3\2\2\2")
+        buf.write(".\u0192\3\2\2\2\60\u0195\3\2\2\2\62\u0198\3\2\2\2\64\u019b")
+        buf.write("\3\2\2\2\66\u019e\3\2\2\28\u01a1\3\2\2\2:\u01a4\3\2\2")
+        buf.write("\2<\u01a8\3\2\2\2>\u01ac\3\2\2\2@\u01ae\3\2\2\2B\u01b0")
+        buf.write("\3\2\2\2D\u01b2\3\2\2\2FG\7$\2\2GH\5 \21\2HI\5\4\3\2I")
+        buf.write("J\7%\2\2J\3\3\2\2\2Kr\5\24\13\2Lr\5\6\4\2MN\7$\2\2NO\5")
+        buf.write("*\26\2OP\5\4\3\2PQ\5\f\7\2QR\7%\2\2Rr\3\2\2\2Sr\5\20\t")
+        buf.write("\2TU\7$\2\2UV\5\64\33\2VW\5\4\3\2WX\5\4\3\2XY\7%\2\2Y")
+        buf.write("r\3\2\2\2Z[\7$\2\2[\\\5\62\32\2\\]\5\36\20\2]^\5\4\3\2")
+        buf.write("^r\3\2\2\2_`\7$\2\2`a\5\"\22\2ab\5\4\3\2bc\7%\2\2cr\3")
+        buf.write("\2\2\2de\7$\2\2ef\5*\26\2fg\7$\2\2gh\5\24\13\2hi\7$\2")
+        buf.write("\2ij\5$\23\2jk\5\f\7\2kl\7%\2\2lm\7%\2\2mn\5\f\7\2no\7")
+        buf.write("%\2\2or\3\2\2\2pr\5\22\n\2qK\3\2\2\2qL\3\2\2\2qM\3\2\2")
+        buf.write("\2qS\3\2\2\2qT\3\2\2\2qZ\3\2\2\2q_\3\2\2\2qd\3\2\2\2q")
+        buf.write("p\3\2\2\2r\5\3\2\2\2su\7$\2\2ts\3\2\2\2tu\3\2\2\2uv\3")
+        buf.write("\2\2\2vw\7\3\2\2wx\5<\37\2xy\7\4\2\2y{\5<\37\2z|\7%\2")
+        buf.write("\2{z\3\2\2\2{|\3\2\2\2|\7\3\2\2\2}\177\7$\2\2~}\3\2\2")
+        buf.write("\2~\177\3\2\2\2\177\u0080\3\2\2\2\u0080\u0081\7\3\2\2")
+        buf.write("\u0081\u0083\5<\37\2\u0082\u0084\7%\2\2\u0083\u0082\3")
+        buf.write("\2\2\2\u0083\u0084\3\2\2\2\u0084\t\3\2\2\2\u0085\u0086")
+        buf.write("\7$\2\2\u0086\u0087\7\5\2\2\u0087\u0088\5<\37\2\u0088")
+        buf.write("\u0089\7%\2\2\u0089\13\3\2\2\2\u008a\u008b\7$\2\2\u008b")
+        buf.write("\u008c\7\5\2\2\u008c\u008d\5<\37\2\u008d\u008e\7%\2\2")
+        buf.write("\u008e\u0095\3\2\2\2\u008f\u0090\7$\2\2\u0090\u0091\5")
+        buf.write("8\35\2\u0091\u0092\5\f\7\2\u0092\u0093\7%\2\2\u0093\u0095")
+        buf.write("\3\2\2\2\u0094\u008a\3\2\2\2\u0094\u008f\3\2\2\2\u0095")
+        buf.write("\r\3\2\2\2\u0096\u0097\7$\2\2\u0097\u0098\5\66\34\2\u0098")
+        buf.write("\u0099\5\n\6\2\u0099\u009a\7%\2\2\u009a\u00a1\3\2\2\2")
+        buf.write("\u009b\u009c\7$\2\2\u009c\u009d\5\66\34\2\u009d\u009e")
+        buf.write("\5\f\7\2\u009e\u009f\7%\2\2\u009f\u00a1\3\2\2\2\u00a0")
+        buf.write("\u0096\3\2\2\2\u00a0\u009b\3\2\2\2\u00a1\17\3\2\2\2\u00a2")
+        buf.write("\u00a3\7$\2\2\u00a3\u00a4\5\64\33\2\u00a4\u00a5\5\20\t")
+        buf.write("\2\u00a5\u00a6\5\20\t\2\u00a6\u00a7\7%\2\2\u00a7\u00cb")
+        buf.write("\3\2\2\2\u00a8\u00a9\7$\2\2\u00a9\u00aa\5*\26\2\u00aa")
+        buf.write("\u00ab\5\4\3\2\u00ab\u00ac\5\f\7\2\u00ac\u00ad\7%\2\2")
+        buf.write("\u00ad\u00cb\3\2\2\2\u00ae\u00af\7$\2\2\u00af\u00b0\5")
+        buf.write(":\36\2\u00b0\u00b1\5\4\3\2\u00b1\u00b2\7%\2\2\u00b2\u00cb")
+        buf.write("\3\2\2\2\u00b3\u00b4\7$\2\2\u00b4\u00b5\7\6\2\2\u00b5")
+        buf.write("\u00ba\5D#\2\u00b6\u00b8\7\3\2\2\u00b7\u00b6\3\2\2\2\u00b7")
+        buf.write("\u00b8\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00bb\5<\37\2")
+        buf.write("\u00ba\u00b7\3\2\2\2\u00ba\u00bb\3\2\2\2\u00bb\u00bc\3")
+        buf.write("\2\2\2\u00bc\u00bd\7%\2\2\u00bd\u00cb\3\2\2\2\u00be\u00bf")
+        buf.write("\7$\2\2\u00bf\u00c0\5> \2\u00c0\u00c1\7%\2\2\u00c1\u00cb")
+        buf.write("\3\2\2\2\u00c2\u00c3\7$\2\2\u00c3\u00c4\5@!\2\u00c4\u00c5")
+        buf.write("\7%\2\2\u00c5\u00cb\3\2\2\2\u00c6\u00c7\7$\2\2\u00c7\u00c8")
+        buf.write("\5B\"\2\u00c8\u00c9\7%\2\2\u00c9\u00cb\3\2\2\2\u00ca\u00a2")
+        buf.write("\3\2\2\2\u00ca\u00a8\3\2\2\2\u00ca\u00ae\3\2\2\2\u00ca")
+        buf.write("\u00b3\3\2\2\2\u00ca\u00be\3\2\2\2\u00ca\u00c2\3\2\2\2")
+        buf.write("\u00ca\u00c6\3\2\2\2\u00cb\21\3\2\2\2\u00cc\u00cd\7$\2")
+        buf.write("\2\u00cd\u00ce\5*\26\2\u00ce\u00cf\7$\2\2\u00cf\u00d0")
+        buf.write("\5&\24\2\u00d0\u00d1\5\b\5\2\u00d1\u00d2\7%\2\2\u00d2")
+        buf.write("\u00d3\7$\2\2\u00d3\u00d4\7\5\2\2\u00d4\u00d5\7\7\2\2")
+        buf.write("\u00d5\u00d6\7\b\2\2\u00d6\u00d7\7%\2\2\u00d7\u00d8\7")
+        buf.write("%\2\2\u00d8\u00e6\3\2\2\2\u00d9\u00e6\5\26\f\2\u00da\u00db")
+        buf.write("\7$\2\2\u00db\u00dc\5*\26\2\u00dc\u00dd\5\4\3\2\u00dd")
+        buf.write("\u00de\5\16\b\2\u00de\u00df\7%\2\2\u00df\u00e6\3\2\2\2")
+        buf.write("\u00e0\u00e1\7$\2\2\u00e1\u00e2\7\t\2\2\u00e2\u00e3\5")
+        buf.write("<\37\2\u00e3\u00e4\7%\2\2\u00e4\u00e6\3\2\2\2\u00e5\u00cc")
+        buf.write("\3\2\2\2\u00e5\u00d9\3\2\2\2\u00e5\u00da\3\2\2\2\u00e5")
+        buf.write("\u00e0\3\2\2\2\u00e6\23\3\2\2\2\u00e7\u00e8\7$\2\2\u00e8")
+        buf.write("\u00e9\7\n\2\2\u00e9\u00ea\5<\37\2\u00ea\u00eb\5\24\13")
+        buf.write("\2\u00eb\u00ec\7%\2\2\u00ec\u00f1\3\2\2\2\u00ed\u00f1")
+        buf.write("\5\26\f\2\u00ee\u00f1\5\30\r\2\u00ef\u00f1\5\32\16\2\u00f0")
+        buf.write("\u00e7\3\2\2\2\u00f0\u00ed\3\2\2\2\u00f0\u00ee\3\2\2\2")
+        buf.write("\u00f0\u00ef\3\2\2\2\u00f1\25\3\2\2\2\u00f2\u00f3\7$\2")
+        buf.write("\2\u00f3\u00f4\5(\25\2\u00f4\u00f5\5\22\n\2\u00f5\u00f6")
+        buf.write("\5\n\6\2\u00f6\u00f7\7%\2\2\u00f7\u0111\3\2\2\2\u00f8")
+        buf.write("\u00f9\7$\2\2\u00f9\u00fa\5(\25\2\u00fa\u00fb\5\22\n\2")
+        buf.write("\u00fb\u00fc\5\f\7\2\u00fc\u00fd\5\34\17\2\u00fd\u00fe")
+        buf.write("\5\20\t\2\u00fe\u00ff\7%\2\2\u00ff\u0111\3\2\2\2\u0100")
+        buf.write("\u0101\7$\2\2\u0101\u0102\5(\25\2\u0102\u0103\5\22\n\2")
+        buf.write("\u0103\u0104\5\n\6\2\u0104\u0105\5\34\17\2\u0105\u0106")
+        buf.write("\5\4\3\2\u0106\u0107\7%\2\2\u0107\u0111\3\2\2\2\u0108")
+        buf.write("\u0109\7$\2\2\u0109\u010a\5(\25\2\u010a\u010b\5\22\n\2")
+        buf.write("\u010b\u010c\5\16\b\2\u010c\u010d\5\34\17\2\u010d\u010e")
+        buf.write("\5\4\3\2\u010e\u010f\7%\2\2\u010f\u0111\3\2\2\2\u0110")
+        buf.write("\u00f2\3\2\2\2\u0110\u00f8\3\2\2\2\u0110\u0100\3\2\2\2")
+        buf.write("\u0110\u0108\3\2\2\2\u0111\27\3\2\2\2\u0112\u0113\7$\2")
+        buf.write("\2\u0113\u0114\5,\27\2\u0114\u0115\5\22\n\2\u0115\u0116")
+        buf.write("\5\34\17\2\u0116\u0117\5\f\7\2\u0117\u0118\7%\2\2\u0118")
+        buf.write("\u0131\3\2\2\2\u0119\u011a\7$\2\2\u011a\u011b\5.\30\2")
+        buf.write("\u011b\u011c\5\22\n\2\u011c\u011d\5\34\17\2\u011d\u011e")
+        buf.write("\5\f\7\2\u011e\u011f\7%\2\2\u011f\u0131\3\2\2\2\u0120")
+        buf.write("\u0121\7$\2\2\u0121\u0122\5.\30\2\u0122\u0123\5\22\n\2")
+        buf.write("\u0123\u0124\5\34\17\2\u0124\u0125\5\n\6\2\u0125\u0126")
+        buf.write("\5\4\3\2\u0126\u0127\7%\2\2\u0127\u0131\3\2\2\2\u0128")
+        buf.write("\u0129\7$\2\2\u0129\u012a\5.\30\2\u012a\u012b\5\22\n\2")
+        buf.write("\u012b\u012c\5\34\17\2\u012c\u012d\5\16\b\2\u012d\u012e")
+        buf.write("\5\4\3\2\u012e\u012f\7%\2\2\u012f\u0131\3\2\2\2\u0130")
+        buf.write("\u0112\3\2\2\2\u0130\u0119\3\2\2\2\u0130\u0120\3\2\2\2")
+        buf.write("\u0130\u0128\3\2\2\2\u0131\31\3\2\2\2\u0132\u0133\7$\2")
+        buf.write("\2\u0133\u0134\5\60\31\2\u0134\u0135\5\22\n\2\u0135\u0136")
+        buf.write("\5\f\7\2\u0136\u0137\5\34\17\2\u0137\u0138\5\20\t\2\u0138")
+        buf.write("\u0139\7%\2\2\u0139\u014d\3\2\2\2\u013a\u013b\7$\2\2\u013b")
+        buf.write("\u013c\5\60\31\2\u013c\u013d\5\22\n\2\u013d\u013e\5\n")
+        buf.write("\6\2\u013e\u013f\5\34\17\2\u013f\u0140\5\20\t\2\u0140")
+        buf.write("\u0141\5\4\3\2\u0141\u0142\7%\2\2\u0142\u014d\3\2\2\2")
+        buf.write("\u0143\u0144\7$\2\2\u0144\u0145\5\60\31\2\u0145\u0146")
+        buf.write("\5\22\n\2\u0146\u0147\5\16\b\2\u0147\u0148\5\34\17\2\u0148")
+        buf.write("\u0149\5\20\t\2\u0149\u014a\5\4\3\2\u014a\u014b\7%\2\2")
+        buf.write("\u014b\u014d\3\2\2\2\u014c\u0132\3\2\2\2\u014c\u013a\3")
+        buf.write("\2\2\2\u014c\u0143\3\2\2\2\u014d\33\3\2\2\2\u014e\u014f")
+        buf.write("\7$\2\2\u014f\u0150\7\5\2\2\u0150\u0151\7\13\2\2\u0151")
+        buf.write("\u0172\7%\2\2\u0152\u0153\7$\2\2\u0153\u0154\7\5\2\2\u0154")
+        buf.write("\u0155\7\7\2\2\u0155\u0156\7\13\2\2\u0156\u0172\7%\2\2")
+        buf.write("\u0157\u0158\7$\2\2\u0158\u0159\7\5\2\2\u0159\u015a\7")
+        buf.write("\f\2\2\u015a\u0172\7%\2\2\u015b\u015c\7$\2\2\u015c\u015d")
+        buf.write("\7\5\2\2\u015d\u015e\7\r\2\2\u015e\u0172\7%\2\2\u015f")
+        buf.write("\u0160\7$\2\2\u0160\u0161\7\5\2\2\u0161\u0162\7\f\2\2")
+        buf.write("\u0162\u0163\7\13\2\2\u0163\u0172\7%\2\2\u0164\u0165\7")
+        buf.write("$\2\2\u0165\u0166\7\5\2\2\u0166\u0167\7\r\2\2\u0167\u0168")
+        buf.write("\7\13\2\2\u0168\u0172\7%\2\2\u0169\u016a\7$\2\2\u016a")
+        buf.write("\u016b\7\5\2\2\u016b\u016c\7\16\2\2\u016c\u0172\7%\2\2")
+        buf.write("\u016d\u016e\7$\2\2\u016e\u016f\7\5\2\2\u016f\u0170\7")
+        buf.write("\17\2\2\u0170\u0172\7%\2\2\u0171\u014e\3\2\2\2\u0171\u0152")
+        buf.write("\3\2\2\2\u0171\u0157\3\2\2\2\u0171\u015b\3\2\2\2\u0171")
+        buf.write("\u015f\3\2\2\2\u0171\u0164\3\2\2\2\u0171\u0169\3\2\2\2")
+        buf.write("\u0171\u016d\3\2\2\2\u0172\35\3\2\2\2\u0173\u0174\7$\2")
+        buf.write("\2\u0174\u0175\7\5\2\2\u0175\u0176\7\20\2\2\u0176\u017c")
+        buf.write("\7%\2\2\u0177\u0178\7$\2\2\u0178\u0179\7\5\2\2\u0179\u017a")
+        buf.write("\7\21\2\2\u017a\u017c\7%\2\2\u017b\u0173\3\2\2\2\u017b")
+        buf.write("\u0177\3\2\2\2\u017c\37\3\2\2\2\u017d\u017e\7#\2\2\u017e")
+        buf.write("\u017f\7\22\2\2\u017f!\3\2\2\2\u0180\u0181\7#\2\2\u0181")
+        buf.write("\u0182\7\23\2\2\u0182#\3\2\2\2\u0183\u0184\7#\2\2\u0184")
+        buf.write("\u0185\7\24\2\2\u0185%\3\2\2\2\u0186\u0187\7#\2\2\u0187")
+        buf.write("\u0188\7\25\2\2\u0188\'\3\2\2\2\u0189\u018a\7#\2\2\u018a")
+        buf.write("\u018b\7\26\2\2\u018b)\3\2\2\2\u018c\u018d\7#\2\2\u018d")
+        buf.write("\u018e\7\27\2\2\u018e+\3\2\2\2\u018f\u0190\7#\2\2\u0190")
+        buf.write("\u0191\7\30\2\2\u0191-\3\2\2\2\u0192\u0193\7#\2\2\u0193")
+        buf.write("\u0194\7\31\2\2\u0194/\3\2\2\2\u0195\u0196\7#\2\2\u0196")
+        buf.write("\u0197\7\32\2\2\u0197\61\3\2\2\2\u0198\u0199\7#\2\2\u0199")
+        buf.write("\u019a\7\33\2\2\u019a\63\3\2\2\2\u019b\u019c\7#\2\2\u019c")
+        buf.write("\u019d\7\34\2\2\u019d\65\3\2\2\2\u019e\u019f\7#\2\2\u019f")
+        buf.write("\u01a0\7\35\2\2\u01a0\67\3\2\2\2\u01a1\u01a2\7#\2\2\u01a2")
+        buf.write("\u01a3\7\36\2\2\u01a39\3\2\2\2\u01a4\u01a5\7#\2\2\u01a5")
+        buf.write("\u01a6\7\37\2\2\u01a6;\3\2\2\2\u01a7\u01a9\t\2\2\2\u01a8")
+        buf.write("\u01a7\3\2\2\2\u01a9\u01aa\3\2\2\2\u01aa\u01a8\3\2\2\2")
+        buf.write("\u01aa\u01ab\3\2\2\2\u01ab=\3\2\2\2\u01ac\u01ad\7&\2\2")
+        buf.write("\u01ad?\3\2\2\2\u01ae\u01af\7\'\2\2\u01afA\3\2\2\2\u01b0")
+        buf.write("\u01b1\7(\2\2\u01b1C\3\2\2\2\u01b2\u01b3\7)\2\2\u01b3")
+        buf.write("E\3\2\2\2\24qt{~\u0083\u0094\u00a0\u00b7\u00ba\u00ca\u00e5")
+        buf.write("\u00f0\u0110\u0130\u014c\u0171\u017b\u01aa")
         return buf.getvalue()
 
 
@@ -215,8 +217,8 @@ class OvernightParser ( Parser ):
                      "'size'", "'domain'", "'singleton'", "'filter'", "'getProperty'", 
                      "'superlative'", "'countSuperlative'", "'countComparative'", 
                      "'aggregate'", "'concat'", "'reverse'", "'ensureNumericProperty'", 
-                     "'ensureNumericEntity'", "'date'", "<INVALID>", "'('", 
-                     "')'" ]
+                     "'ensureNumericEntity'", "'date'", "'year'", "'time'", 
+                     "<INVALID>", "'('", "')'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
@@ -225,9 +227,9 @@ class OvernightParser ( Parser ):
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "<INVALID>", "PREFIX", "LB", 
-                      "RB", "DATE", "TIME", "INTEGER", "STRING_LITERAL", 
-                      "WS" ]
+                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "PREFIX", "LB", "RB", "DATE", "YEAR", 
+                      "TIME", "INTEGER", "STRING_LITERAL", "WS" ]
 
     RULE_root = 0
     RULE_np = 1
@@ -260,8 +262,9 @@ class OvernightParser ( Parser ):
     RULE_ensureNumericEntity = 28
     RULE_string = 29
     RULE_date = 30
-    RULE_time = 31
-    RULE_quantity = 32
+    RULE_year = 31
+    RULE_time = 32
+    RULE_quantity = 33
 
     ruleNames =  [ "root", "np", "entity", "concept", "predicate", "relNP", 
                    "reversePredicate", "value", "constraintNP", "cp", "filterCP", 
@@ -269,7 +272,8 @@ class OvernightParser ( Parser ):
                    "listValue", "size", "domain", "singleton", "filterFunc", 
                    "getProperty", "superlative", "countSuperlative", "countComparative", 
                    "aggregate", "concat", "reverse", "ensureNumericProperty", 
-                   "ensureNumericEntity", "string", "date", "time", "quantity" ]
+                   "ensureNumericEntity", "string", "date", "year", "time", 
+                   "quantity" ]
 
     EOF = Token.EOF
     T__0=1
@@ -302,14 +306,17 @@ class OvernightParser ( Parser ):
     T__27=28
     T__28=29
     T__29=30
-    PREFIX=31
-    LB=32
-    RB=33
-    DATE=34
-    TIME=35
-    INTEGER=36
-    STRING_LITERAL=37
-    WS=38
+    T__30=31
+    T__31=32
+    PREFIX=33
+    LB=34
+    RB=35
+    DATE=36
+    YEAR=37
+    TIME=38
+    INTEGER=39
+    STRING_LITERAL=40
+    WS=41
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -361,13 +368,13 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_root)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 66
-            self.match(OvernightParser.LB)
-            self.state = 67
-            self.listValue()
             self.state = 68
-            self.np()
+            self.match(OvernightParser.LB)
             self.state = 69
+            self.listValue()
+            self.state = 70
+            self.np()
+            self.state = 71
             self.match(OvernightParser.RB)
         except RecognitionException as re:
             localctx.exception = re
@@ -629,117 +636,117 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.NpContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_np)
         try:
-            self.state = 109
+            self.state = 111
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.CPNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 71
+                self.state = 73
                 self.cp()
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.EntityNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 72
+                self.state = 74
                 self.entity()
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.GetPropertyNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 73
-                self.match(OvernightParser.LB)
-                self.state = 74
-                self.getProperty()
                 self.state = 75
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 76
-                self.relNP()
+                self.getProperty()
                 self.state = 77
+                self.np()
+                self.state = 78
+                self.relNP()
+                self.state = 79
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.NumericNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 79
+                self.state = 81
                 self.value()
                 pass
 
             elif la_ == 5:
                 localctx = OvernightParser.ConcatNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 80
-                self.match(OvernightParser.LB)
-                self.state = 81
-                self.concat()
                 self.state = 82
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 83
-                self.np()
+                self.concat()
                 self.state = 84
+                self.np()
+                self.state = 85
+                self.np()
+                self.state = 86
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 6:
                 localctx = OvernightParser.AggregateNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
-                self.state = 86
-                self.match(OvernightParser.LB)
-                self.state = 87
-                self.aggregate()
                 self.state = 88
-                self.aggregateType()
+                self.match(OvernightParser.LB)
                 self.state = 89
+                self.aggregate()
+                self.state = 90
+                self.aggregateType()
+                self.state = 91
                 self.np()
                 pass
 
             elif la_ == 7:
                 localctx = OvernightParser.SizeNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
-                self.state = 91
-                self.match(OvernightParser.LB)
-                self.state = 92
-                self.size()
                 self.state = 93
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 94
+                self.size()
+                self.state = 95
+                self.np()
+                self.state = 96
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 8:
                 localctx = OvernightParser.DomainCPNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 8)
-                self.state = 96
-                self.match(OvernightParser.LB)
-                self.state = 97
-                self.getProperty()
                 self.state = 98
                 self.match(OvernightParser.LB)
                 self.state = 99
-                self.cp()
+                self.getProperty()
                 self.state = 100
                 self.match(OvernightParser.LB)
                 self.state = 101
-                self.domain()
+                self.cp()
                 self.state = 102
-                self.relNP()
+                self.match(OvernightParser.LB)
                 self.state = 103
-                self.match(OvernightParser.RB)
+                self.domain()
                 self.state = 104
-                self.match(OvernightParser.RB)
-                self.state = 105
                 self.relNP()
+                self.state = 105
+                self.match(OvernightParser.RB)
                 self.state = 106
+                self.match(OvernightParser.RB)
+                self.state = 107
+                self.relNP()
+                self.state = 108
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 9:
                 localctx = OvernightParser.FilterNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 9)
-                self.state = 108
+                self.state = 110
                 self.constraintNP()
                 pass
 
@@ -794,27 +801,27 @@ class OvernightParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 112
+            self.state = 114
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==OvernightParser.LB:
-                self.state = 111
+                self.state = 113
                 self.match(OvernightParser.LB)
 
 
-            self.state = 114
-            self.match(OvernightParser.T__0)
-            self.state = 115
-            self.string()
             self.state = 116
-            self.match(OvernightParser.T__1)
+            self.match(OvernightParser.T__0)
             self.state = 117
             self.string()
+            self.state = 118
+            self.match(OvernightParser.T__1)
             self.state = 119
+            self.string()
+            self.state = 121
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
             if la_ == 1:
-                self.state = 118
+                self.state = 120
                 self.match(OvernightParser.RB)
 
 
@@ -865,23 +872,23 @@ class OvernightParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 122
+            self.state = 124
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==OvernightParser.LB:
-                self.state = 121
+                self.state = 123
                 self.match(OvernightParser.LB)
 
 
-            self.state = 124
+            self.state = 126
             self.match(OvernightParser.T__0)
-            self.state = 125
-            self.string()
             self.state = 127
+            self.string()
+            self.state = 129
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
-                self.state = 126
+                self.state = 128
                 self.match(OvernightParser.RB)
 
 
@@ -931,13 +938,13 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 8, self.RULE_predicate)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 129
-            self.match(OvernightParser.LB)
-            self.state = 130
-            self.match(OvernightParser.T__2)
             self.state = 131
-            self.string()
+            self.match(OvernightParser.LB)
             self.state = 132
+            self.match(OvernightParser.T__2)
+            self.state = 133
+            self.string()
+            self.state = 134
             self.match(OvernightParser.RB)
         except RecognitionException as re:
             localctx.exception = re
@@ -1020,32 +1027,32 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.RelNPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_relNP)
         try:
-            self.state = 144
+            self.state = 146
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.StringRelNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 134
-                self.match(OvernightParser.LB)
-                self.state = 135
-                self.match(OvernightParser.T__2)
                 self.state = 136
-                self.string()
+                self.match(OvernightParser.LB)
                 self.state = 137
+                self.match(OvernightParser.T__2)
+                self.state = 138
+                self.string()
+                self.state = 139
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.NumberRelNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 139
-                self.match(OvernightParser.LB)
-                self.state = 140
-                self.ensureNumericProperty()
                 self.state = 141
-                self.relNP()
+                self.match(OvernightParser.LB)
                 self.state = 142
+                self.ensureNumericProperty()
+                self.state = 143
+                self.relNP()
+                self.state = 144
                 self.match(OvernightParser.RB)
                 pass
 
@@ -1103,30 +1110,30 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.ReversePredicateContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_reversePredicate)
         try:
-            self.state = 156
+            self.state = 158
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 146
-                self.match(OvernightParser.LB)
-                self.state = 147
-                self.reverse()
                 self.state = 148
-                self.predicate()
+                self.match(OvernightParser.LB)
                 self.state = 149
+                self.reverse()
+                self.state = 150
+                self.predicate()
+                self.state = 151
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 151
-                self.match(OvernightParser.LB)
-                self.state = 152
-                self.reverse()
                 self.state = 153
-                self.relNP()
+                self.match(OvernightParser.LB)
                 self.state = 154
+                self.reverse()
+                self.state = 155
+                self.relNP()
+                self.state = 156
                 self.match(OvernightParser.RB)
                 pass
 
@@ -1284,6 +1291,29 @@ class OvernightParser ( Parser ):
                 listener.exitConcatValueNP(self)
 
 
+    class YearNPContext(ValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a OvernightParser.ValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LB(self):
+            return self.getToken(OvernightParser.LB, 0)
+        def year(self):
+            return self.getTypedRuleContext(OvernightParser.YearContext,0)
+
+        def RB(self):
+            return self.getToken(OvernightParser.RB, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterYearNP" ):
+                listener.enterYearNP(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitYearNP" ):
+                listener.exitYearNP(self)
+
+
     class AttributeNPContext(ValueContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a OvernightParser.ValueContext
@@ -1320,100 +1350,111 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_value)
         self._la = 0 # Token type
         try:
-            self.state = 194
+            self.state = 200
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.ConcatValueNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 158
-                self.match(OvernightParser.LB)
-                self.state = 159
-                self.concat()
                 self.state = 160
-                self.value()
+                self.match(OvernightParser.LB)
                 self.state = 161
-                self.value()
+                self.concat()
                 self.state = 162
+                self.value()
+                self.state = 163
+                self.value()
+                self.state = 164
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.AttributeNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 164
-                self.match(OvernightParser.LB)
-                self.state = 165
-                self.getProperty()
                 self.state = 166
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 167
-                self.relNP()
+                self.getProperty()
                 self.state = 168
+                self.np()
+                self.state = 169
+                self.relNP()
+                self.state = 170
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.NumericEntityNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 170
-                self.match(OvernightParser.LB)
-                self.state = 171
-                self.ensureNumericEntity()
                 self.state = 172
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 173
+                self.ensureNumericEntity()
+                self.state = 174
+                self.np()
+                self.state = 175
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.NumberNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 175
-                self.match(OvernightParser.LB)
-                self.state = 176
-                self.match(OvernightParser.T__3)
                 self.state = 177
+                self.match(OvernightParser.LB)
+                self.state = 178
+                self.match(OvernightParser.T__3)
+                self.state = 179
                 self.quantity()
-                self.state = 182
+                self.state = 184
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << OvernightParser.T__0) | (1 << OvernightParser.T__16) | (1 << OvernightParser.T__29) | (1 << OvernightParser.INTEGER) | (1 << OvernightParser.STRING_LITERAL))) != 0):
-                    self.state = 179
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << OvernightParser.T__0) | (1 << OvernightParser.T__16) | (1 << OvernightParser.T__29) | (1 << OvernightParser.T__30) | (1 << OvernightParser.T__31) | (1 << OvernightParser.INTEGER) | (1 << OvernightParser.STRING_LITERAL))) != 0):
+                    self.state = 181
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if _la==OvernightParser.T__0:
-                        self.state = 178
+                        self.state = 180
                         self.match(OvernightParser.T__0)
 
 
-                    self.state = 181
+                    self.state = 183
                     self.string()
 
 
-                self.state = 184
+                self.state = 186
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 5:
                 localctx = OvernightParser.DateNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 186
-                self.match(OvernightParser.LB)
-                self.state = 187
-                self.date()
                 self.state = 188
+                self.match(OvernightParser.LB)
+                self.state = 189
+                self.date()
+                self.state = 190
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 6:
-                localctx = OvernightParser.TimeNPContext(self, localctx)
+                localctx = OvernightParser.YearNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
-                self.state = 190
-                self.match(OvernightParser.LB)
-                self.state = 191
-                self.time()
                 self.state = 192
+                self.match(OvernightParser.LB)
+                self.state = 193
+                self.year()
+                self.state = 194
+                self.match(OvernightParser.RB)
+                pass
+
+            elif la_ == 7:
+                localctx = OvernightParser.TimeNPContext(self, localctx)
+                self.enterOuterAlt(localctx, 7)
+                self.state = 196
+                self.match(OvernightParser.LB)
+                self.state = 197
+                self.time()
+                self.state = 198
                 self.match(OvernightParser.RB)
                 pass
 
@@ -1556,70 +1597,70 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.ConstraintNPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_constraintNP)
         try:
-            self.state = 221
+            self.state = 227
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.TypeConstraintNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 196
-                self.match(OvernightParser.LB)
-                self.state = 197
-                self.getProperty()
-                self.state = 198
-                self.match(OvernightParser.LB)
-                self.state = 199
-                self.singleton()
-                self.state = 200
-                self.concept()
-                self.state = 201
-                self.match(OvernightParser.RB)
                 self.state = 202
                 self.match(OvernightParser.LB)
                 self.state = 203
-                self.match(OvernightParser.T__2)
+                self.getProperty()
                 self.state = 204
-                self.match(OvernightParser.T__4)
+                self.match(OvernightParser.LB)
                 self.state = 205
-                self.match(OvernightParser.T__5)
+                self.singleton()
                 self.state = 206
-                self.match(OvernightParser.RB)
+                self.concept()
                 self.state = 207
+                self.match(OvernightParser.RB)
+                self.state = 208
+                self.match(OvernightParser.LB)
+                self.state = 209
+                self.match(OvernightParser.T__2)
+                self.state = 210
+                self.match(OvernightParser.T__4)
+                self.state = 211
+                self.match(OvernightParser.T__5)
+                self.state = 212
+                self.match(OvernightParser.RB)
+                self.state = 213
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.FilterConstraintNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 209
+                self.state = 215
                 self.filterCP()
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.EventConstraintNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 210
+                self.state = 216
                 self.match(OvernightParser.LB)
-                self.state = 211
+                self.state = 217
                 self.getProperty()
-                self.state = 212
+                self.state = 218
                 self.np()
-                self.state = 213
+                self.state = 219
                 self.reversePredicate()
-                self.state = 214
+                self.state = 220
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.VoidConstraintNPContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 216
+                self.state = 222
                 self.match(OvernightParser.LB)
-                self.state = 217
+                self.state = 223
                 self.match(OvernightParser.T__6)
-                self.state = 218
+                self.state = 224
                 self.string()
-                self.state = 219
+                self.state = 225
                 self.match(OvernightParser.RB)
                 pass
 
@@ -1707,42 +1748,42 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.CpContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_cp)
         try:
-            self.state = 232
+            self.state = 238
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,11,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.NestedCPContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 223
+                self.state = 229
                 self.match(OvernightParser.LB)
-                self.state = 224
+                self.state = 230
                 self.match(OvernightParser.T__7)
-                self.state = 225
+                self.state = 231
                 self.string()
-                self.state = 226
+                self.state = 232
                 self.cp()
-                self.state = 227
+                self.state = 233
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.CPContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 229
+                self.state = 235
                 self.filterCP()
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.CPContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 230
+                self.state = 236
                 self.superlativeCP()
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.CPContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 231
+                self.state = 237
                 self.comparativeCP()
                 pass
 
@@ -1884,27 +1925,12 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.FilterCPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_filterCP)
         try:
-            self.state = 264
+            self.state = 270
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.FilterByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 234
-                self.match(OvernightParser.LB)
-                self.state = 235
-                self.filterFunc()
-                self.state = 236
-                self.constraintNP()
-                self.state = 237
-                self.predicate()
-                self.state = 238
-                self.match(OvernightParser.RB)
-                pass
-
-            elif la_ == 2:
-                localctx = OvernightParser.FilterByAttributeContext(self, localctx)
-                self.enterOuterAlt(localctx, 2)
                 self.state = 240
                 self.match(OvernightParser.LB)
                 self.state = 241
@@ -1912,50 +1938,65 @@ class OvernightParser ( Parser ):
                 self.state = 242
                 self.constraintNP()
                 self.state = 243
-                self.relNP()
+                self.predicate()
                 self.state = 244
-                self.op()
-                self.state = 245
-                self.value()
+                self.match(OvernightParser.RB)
+                pass
+
+            elif la_ == 2:
+                localctx = OvernightParser.FilterByAttributeContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
                 self.state = 246
+                self.match(OvernightParser.LB)
+                self.state = 247
+                self.filterFunc()
+                self.state = 248
+                self.constraintNP()
+                self.state = 249
+                self.relNP()
+                self.state = 250
+                self.op()
+                self.state = 251
+                self.value()
+                self.state = 252
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.FilterByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 248
-                self.match(OvernightParser.LB)
-                self.state = 249
-                self.filterFunc()
-                self.state = 250
-                self.constraintNP()
-                self.state = 251
-                self.predicate()
-                self.state = 252
-                self.op()
-                self.state = 253
-                self.np()
                 self.state = 254
+                self.match(OvernightParser.LB)
+                self.state = 255
+                self.filterFunc()
+                self.state = 256
+                self.constraintNP()
+                self.state = 257
+                self.predicate()
+                self.state = 258
+                self.op()
+                self.state = 259
+                self.np()
+                self.state = 260
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.FilterByReversePredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 256
-                self.match(OvernightParser.LB)
-                self.state = 257
-                self.filterFunc()
-                self.state = 258
-                self.constraintNP()
-                self.state = 259
-                self.reversePredicate()
-                self.state = 260
-                self.op()
-                self.state = 261
-                self.np()
                 self.state = 262
+                self.match(OvernightParser.LB)
+                self.state = 263
+                self.filterFunc()
+                self.state = 264
+                self.constraintNP()
+                self.state = 265
+                self.reversePredicate()
+                self.state = 266
+                self.op()
+                self.state = 267
+                self.np()
+                self.state = 268
                 self.match(OvernightParser.RB)
                 pass
 
@@ -2097,78 +2138,78 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.SuperlativeCPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_superlativeCP)
         try:
-            self.state = 296
+            self.state = 302
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.SuperlativeByAttributeContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 266
+                self.state = 272
                 self.match(OvernightParser.LB)
-                self.state = 267
+                self.state = 273
                 self.superlative()
-                self.state = 268
+                self.state = 274
                 self.constraintNP()
-                self.state = 269
+                self.state = 275
                 self.op()
-                self.state = 270
+                self.state = 276
                 self.relNP()
-                self.state = 271
+                self.state = 277
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.SuperlativeByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 273
+                self.state = 279
                 self.match(OvernightParser.LB)
-                self.state = 274
+                self.state = 280
                 self.countSuperlative()
-                self.state = 275
+                self.state = 281
                 self.constraintNP()
-                self.state = 276
+                self.state = 282
                 self.op()
-                self.state = 277
+                self.state = 283
                 self.relNP()
-                self.state = 278
+                self.state = 284
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.SuperlativeByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 280
-                self.match(OvernightParser.LB)
-                self.state = 281
-                self.countSuperlative()
-                self.state = 282
-                self.constraintNP()
-                self.state = 283
-                self.op()
-                self.state = 284
-                self.predicate()
-                self.state = 285
-                self.np()
                 self.state = 286
+                self.match(OvernightParser.LB)
+                self.state = 287
+                self.countSuperlative()
+                self.state = 288
+                self.constraintNP()
+                self.state = 289
+                self.op()
+                self.state = 290
+                self.predicate()
+                self.state = 291
+                self.np()
+                self.state = 292
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.SuperlativeByReversePredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 288
-                self.match(OvernightParser.LB)
-                self.state = 289
-                self.countSuperlative()
-                self.state = 290
-                self.constraintNP()
-                self.state = 291
-                self.op()
-                self.state = 292
-                self.reversePredicate()
-                self.state = 293
-                self.np()
                 self.state = 294
+                self.match(OvernightParser.LB)
+                self.state = 295
+                self.countSuperlative()
+                self.state = 296
+                self.constraintNP()
+                self.state = 297
+                self.op()
+                self.state = 298
+                self.reversePredicate()
+                self.state = 299
+                self.np()
+                self.state = 300
                 self.match(OvernightParser.RB)
                 pass
 
@@ -2284,67 +2325,67 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.ComparativeCPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_comparativeCP)
         try:
-            self.state = 324
+            self.state = 330
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.ComparativeByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 298
-                self.match(OvernightParser.LB)
-                self.state = 299
-                self.countComparative()
-                self.state = 300
-                self.constraintNP()
-                self.state = 301
-                self.relNP()
-                self.state = 302
-                self.op()
-                self.state = 303
-                self.value()
                 self.state = 304
+                self.match(OvernightParser.LB)
+                self.state = 305
+                self.countComparative()
+                self.state = 306
+                self.constraintNP()
+                self.state = 307
+                self.relNP()
+                self.state = 308
+                self.op()
+                self.state = 309
+                self.value()
+                self.state = 310
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.ComparativeByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 306
-                self.match(OvernightParser.LB)
-                self.state = 307
-                self.countComparative()
-                self.state = 308
-                self.constraintNP()
-                self.state = 309
-                self.predicate()
-                self.state = 310
-                self.op()
-                self.state = 311
-                self.value()
                 self.state = 312
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 313
+                self.countComparative()
+                self.state = 314
+                self.constraintNP()
+                self.state = 315
+                self.predicate()
+                self.state = 316
+                self.op()
+                self.state = 317
+                self.value()
+                self.state = 318
+                self.np()
+                self.state = 319
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.ComparativeByReversePredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 315
-                self.match(OvernightParser.LB)
-                self.state = 316
-                self.countComparative()
-                self.state = 317
-                self.constraintNP()
-                self.state = 318
-                self.reversePredicate()
-                self.state = 319
-                self.op()
-                self.state = 320
-                self.value()
                 self.state = 321
-                self.np()
+                self.match(OvernightParser.LB)
                 self.state = 322
+                self.countComparative()
+                self.state = 323
+                self.constraintNP()
+                self.state = 324
+                self.reversePredicate()
+                self.state = 325
+                self.op()
+                self.state = 326
+                self.value()
+                self.state = 327
+                self.np()
+                self.state = 328
                 self.match(OvernightParser.RB)
                 pass
 
@@ -2541,116 +2582,116 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.OpContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_op)
         try:
-            self.state = 361
+            self.state = 367
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,15,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.EqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 326
+                self.state = 332
                 self.match(OvernightParser.LB)
-                self.state = 327
+                self.state = 333
                 self.match(OvernightParser.T__2)
-                self.state = 328
+                self.state = 334
                 self.match(OvernightParser.T__8)
-                self.state = 329
+                self.state = 335
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.NotEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 330
+                self.state = 336
                 self.match(OvernightParser.LB)
-                self.state = 331
+                self.state = 337
                 self.match(OvernightParser.T__2)
-                self.state = 332
+                self.state = 338
                 self.match(OvernightParser.T__4)
-                self.state = 333
+                self.state = 339
                 self.match(OvernightParser.T__8)
-                self.state = 334
+                self.state = 340
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 3:
                 localctx = OvernightParser.LessThanContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 335
+                self.state = 341
                 self.match(OvernightParser.LB)
-                self.state = 336
+                self.state = 342
                 self.match(OvernightParser.T__2)
-                self.state = 337
+                self.state = 343
                 self.match(OvernightParser.T__9)
-                self.state = 338
+                self.state = 344
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 4:
                 localctx = OvernightParser.GreaterThanContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 339
+                self.state = 345
                 self.match(OvernightParser.LB)
-                self.state = 340
+                self.state = 346
                 self.match(OvernightParser.T__2)
-                self.state = 341
+                self.state = 347
                 self.match(OvernightParser.T__10)
-                self.state = 342
+                self.state = 348
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 5:
                 localctx = OvernightParser.LessThanOrEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 343
+                self.state = 349
                 self.match(OvernightParser.LB)
-                self.state = 344
+                self.state = 350
                 self.match(OvernightParser.T__2)
-                self.state = 345
+                self.state = 351
                 self.match(OvernightParser.T__9)
-                self.state = 346
+                self.state = 352
                 self.match(OvernightParser.T__8)
-                self.state = 347
+                self.state = 353
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 6:
                 localctx = OvernightParser.GreaterThanOrEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
-                self.state = 348
+                self.state = 354
                 self.match(OvernightParser.LB)
-                self.state = 349
+                self.state = 355
                 self.match(OvernightParser.T__2)
-                self.state = 350
+                self.state = 356
                 self.match(OvernightParser.T__10)
-                self.state = 351
+                self.state = 357
                 self.match(OvernightParser.T__8)
-                self.state = 352
+                self.state = 358
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 7:
                 localctx = OvernightParser.MinContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
-                self.state = 353
+                self.state = 359
                 self.match(OvernightParser.LB)
-                self.state = 354
+                self.state = 360
                 self.match(OvernightParser.T__2)
-                self.state = 355
+                self.state = 361
                 self.match(OvernightParser.T__11)
-                self.state = 356
+                self.state = 362
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 8:
                 localctx = OvernightParser.MaxContext(self, localctx)
                 self.enterOuterAlt(localctx, 8)
-                self.state = 357
+                self.state = 363
                 self.match(OvernightParser.LB)
-                self.state = 358
+                self.state = 364
                 self.match(OvernightParser.T__2)
-                self.state = 359
+                self.state = 365
                 self.match(OvernightParser.T__12)
-                self.state = 360
+                self.state = 366
                 self.match(OvernightParser.RB)
                 pass
 
@@ -2727,32 +2768,32 @@ class OvernightParser ( Parser ):
         localctx = OvernightParser.AggregateTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_aggregateType)
         try:
-            self.state = 371
+            self.state = 377
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
             if la_ == 1:
                 localctx = OvernightParser.SumAggregateContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 363
+                self.state = 369
                 self.match(OvernightParser.LB)
-                self.state = 364
+                self.state = 370
                 self.match(OvernightParser.T__2)
-                self.state = 365
+                self.state = 371
                 self.match(OvernightParser.T__13)
-                self.state = 366
+                self.state = 372
                 self.match(OvernightParser.RB)
                 pass
 
             elif la_ == 2:
                 localctx = OvernightParser.AvgAggregateContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 367
+                self.state = 373
                 self.match(OvernightParser.LB)
-                self.state = 368
+                self.state = 374
                 self.match(OvernightParser.T__2)
-                self.state = 369
+                self.state = 375
                 self.match(OvernightParser.T__14)
-                self.state = 370
+                self.state = 376
                 self.match(OvernightParser.RB)
                 pass
 
@@ -2796,9 +2837,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 30, self.RULE_listValue)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 373
+            self.state = 379
             self.match(OvernightParser.PREFIX)
-            self.state = 374
+            self.state = 380
             self.match(OvernightParser.T__15)
         except RecognitionException as re:
             localctx.exception = re
@@ -2839,9 +2880,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 32, self.RULE_size)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 376
+            self.state = 382
             self.match(OvernightParser.PREFIX)
-            self.state = 377
+            self.state = 383
             self.match(OvernightParser.T__16)
         except RecognitionException as re:
             localctx.exception = re
@@ -2882,9 +2923,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 34, self.RULE_domain)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 379
+            self.state = 385
             self.match(OvernightParser.PREFIX)
-            self.state = 380
+            self.state = 386
             self.match(OvernightParser.T__17)
         except RecognitionException as re:
             localctx.exception = re
@@ -2925,9 +2966,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 36, self.RULE_singleton)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 382
+            self.state = 388
             self.match(OvernightParser.PREFIX)
-            self.state = 383
+            self.state = 389
             self.match(OvernightParser.T__18)
         except RecognitionException as re:
             localctx.exception = re
@@ -2968,9 +3009,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 38, self.RULE_filterFunc)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 385
+            self.state = 391
             self.match(OvernightParser.PREFIX)
-            self.state = 386
+            self.state = 392
             self.match(OvernightParser.T__19)
         except RecognitionException as re:
             localctx.exception = re
@@ -3011,9 +3052,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 40, self.RULE_getProperty)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 388
+            self.state = 394
             self.match(OvernightParser.PREFIX)
-            self.state = 389
+            self.state = 395
             self.match(OvernightParser.T__20)
         except RecognitionException as re:
             localctx.exception = re
@@ -3054,9 +3095,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 42, self.RULE_superlative)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 391
+            self.state = 397
             self.match(OvernightParser.PREFIX)
-            self.state = 392
+            self.state = 398
             self.match(OvernightParser.T__21)
         except RecognitionException as re:
             localctx.exception = re
@@ -3097,9 +3138,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 44, self.RULE_countSuperlative)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 394
+            self.state = 400
             self.match(OvernightParser.PREFIX)
-            self.state = 395
+            self.state = 401
             self.match(OvernightParser.T__22)
         except RecognitionException as re:
             localctx.exception = re
@@ -3140,9 +3181,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 46, self.RULE_countComparative)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 397
+            self.state = 403
             self.match(OvernightParser.PREFIX)
-            self.state = 398
+            self.state = 404
             self.match(OvernightParser.T__23)
         except RecognitionException as re:
             localctx.exception = re
@@ -3183,9 +3224,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 48, self.RULE_aggregate)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 400
+            self.state = 406
             self.match(OvernightParser.PREFIX)
-            self.state = 401
+            self.state = 407
             self.match(OvernightParser.T__24)
         except RecognitionException as re:
             localctx.exception = re
@@ -3226,9 +3267,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 50, self.RULE_concat)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 403
+            self.state = 409
             self.match(OvernightParser.PREFIX)
-            self.state = 404
+            self.state = 410
             self.match(OvernightParser.T__25)
         except RecognitionException as re:
             localctx.exception = re
@@ -3269,9 +3310,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 52, self.RULE_reverse)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 406
+            self.state = 412
             self.match(OvernightParser.PREFIX)
-            self.state = 407
+            self.state = 413
             self.match(OvernightParser.T__26)
         except RecognitionException as re:
             localctx.exception = re
@@ -3312,9 +3353,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 54, self.RULE_ensureNumericProperty)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 409
+            self.state = 415
             self.match(OvernightParser.PREFIX)
-            self.state = 410
+            self.state = 416
             self.match(OvernightParser.T__27)
         except RecognitionException as re:
             localctx.exception = re
@@ -3355,9 +3396,9 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 56, self.RULE_ensureNumericEntity)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 412
+            self.state = 418
             self.match(OvernightParser.PREFIX)
-            self.state = 413
+            self.state = 419
             self.match(OvernightParser.T__28)
         except RecognitionException as re:
             localctx.exception = re
@@ -3408,21 +3449,21 @@ class OvernightParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 416 
+            self.state = 422 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 415
+                self.state = 421
                 _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << OvernightParser.T__16) | (1 << OvernightParser.T__29) | (1 << OvernightParser.INTEGER) | (1 << OvernightParser.STRING_LITERAL))) != 0)):
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << OvernightParser.T__16) | (1 << OvernightParser.T__29) | (1 << OvernightParser.T__30) | (1 << OvernightParser.T__31) | (1 << OvernightParser.INTEGER) | (1 << OvernightParser.STRING_LITERAL))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 418 
+                self.state = 424 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << OvernightParser.T__16) | (1 << OvernightParser.T__29) | (1 << OvernightParser.INTEGER) | (1 << OvernightParser.STRING_LITERAL))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << OvernightParser.T__16) | (1 << OvernightParser.T__29) | (1 << OvernightParser.T__30) | (1 << OvernightParser.T__31) | (1 << OvernightParser.INTEGER) | (1 << OvernightParser.STRING_LITERAL))) != 0)):
                     break
 
         except RecognitionException as re:
@@ -3464,8 +3505,49 @@ class OvernightParser ( Parser ):
         self.enterRule(localctx, 60, self.RULE_date)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 420
+            self.state = 426
             self.match(OvernightParser.DATE)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class YearContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def YEAR(self):
+            return self.getToken(OvernightParser.YEAR, 0)
+
+        def getRuleIndex(self):
+            return OvernightParser.RULE_year
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterYear" ):
+                listener.enterYear(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitYear" ):
+                listener.exitYear(self)
+
+
+
+
+    def year(self):
+
+        localctx = OvernightParser.YearContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 62, self.RULE_year)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 428
+            self.match(OvernightParser.YEAR)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3502,10 +3584,10 @@ class OvernightParser ( Parser ):
     def time(self):
 
         localctx = OvernightParser.TimeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 62, self.RULE_time)
+        self.enterRule(localctx, 64, self.RULE_time)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 422
+            self.state = 430
             self.match(OvernightParser.TIME)
         except RecognitionException as re:
             localctx.exception = re
@@ -3543,10 +3625,10 @@ class OvernightParser ( Parser ):
     def quantity(self):
 
         localctx = OvernightParser.QuantityContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 64, self.RULE_quantity)
+        self.enterRule(localctx, 66, self.RULE_quantity)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 424
+            self.state = 432
             self.match(OvernightParser.INTEGER)
         except RecognitionException as re:
             localctx.exception = re

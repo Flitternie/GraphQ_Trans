@@ -48,6 +48,7 @@ value
     | LB ensureNumericEntity np RB #numericEntityNP
     | LB 'number' quantity ( 'en.'? string )? RB #numberNP
     | LB date RB #dateNP
+    | LB year RB #yearNP
     | LB time RB #timeNP
     ;
 
@@ -172,11 +173,15 @@ RB
     ;
 
 string
-    : ( STRING_LITERAL | INTEGER | 'date' | 'size' )+
+    : ( STRING_LITERAL | INTEGER | 'date' | 'year' | 'time' | 'size' )+
     ;
 
 date
     : DATE
+    ;
+
+year
+    : YEAR
     ;
 
 time
@@ -189,6 +194,10 @@ quantity
 
 DATE
     : 'date ' INTEGER ' ' INTEGER ' ' INTEGER
+    ;
+
+YEAR
+    : 'year ' INTEGER
     ;
 
 TIME
