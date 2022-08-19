@@ -32,10 +32,10 @@ ir_translator = IRTranslator() # Create a IRTranslator that translates graphqIR 
 # the SPARQL query for "Get all entities that are human"
 sparql_query = 'SELECT DISTINCT ?e WHERE { ?e <pred:instance_of> ?c . ?c <pred:name> "human" } '
 
-ir = sparql_translator.to_ir(sparql_query)
+ir = sparql_translator.to_ir(sparql_query) # translates sparql to ir
 print(ir)
 
-cypher_query = ir_translator.to_cypher(ir)
+cypher_query = ir_translator.to_cypher(ir) # translates ir to cypher
 print(cypher_query) 
 ```
 
