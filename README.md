@@ -82,7 +82,7 @@ RETURN x.name
 
 
 ### KoPL
-For KoPL, we support all styles that satisfy the language grammar. To see more specific instrution, please refer to the original website https://github.com/THU-KEG/KoPL
+For KoPL, we support all styles that satisfy the language grammar. To see more specific instrution, please refer to their public repository https://github.com/THU-KEG/KoPL
 
 ### Lambda-DCS
 For lambda-DCS, please refers to the original paper [(Liang, 2013)](https://arxiv.org/abs/1309.4408) for more specific instructions
