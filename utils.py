@@ -1,3 +1,15 @@
+from antlr4.error.ErrorListener import ErrorListener
+
+class ErrorHandler(ErrorListener):
+
+    __slots__ = [ 'file_name' ]
+    
+    def __init__(self, file_name="<stdin>"):
+        self.file_name = file_name
+
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        print(f"{self.file_name} {line}:{column} {msg}")
+
 class strictDict(dict):
     def __setitem__(self, key, value):
         if key not in self:

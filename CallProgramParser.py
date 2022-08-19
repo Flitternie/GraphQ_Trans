@@ -1,27 +1,8 @@
-import sys
-import json
-from itertools import chain
-from tqdm import tqdm
-
-from collections import OrderedDict
-from string import Template
-
 from antlr4 import *
 from antlr4.InputStream import InputStream
 
-from .program.ProgramLexer import ProgramLexer
-from .program.ProgramParser import ProgramParser
-from .program.ProgramListener import ProgramListener
-
-from antlr4.error.ErrorListener import ErrorListener
-from antlr4.error.Errors import ParseCancellationException
-
-class ThrowingErrorListener(ErrorListener):
-    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        ex = ParseCancellationException(f'line {line}: {column} {msg}')
-        ex.line = line
-        ex.column = column
-        raise ex
+from .kopl.KoplLexer import KoplLexer
+from .kopl.KoplParser import KoplParser
 
 def get_program_seq(program):
     seq = []
@@ -40,11 +21,9 @@ class Parser():
     def parse(self, input):
         program = get_program_seq(input)
         input_stream = InputStream(program)
-        lexer = ProgramLexer(input_stream)       
-        # lexer.removeErrorListeners()
-        # lexer.addErrorListener(ThrowingErrorListener())
+        lexer = KoplLexer(input_stream)       
         token_stream = CommonTokenStream(lexer)
-        parser = ProgramParser(token_stream)
+        parser = KoplParser(token_stream)
         
         try:
             tree = parser.query()

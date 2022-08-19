@@ -1,5 +1,5 @@
 lexer grammar CypherLexer;
-
+    
 Match
     : 'MATCH'
     ;
@@ -12,12 +12,24 @@ Return
     : 'RETURN'
     ;
 
+Union
+    : 'UNION'
+    ;
+
 With
     : 'WITH'
     ;
 
 As
     : 'AS'
+    ;
+
+And
+    : 'AND'
+    ;
+
+Or
+    : 'OR'
     ;
 
 OrderBy
@@ -32,12 +44,20 @@ Distinct
     : 'DISTINCT'
     ;
 
-WS
-    : ( '\t' | '\n' | '\r' )+ ->skip
+CountFunction
+    : 'count'
+    ;
+
+IsEmptyFunction
+    : 'isEmpty'
+    ;
+
+Desc
+    : 'DESC'
     ;
 
 SEP
-    : '"'
+    : '\'' | '"'
     ;
 
 LP
@@ -52,7 +72,7 @@ LB
     : '{'
     ;
 
-C
+COL
     : ':'
     ;
 
@@ -80,8 +100,28 @@ RSB
     : ']'
     ;
 
-EQUAL
+EQ
     : '='
+    ;
+
+NEQ
+    : '<>'
+    ;
+
+GTE
+    : '>='
+    ;
+
+GT
+    : '>'
+    ;
+
+LTE
+    : '<='
+    ;
+
+LT
+    : '<'
     ;
 
 DOT
@@ -92,6 +132,10 @@ INTEGER
     : DIGIT+
     ;
 
+STRING_SYMBOL
+    : SYMBOL+
+    ;
+
 STRING_LITERAL
     : CHAR+
     ;
@@ -100,8 +144,8 @@ OR
     : '|'
     ;
 
-SPACE
-    : ' ' ->skip
+COMMA
+    : ','
     ;
 
 fragment
@@ -111,8 +155,17 @@ DIGIT
     ;
 
 fragment
+SYMBOL
+    : '!' | '/' | '?' | '%' | '*' | '¡' | ','
+    ;
+
+fragment
 CHAR
-    : '!' | '/' | '\'' | '?' | '%' | '*' | '¡' | ',' | '_' 
+    : '_'
     | [\p{Uppercase_Letter}\p{Lowercase_Letter}]
     | [\p{Math_Symbol}\p{Currency_Symbol}]
+    ;
+
+WS
+    : ( '\t' | '\n' | '\r' | ' ' )+ ->skip
     ;
