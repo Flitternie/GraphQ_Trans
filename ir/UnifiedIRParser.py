@@ -2813,7 +2813,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def ENTI_END(self):
-            return self.getToken(UnifiedIRParser.ENTI_END, 0)
+            return self.getToken(Parser.ENTI_END, 0)
 
         def getRuleIndex(self):
             return UnifiedIRParser.RULE_entity

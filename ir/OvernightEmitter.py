@@ -1,15 +1,15 @@
 import os
 import re
-from collections import OrderedDict
 from antlr4 import *
 
-from .UnifiedIRLexer import UnifiedIRLexer
-from .UnifiedIRParser import UnifiedIRParser
-from .UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
+from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
+from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
 
-from ..utils import *
+from graphq_trans.utils import *
 
 overnight_domains = ['basketball', 'blocks', 'calendar', 'housing', 'publications', 'recipes', 'restaurants', 'socialnetwork']
+
 
 def read_grammar(file_path):
     grammar = {}
@@ -42,7 +42,7 @@ def read_grammar(file_path):
 
 class OvernightEmitter(UnifiedIRParserListener):
     def __init__(self, ungrounded=False):
-        self.logical_form = ""
+        self.output = ""
         self.domain = None
         self.ungrounded = ungrounded
         
@@ -72,13 +72,13 @@ class OvernightEmitter(UnifiedIRParserListener):
         
     
     def initialize(self):
-        self.logical_form = ""
+        self.output = ""
     
     def set_domain(self, domain):
         self.domain = domain
 
-    def get_logical_form(self, ctx):
-        return self.logical_form
+    def emit(self, ctx):
+        return self.output
 
     def get_full_name(self, abbr, datatype, domain):
         datatype = [datatype] if isinstance(datatype, str) else datatype
@@ -140,7 +140,7 @@ class OvernightEmitter(UnifiedIRParserListener):
         return super().enterRoot(ctx)
 
     def exitRoot(self, ctx: UnifiedIRParser.RootContext):
-        self.logical_form = ctx.slots["LF"]
+        self.output = ctx.slots["LF"]
         return super().exitRoot(ctx)    
     
     def enterEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):

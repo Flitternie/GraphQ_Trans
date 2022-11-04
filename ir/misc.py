@@ -1,5 +1,5 @@
-import math
 import re
+import json
 
 PRED_INSTANCE = 'pred:instance_of'
 PRED_NAME = 'pred:name'
@@ -13,6 +13,25 @@ PRED_TIME = 'pred:time'  # link packed value node to its date value, which is a 
 PRED_FACT_H = 'pred:fact_h'  # link qualifier node to its head
 PRED_FACT_R = 'pred:fact_r'
 PRED_FACT_T = 'pred:fact_t'
+
+class ValueTyping(object):
+    def __init__(self, kb_json):
+        kb = json.load(open(kb_json))
+        self.entities = kb['entities']
+        self.key_type = {}
+        for _, ent_info in self.entities.items():
+            for attr_info in ent_info['attributes']:
+                self.key_type[attr_info['key']] = attr_info['value']['type']
+                for qk in attr_info['qualifiers']:
+                    for qv in attr_info['qualifiers'][qk]:
+                        self.key_type[qk] = qv['type']
+        for _, ent_info in self.entities.items():
+            for rel_info in ent_info['relations']:
+                for qk in rel_info['qualifiers']:
+                    for qv in rel_info['qualifiers'][qk]:
+                        self.key_type[qk] = qv['type']
+        # Note: key_type is one of string/quantity/date, but date means the key may have values of type year
+        self.key_type = { k:v if v!='year' else 'date' for k,v in self.key_type.items() }
 
 
 def legal(s):
@@ -390,7 +409,7 @@ def hop_two_descriptions(condition1, condition2):
 
 
 # For Graphq IR -> Cypher
-def shift_index(n_step, r_step, clauses: [str]):
+def shift_index(n_step, r_step, clauses):
     """
     To shift the variable indices of nodes and relationships in the clauses by n_step and r_step respectively.
     """
@@ -403,7 +422,7 @@ def shift_index(n_step, r_step, clauses: [str]):
     return new_clauses
 
 
-def find_max_idx(clauses: [str]):
+def find_max_idx(clauses):
     """
     return the maximum node index and relationship index
     """
@@ -416,7 +435,7 @@ def find_max_idx(clauses: [str]):
     return max(n_idxs), max(r_idxs)
 
 
-def find_min_unsused(clauses1: [str], clauses2: [str]):
+def find_min_unsused(clauses1, clauses2):
     """
     return the minimum common, unused indices (node and relationship) across two clauses
     """
@@ -455,7 +474,7 @@ def valid_str(x: str):
 
 # For Cypher -> IR
 
-def union(irs: [str]):
+def union(irs):
     ir = irs.pop()
     while irs:
         ir = "<ES> {} or {} </ES>".format(ir, irs.pop())

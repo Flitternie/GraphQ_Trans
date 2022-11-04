@@ -1,20 +1,18 @@
-import os
 import re
 import warnings
-
 from antlr4 import *
 
-from .UnifiedIRLexer import UnifiedIRLexer
-from .UnifiedIRParser import UnifiedIRParser
-from .UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
+from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
+from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
 
-from ..utils import *
-from .misc import *
+from graphq_trans.utils import *
+from graphq_trans.ir.misc import *
 
 
 class CypherEmitter(UnifiedIRParserListener):
     def __init__(self):
-        self.logical_form = ""
+        self.output = ""
 
         self.entitySetSet = [
             UnifiedIRParser.EntitySetGroupContext,
@@ -25,10 +23,10 @@ class CypherEmitter(UnifiedIRParserListener):
         ]
 
     def initialize(self):
-        self.logical_form = ""
+        self.output = ""
 
-    def get_logical_form(self, ctx):
-        return self.logical_form
+    def emit(self, ctx):
+        return self.output
 
     # Enter a parse tree produced by UnifiedIRParser#root.
     def enterRoot(self, ctx: UnifiedIRParser.RootContext):
@@ -40,20 +38,20 @@ class CypherEmitter(UnifiedIRParserListener):
     # Exit a parse tree produced by UnifiedIRParser#root.
     def exitRoot(self, ctx: UnifiedIRParser.RootContext):
         for clause in ctx.slots["matchClauses"]:
-            self.logical_form += clause + "\n"
-        self.logical_form += ctx.slots["returnClause"]
+            self.output += clause + "\n"
+        self.output += ctx.slots["returnClause"]
         if ctx.slots["orderByClause"]:
-            self.logical_form += "\n" + ctx.slots["orderByClause"]
+            self.output += "\n" + ctx.slots["orderByClause"]
         if ctx.slots["parallelQuery"]:
-            self.logical_form += "\n" + "UNION\n"
+            self.output += "\n" + "UNION\n"
             for clause in ctx.slots["parallelQuery"]["matchClauses"]:
-                self.logical_form += clause + "\n"
-            self.logical_form += ctx.slots["parallelQuery"]["returnClause"]
+                self.output += clause + "\n"
+            self.output += ctx.slots["parallelQuery"]["returnClause"]
             if "orderByClause" in ctx.slots["parallelQuery"].keys():
-                self.logical_form += "\n" + ctx.slots["orderByClause"]
+                self.output += "\n" + ctx.slots["orderByClause"]
 
         if ctx.slots["limitClause"]:
-            self.logical_form += "\n" + ctx.slots["limitClause"]
+            self.output += "\n" + ctx.slots["limitClause"]
 
         return super().exitRoot(ctx)
 

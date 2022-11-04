@@ -1,20 +1,18 @@
-import os
 import re
 from antlr4 import *
 
-from .SparqlLexer import SparqlLexer
-from .SparqlParser import SparqlParser
-from .SparqlListener import SparqlListener
+from graphq_trans.sparql.SparqlLexer import SparqlLexer
+from graphq_trans.sparql.SparqlParser import SparqlParser
+from graphq_trans.sparql.SparqlListener import SparqlListener
 
 
-from ..utils import *
-from ..ir.utils import *
+from graphq_trans.utils import *
+from graphq_trans.ir.utils import *
 
 
 class IREmitter(SparqlListener):
 
     def __init__(self):
-
         self.SOP = {
             "=": "is",
             "<": "smaller than",
@@ -35,17 +33,17 @@ class IREmitter(SparqlListener):
             "xsd:date": 'date',
             'xsd:gYearMonth': 'month',
         }
-        self.ir = ""
+        self.output = ""
         self.query_var = ""
         self.queryType = ""
     
     def initialize(self):
-        self.ir = ""
+        self.output = ""
         self.query_var = ""
         self.queryType = ""
 
-    def get_ir(self, ctx):
-        return self.ir
+    def emit(self, ctx):
+        return self.output
 
 
     # Enter a parse tree produced by SparqlParser#query.
@@ -60,19 +58,19 @@ class IREmitter(SparqlListener):
     # Exit a parse tree produced by SparqlParser#query.
     def exitQuery(self, ctx: SparqlParser.QueryContext):
         if self.queryType == "EntityQuery":
-            self.ir = "what is {}".format(ctx.slots["entitySet"])
+            self.output = "what is {}".format(ctx.slots["entitySet"])
         if self.queryType == "CountQuery":
-            self.ir = "how many {}".format(ctx.slots["entitySet"])
+            self.output = "how many {}".format(ctx.slots["entitySet"])
         if self.queryType == 'AttributeQuery':
-            self.ir = "what is the attribute {} of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
+            self.output = "what is the attribute {} of {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
         if self.queryType == "PredicateQuery":
-            self.ir = "what is the relation from {} to {}".format(ctx.slots["relationEntitySet1"], ctx.slots["relationEntitySet2"])
+            self.output = "what is the relation from {} to {}".format(ctx.slots["relationEntitySet1"], ctx.slots["relationEntitySet2"])
         if self.queryType == "SelectQuery":
-            self.ir = "which one has the {} among {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
+            self.output = "which one has the {} among {}".format(ctx.slots["attribute"], ctx.slots["entitySet"])
         if self.queryType == "VerifyQuery":
-            self.ir = "whether {}".format(ctx.slots["verify"])
+            self.output = "whether {}".format(ctx.slots["verify"])
         if self.queryType == "QualifierQuery":
-            self.ir = "what is the qualifier {} of {}".format(ctx.slots["qualifier"], ctx.slots["verify"])
+            self.output = "what is the qualifier {} of {}".format(ctx.slots["qualifier"], ctx.slots["verify"])
         return super().exitQuery(ctx)
 
         # Enter a parse tree produced by SparqlParser#prologue.

@@ -1,16 +1,15 @@
-import os
-import re
 from antlr4 import *
 
-from .UnifiedIRLexer import UnifiedIRLexer
-from .UnifiedIRParser import UnifiedIRParser
-from .UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
+from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
+from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
 
-from ..utils import *
+from graphq_trans.utils import *
+
 
 class KoplEmitter(UnifiedIRParserListener):
     def __init__(self):
-        self.logical_form = ""
+        self.output = ""
         self.SEP = '<b>'
         
         ARG_SEP = '<c>'
@@ -52,10 +51,14 @@ class KoplEmitter(UnifiedIRParserListener):
 
 
     def initialize(self):
-        self.logical_form = ""
+        self.output = ""
 
-    def get_logical_form(self, ctx):
-        return self.logical_form
+    def emit(self, ctx):
+        return self.output
+    
+    def reverse(self, direction):
+        assert direction in ["forward", "backward"]
+        return "forward" if direction == "backward" else "backward"
     
     def enterRoot(self, ctx: UnifiedIRParser.RootContext):
         self.initialize()
@@ -63,7 +66,7 @@ class KoplEmitter(UnifiedIRParserListener):
         return super().enterRoot(ctx)
     
     def exitRoot(self, ctx: UnifiedIRParser.RootContext):
-        self.logical_form = ctx.slots["query"]
+        self.output = ctx.slots["query"]
         return super().exitRoot(ctx)
     
     def enterEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
@@ -291,7 +294,7 @@ class KoplEmitter(UnifiedIRParserListener):
         if isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByPredicateContext):
             ctx.parentCtx.slots["predicate"] = ctx.slots["predicate"]
         else:
-            ctx.parentCtx.slots["predicateFilter"] = self.func["FilterRelation"].format(ctx.slots["predicate"], ctx.slots["direction"])
+            ctx.parentCtx.slots["predicateFilter"] = self.func["FilterRelation"].format(ctx.slots["predicate"], self.reverse(ctx.slots["direction"]))
         return super().exitFilterByPredicate(ctx)
     
     def enterFilterByQualifier(self, ctx: UnifiedIRParser.FilterByQualifierContext):

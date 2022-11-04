@@ -2,20 +2,21 @@ import os
 import re
 from antlr4 import *
 
-from .UnifiedIRLexer import UnifiedIRLexer
-from .UnifiedIRParser import UnifiedIRParser
-from .UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
+from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
+from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
 
-from data.kqapro.utils.executor_rule_new import RuleExecutor
-
-from ..utils import *
-from .misc import *
+from graphq_trans.utils import *
+from graphq_trans.ir.misc import *
 
 class SparqlEmitter(UnifiedIRParserListener):
     def __init__(self):
-        self.logical_form = ""
-        self.rule_executor = RuleExecutor(os.path.join("./data/kqapro/data/", 'kb.json'))
-        
+        self.output = ""
+        try:
+            self.value_typing = ValueTyping(os.path.join("./data/kqapro/data/", 'kb.json'))
+        except:
+            pass
+            
         self.ambiguous_qualifiers = [
             "point in time", 
             "inception", 
@@ -40,14 +41,14 @@ class SparqlEmitter(UnifiedIRParserListener):
         }
     
     def initialize(self):
-        self.logical_form = ""
+        self.output = ""
 
-    def get_logical_form(self, ctx):
-        return self.logical_form
+    def emit(self, ctx):
+        return self.output
     
     def get_value_type(self, key, value=None):
         try:
-            v_type = self.rule_executor.key_type[key]
+            v_type = self.value_typing.key_type[key]
             if key in self.ambiguous_qualifiers and v_type == "date" and re.match(r"-?[0-9]{3,4}(?!.)", value):
                 return "year"
             return v_type
@@ -72,7 +73,7 @@ class SparqlEmitter(UnifiedIRParserListener):
         return super().enterRoot(ctx)
 
     def exitRoot(self, ctx: UnifiedIRParser.RootContext):
-        self.logical_form = ctx.slots["query"]
+        self.output = ctx.slots["query"]
         return super().exitRoot(ctx)
     
     def enterEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):

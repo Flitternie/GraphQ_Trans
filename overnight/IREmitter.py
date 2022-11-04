@@ -1,34 +1,33 @@
-import os
-import re
 from antlr4 import *
 
-from .OvernightLexer import OvernightLexer
-from .OvernightParser import OvernightParser
-from .OvernightListener import OvernightListener
+from graphq_trans.overnight.OvernightLexer import OvernightLexer
+from graphq_trans.overnight.OvernightParser import OvernightParser
+from graphq_trans.overnight.OvernightListener import OvernightListener
 
-from ..utils import *
-from ..ir.utils import *
+from graphq_trans.utils import *
+from graphq_trans.ir.utils import *
+
 
 class IREmitter(OvernightListener):
     def __init__(self):
-        self.ir = ""
+        self.output = ""
     
-    def get_ir(self, ctx):
-        return self.ir        
+    def emit(self, ctx):
+        return self.output        
 
     def enterRoot(self, ctx: OvernightParser.RootContext):
-        self.ir = ""
+        self.output = ""
         ctx.slots = strictDict({"entitySet": ""})
         return super().enterRoot(ctx)
     
     def exitRoot(self, ctx: OvernightParser.RootContext):
-        self.ir = str(ctx.slots["entitySet"]).replace("  ", " ").strip()
-        if self.ir.startswith("<{}>".format(data_type["attribute"])):
-            self.ir = "what is the attribute " + self.ir
-        elif self.ir.startswith("size of"):
-            self.ir = self.ir.replace("size of", "how many")
+        self.output = str(ctx.slots["entitySet"]).replace("  ", " ").strip()
+        if self.output.startswith("<{}>".format(data_type["attribute"])):
+            self.output = "what is the attribute " + self.output
+        elif self.output.startswith("size of"):
+            self.output = self.output.replace("size of", "how many")
         else:
-            self.ir = "what is " + self.ir
+            self.output = "what is " + self.output
         return super().exitRoot(ctx)
     
     def enterConcatNP(self, ctx: OvernightParser.ConcatNPContext):

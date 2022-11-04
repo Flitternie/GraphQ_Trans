@@ -3,19 +3,17 @@ from antlr4.InputStream import InputStream
 
 from graphq_trans.kopl.KoplLexer import KoplLexer
 from graphq_trans.kopl.KoplParser import KoplParser
-from graphq_trans.kopl.KoplListener import KoplListener
-from graphq_trans.kopl.IREmitter import IREmitter
 
 from graphq_trans.utils import ErrorHandler
 from graphq_trans.kopl.utils import get_program_seq
 
-class Translator():
+class Parser():
     def __init__(self):
-        self.emitter = IREmitter()
         self.walker = ParseTreeWalker() 
         self.error_listener = ErrorHandler()
-    
+
     def parse(self, input):
+        input = get_program_seq(input)
         input_stream = InputStream(input)
         lexer = KoplLexer(input_stream)
         lexer.removeErrorListeners()
@@ -25,10 +23,8 @@ class Translator():
         parser = KoplParser(token_stream)
         parser.removeErrorListeners()
         parser.addErrorListener(self.error_listener)
-        return parser.root()
+        tree = parser.root()
+        lisp_tree_str = tree.toStringTree(recog=parser)
 
-    def to_ir(self, input):
-        tree = self.parse(get_program_seq(input))
-        self.walker.walk(self.emitter, tree)
-        ir = self.emitter.emit(tree)
-        return ir
+        return lisp_tree_str       
+    

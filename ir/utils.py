@@ -1,5 +1,5 @@
 import re 
-from ..utils import *
+from graphq_trans.utils import *
 
 data_type = {  
     "entity": "E", 

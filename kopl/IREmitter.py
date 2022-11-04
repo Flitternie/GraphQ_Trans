@@ -1,23 +1,28 @@
 from antlr4 import *
 
-from .KoplLexer import KoplLexer
-from .KoplParser import KoplParser
-from .KoplListener import KoplListener
+from graphq_trans.kopl.KoplLexer import KoplLexer
+from graphq_trans.kopl.KoplParser import KoplParser
+from graphq_trans.kopl.KoplListener import KoplListener
 
-from ..utils import *
-from ..ir.utils import *
+from graphq_trans.utils import *
+from graphq_trans.ir.utils import *
+
 
 class IREmitter(KoplListener):
     def __init__(self):
-        self.ir = ""
+        self.output = ""
         
-        self.setOP_vocab = {    "and": "and",
-                                "or": "or" }
+        self.setOP_vocab = {    
+            "and": "and",
+            "or": "or" 
+        }
 
-        self.stringOP_vocab = { "largest": "largest", 
-                                "smallest": "smallest", 
-                                "greater": "larger", 
-                                "less": "smaller"}
+        self.stringOP_vocab = { 
+            "largest": "largest", 
+            "smallest": "smallest", 
+            "greater": "larger", 
+            "less": "smaller"
+        }
         
         self.skeleton = {
             "WhatEntityQuery": "what is {}",
@@ -29,8 +34,8 @@ class IREmitter(KoplListener):
             "WhatRelationQualifierQuery": "what is the qualifier {} of {} that {} to {}",
         }
         
-    def get_ir(self, ctx):
-        return self.ir
+    def emit(self, ctx):
+        return self.output
     
     def find_aux_entityset(self, ctx):
         assert isinstance(ctx.slots["entitySet"], list) and len(ctx.slots["entitySet"]) == 2
@@ -43,12 +48,12 @@ class IREmitter(KoplListener):
             return False
 
     def enterRoot(self, ctx: KoplParser.RootContext):
-        self.ir = ""
+        self.output = ""
         ctx.slots = strictDict({"query": ""})
         return super().enterRoot(ctx)
 
     def exitRoot(self, ctx: KoplParser.RootContext):
-        self.ir = str(ctx.slots["query"])
+        self.output = str(ctx.slots["query"])
         return super().exitRoot(ctx)    
 
     def enterWhatEntityQuery(self, ctx: KoplParser.WhatEntityQueryContext):

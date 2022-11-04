@@ -1,15 +1,16 @@
 from antlr4 import *
 from antlr4.InputStream import InputStream
 
-from .UnifiedIRLexer import UnifiedIRLexer
-from .UnifiedIRParser import UnifiedIRParser
-from .UnifiedIRParserListener import UnifiedIRParserListener
-from .SparqlEmitter import SparqlEmitter
-from .OvernightEmitter import OvernightEmitter, overnight_domains
-from .CypherEmitter import CypherEmitter
-from .KoplEmitter import KoplEmitter
+from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
+from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
+from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
 
-from ..utils import ErrorHandler
+from graphq_trans.ir.SparqlEmitter import SparqlEmitter
+from graphq_trans.ir.OvernightEmitter import OvernightEmitter, overnight_domains
+from graphq_trans.ir.CypherEmitter import CypherEmitter
+from graphq_trans.ir.KoplEmitter import KoplEmitter
+
+from graphq_trans.utils import ErrorHandler
 
 
 def post_process_ir(ir):
@@ -28,12 +29,12 @@ class Translator():
         self.walker = ParseTreeWalker() 
         self.error_listener = ErrorHandler()
     
-    def set_domain(self, domain_idx: int):
+    def set_domain(self, domain_idx):
         assert domain_idx < len(overnight_domains)
         self.overnight_emitter.set_domain(overnight_domains[domain_idx])
     
-    def parse(self, ir):
-        input_stream = InputStream(ir)
+    def parse(self, input):
+        input_stream = InputStream(input)
         lexer = UnifiedIRLexer(input_stream)
         lexer.removeErrorListeners()
         lexer.addErrorListener(self.error_listener)    
@@ -44,32 +45,32 @@ class Translator():
         parser.addErrorListener(self.error_listener)
         return parser.root()
 
-    def to_sparql(self, ir):
-        ir = post_process_ir(ir)
-        tree = self.parse(ir)
+    def to_sparql(self, input):
+        input = post_process_ir(input)
+        tree = self.parse(input)
         self.walker.walk(self.sparql_emitter, tree)
-        logical_form = self.sparql_emitter.get_logical_form(tree)
+        logical_form = self.sparql_emitter.emit(tree)
         return logical_form
 
-    def to_kopl(self, ir):
-        ir = post_process_ir(ir)
-        tree = self.parse(ir)
+    def to_kopl(self, input):
+        input = post_process_ir(input)
+        tree = self.parse(input)
         self.walker.walk(self.kopl_emitter, tree)
-        logical_form = self.kopl_emitter.get_logical_form(tree)
+        logical_form = self.kopl_emitter.emit(tree)
         return logical_form
     
-    def to_overnight(self, ir, domain_idx=None):
+    def to_overnight(self, input, domain_idx=None):
         if domain_idx != None and self.overnight_emitter.domain != overnight_domains[domain_idx]:
             self.set_domain(domain_idx)
-        tree = self.parse(ir)
+        tree = self.parse(input)
         self.walker.walk(self.overnight_emitter, tree)
-        logical_form = self.overnight_emitter.get_logical_form(tree)
+        logical_form = self.overnight_emitter.emit(tree)
         return logical_form
     
-    def to_cypher(self, ir):
-        tree = self.parse(ir)
+    def to_cypher(self, input):
+        tree = self.parse(input)
         self.walker.walk(self.cypher_emitter, tree)
-        logical_form = self.cypher_emitter.get_logical_form(tree)
+        logical_form = self.cypher_emitter.emit(tree)
         return logical_form
 
     

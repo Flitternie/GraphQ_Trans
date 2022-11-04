@@ -1,10 +1,8 @@
-from ..utils import *
+from graphq_trans.utils import *
 
 
 class EntitySet:
-
     def __init__(self, var=None, label=None, concept=None):
-
         self._var = var
         self._label = label
         self._concept = concept

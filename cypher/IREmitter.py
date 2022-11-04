@@ -1,21 +1,19 @@
-import os
 import re
 from antlr4 import *
-
 import antlr4.tree.Tree as t
 
-from .CypherLexer import CypherLexer
-from .CypherParser import CypherParser
-from .CypherParserListener import CypherParserListener
+from graphq_trans.cypher.CypherLexer import CypherLexer
+from graphq_trans.cypher.CypherParser import CypherParser
+from graphq_trans.cypher.CypherParserListener import CypherParserListener
 
-from ..utils import *
-from .utils import *
-from ..ir.utils import *
+from graphq_trans.utils import *
+from graphq_trans.cypher.utils import *
+from graphq_trans.ir.utils import *
 
 
 class IREmitter(CypherParserListener):
     def __init__(self):
-        self.ir = ""
+        self.output = ""
 
         self.skeleton = {
             "EntityQuery": "what is {}",
@@ -37,10 +35,10 @@ class IREmitter(CypherParserListener):
         }
 
     def initialize(self):
-        self.ir = ""
+        self.output = ""
 
-    def get_ir(self, ctx):
-        return self.ir
+    def emit(self, ctx):
+        return self.output
 
     # Enter a parse tree produced by CypherParser#root.
     def enterRoot(self, ctx: CypherParser.RootContext):
@@ -84,7 +82,7 @@ class IREmitter(CypherParserListener):
                     union_es = es_ir_union_list.pop()
                     while es_ir_union_list:
                         union_es = "<ES> {} or {} </ES>".format(union_es, es_ir_union_list.pop())
-                    self.ir = self.skeleton["CountQuery"].format(union_es)
+                    self.output = self.skeleton["CountQuery"].format(union_es)
 
                 elif ctx.slots["query_func"] == "isEmpty":
                     es_ir_union_list = []
@@ -97,7 +95,7 @@ class IREmitter(CypherParserListener):
                     union_es = es_ir_union_list.pop()
                     while es_ir_union_list:
                         union_es = "<ES> {} or {} </ES>".format(union_es, es_ir_union_list.pop())
-                    self.ir = self.skeleton["VerifyQuery"].format(union_es)
+                    self.output = self.skeleton["VerifyQuery"].format(union_es)
 
             elif query_attr == "name":
                 if not order:
@@ -110,7 +108,7 @@ class IREmitter(CypherParserListener):
                     union_es = es_ir_union_list.pop()
                     while es_ir_union_list:
                         union_es = "<ES> {} or {} </ES>".format(union_es, es_ir_union_list.pop())
-                    self.ir = self.skeleton["EntityQuery"].format(union_es)
+                    self.output = self.skeleton["EntityQuery"].format(union_es)
                 else:
                     es_ir_union_list = []
                     for i in range(len(ctx.slots["order_attr"])):
@@ -124,7 +122,7 @@ class IREmitter(CypherParserListener):
                     union_es = es_ir_union_list.pop()
                     while es_ir_union_list:
                         union_es = "<ES> {} or {} </ES>".format(union_es, es_ir_union_list.pop())
-                    self.ir = self.skeleton["SelectQuery"].format(order, order_attr, union_es)
+                    self.output = self.skeleton["SelectQuery"].format(order, order_attr, union_es)
 
             elif query_attr == "label":
                 raise NotImplementedError("Current GraphQ IR design does not support this type of expression!")
@@ -148,12 +146,12 @@ class IREmitter(CypherParserListener):
                     union_es = es_ir_union_list4attr.pop()
                     while es_ir_union_list4attr:
                         union_es = "<ES> {} or {} </ES>".format(union_es, es_ir_union_list4attr.pop())
-                    self.ir = self.skeleton["AttributeQuery"].format(query_attr, union_es)
+                    self.output = self.skeleton["AttributeQuery"].format(query_attr, union_es)
                 else:
                     union_es = es_ir_union_list4qual.pop()
                     while es_ir_union_list4qual:
                         union_es = "<ES> {} or {} </ES>".format(union_es, es_ir_union_list4qual.pop())
-                    self.ir = self.skeleton["QualifierQuery"].format(query_attr, union_es)
+                    self.output = self.skeleton["QualifierQuery"].format(query_attr, union_es)
             else:
                 pass
         else:
@@ -164,31 +162,30 @@ class IREmitter(CypherParserListener):
             ctx.slots["order"] = ctx.slots["order"][0]
             ctx.slots["order_var"] = ctx.slots["order_var"][0]
             ctx.slots["order_attr"] = ctx.slots["order_attr"][0]
-            print(ctx.slots)
 
             if ctx.slots["query_func"]:
                 if ctx.slots["query_func"] == "count":
                     for es in ctx.slots["var_list"]:
                         if es.var == ctx.slots["query_var"]:
-                            self.ir = self.skeleton["CountQuery"].format(es.get_ir())
+                            self.output = self.skeleton["CountQuery"].format(es.get_ir())
                             break
                 elif ctx.slots["query_func"] == "isEmpty":
                     for es in ctx.slots["var_list"]:
                         if es.var == ctx.slots["query_var"]:
-                            self.ir = self.skeleton["VerifyQuery"].format(es.get_ir())
+                            self.output = self.skeleton["VerifyQuery"].format(es.get_ir())
                             break
             elif ctx.slots["query_attr"] == "name":
                 if not ctx.slots["order"]:
                     for es in ctx.slots["var_list"]:
                         if es.var == ctx.slots["query_var"]:
-                            self.ir = self.skeleton["EntityQuery"].format(es.get_ir())
+                            self.output = self.skeleton["EntityQuery"].format(es.get_ir())
                             break
                 else:
                     assert ctx.slots["order_var"] == ctx.slots["query_var"]
                     assert ctx.slots["limit"] == "1"
                     for es in ctx.slots["var_list"]:
                         if es.var == ctx.slots["query_var"]:
-                            self.ir = self.skeleton["SelectQuery"].format(
+                            self.output = self.skeleton["SelectQuery"].format(
                                 ctx.slots["order"], ctx.slots["order_attr"], es.get_ir()
                             )
                             break
@@ -198,7 +195,7 @@ class IREmitter(CypherParserListener):
                         if es.related_es[key]["edge_var"] == ctx.slots["query_var"]:
                             head_es = es
                             tail_es = es.related_es[key]["entitySet"]
-                            self.ir = self.skeleton["PredicateQuery"].format(
+                            self.output = self.skeleton["PredicateQuery"].format(
                                 head_es.get_ir([tail_es]), tail_es.get_ir([head_es])
                             )
                             break
@@ -209,13 +206,12 @@ class IREmitter(CypherParserListener):
             elif ctx.slots["query_attr"]:
                 for es in ctx.slots["var_list"]:
                     if es.var == ctx.slots["query_var"]:
-                        self.ir = self.skeleton["AttributeQuery"].format(ctx.slots["query_attr"], es.get_ir())
+                        self.output = self.skeleton["AttributeQuery"].format(ctx.slots["query_attr"], es.get_ir())
                         break
                     else:
                         for key in es.related_es.keys():
                             if es.related_es[key]["edge_var"] == ctx.slots["query_var"]:
-                                # print(es.related_es)
-                                self.ir = self.skeleton["QualifierQuery"].format(
+                                self.output = self.skeleton["QualifierQuery"].format(
                                     ctx.slots["query_attr"], es.get_ir()
                                 )
                                 break
