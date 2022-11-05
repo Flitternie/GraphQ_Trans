@@ -1,26 +1,31 @@
-# GraphQ Trans
-
 ![Icon](./docs/imgs/icon.png)
 
-<p> GraphQ Trans is an integrated system that supports the translation from natural language to graph query language as well as the transpilation among different query languages. Specifically, GraphQ Trans provides a user-friendly interface that automati- cally translates natural language questions  into various graph query languages in order to ease end-user interaction with heterogeneous graph database backend. </p>
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg?style=flat)](https://github.com/flitternie/graphq_trans/issues)
 
-For our demonstration website, please visit https://graphqtrans.xlore.cn/index
+GraphQ Trans is a source-to-source compiler that supports the transpilation among multiple graph query languages via a unified intermediate representation. You may install this package via pip:
+
+```bash
+pip install graphq_trans
+```
+
+For our demonstration website, please visit https://graphqtrans.xlore.cn/
 
 ## Setup Environment
 
-This toolkit relies on [ANTLR4](https://github.com/antlr/antlr4) for parse tree generation. The Python package has the following dependencies:
+This package has the following dependencies:
 
 * Python >= 3.6.2
-
-* Java >= 11
 
 * ANTLR >= 4.9.2
 
 * antlr4-python3-runtime >= 4.9.2
 
+This toolkit relies on [ANTLR4](https://github.com/antlr/antlr4) for front-end analysis, please refer to their [tutorial](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md) for setup. 
+
 ## Quick Start
 
-GraphQ Trans provides a set of easy-to-use translators for converting graph query languages. Here's a simple example of how to use the toolkit to convert between two graph query languages:
+GraphQ Trans provides a set of easy-to-use APIs for transpiling graph query languages. Here's a simple example of how to use the toolkit to convert between two graph query languages:
 
 ```python
 from graphq_ir.sparql.translator import Translator as SparqlTranslator
@@ -33,8 +38,6 @@ ir_translator = IRTranslator() # Create a IRTranslator that translates graphqIR 
 sparql_query = 'SELECT DISTINCT ?e WHERE { ?e <pred:instance_of> ?c . ?c <pred:name> "human" } '
 
 ir = sparql_translator.to_ir(sparql_query) # translates sparql to ir
-print(ir)
-
 cypher_query = ir_translator.to_cypher(ir) # translates ir to cypher
 print(cypher_query) 
 ```
@@ -46,8 +49,6 @@ MATCH (n1:human)
 RETURN n1.name
 ```
 
-## Supported Features
-To see the exact features in each graph query languages that we support, you may check out the .md file for each language.
 
 ## Style Requirement
 ### SPARQL
@@ -79,10 +80,22 @@ For convenience of KBQA, we design the transpiler based on the need of getting t
 RETURN x.name
 ...
 ```
-
-
 ### KoPL
-For KoPL, we support all styles that satisfy the language grammar. To see more specific instrution, please refer to their public repository https://github.com/THU-KEG/KoPL
+For KoPL, we support all styles that satisfy the language grammar. Please refer to their repository for detailed documentation: https://github.com/THU-KEG/KoPL
 
 ### Lambda-DCS
 For lambda-DCS, please refers to the original paper [(Liang, 2013)](https://arxiv.org/abs/1309.4408) for more specific instructions
+
+## Citation
+
+If you find our work helpful, please cite it as follows:
+
+```
+@article{nie2022graphq,
+  title={GraphQ IR: Unifying Semantic Parsing of Graph Query Language with Intermediate Representation},
+  author={Nie, Lunyiu and Cao, Shulin and Shi, Jiaxin and Tian, Qi and Hou, Lei and Li, Juanzi and Zhai, Jidong},
+  journal={arXiv preprint arXiv:2205.12078},
+  year={2022}
+}
+```
+
