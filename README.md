@@ -28,8 +28,8 @@ This toolkit relies on [ANTLR4](https://github.com/antlr/antlr4) for front-end a
 GraphQ Trans provides a set of easy-to-use APIs for transpiling graph query languages. Here's a simple example of how to use the toolkit to convert between two graph query languages:
 
 ```python
-from graphq_ir.sparql.translator import Translator as SparqlTranslator
-from graphq_ir.ir.translator import Translator as IRTranslator
+from graphq_trans.sparql.translator import Translator as SparqlTranslator
+from graphq_trans.ir.translator import Translator as IRTranslator
 
 sparql_translator = SparqlTranslator() # Create a SparqlTranslator that translates SPARQL to graphqIR
 ir_translator = IRTranslator() # Create a IRTranslator that translates graphqIR to Cypher
