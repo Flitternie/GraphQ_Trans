@@ -86,8 +86,10 @@ class OvernightEmitter(IRParserListener):
             abbr = abbr.replace(" ", "_")
             if datatype[0] in ["VP", "VPNP", "RelNP"]:
                 return "( string {} )".format(abbr)
-            elif datatype[0] in ["TypeNP", "EntityNP"]:
+            elif datatype[0] == "TypeNP":
                 return "en.{}".format(abbr)
+            elif datatype[0] == "EntityNP":
+                return "en.entity.{}".format(abbr)
             else:
                 raise NotImplementedError("Unsupported datatype {}.".format(datatype))
         if domain:
@@ -110,7 +112,7 @@ class OvernightEmitter(IRParserListener):
     def get_full_name_and_type(self, abbr, domain):
         results = {}
         if self.ungrounded:
-            return {"TypeNP": "( string {} )".format(abbr), "RelNP": "( string {} )".format(abbr)}
+            return {"TypeNP": "{}".format(abbr), "RelNP": "( string {} )".format(abbr)}
         if domain:
             for datatype in self.grammar[domain].keys():
                 # for name in self.grammar[domain][datatype].values():
