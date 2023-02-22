@@ -1,8 +1,8 @@
 from antlr4 import *
 from antlr4.InputStream import InputStream
 
-from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
-from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
+from graphq_trans.ir.IRLexer import IRLexer
+from graphq_trans.ir.IRParser import IRParser
 
 from graphq_trans.utils import ErrorHandler
 
@@ -14,12 +14,12 @@ class Parser():
 
     def parse(self, input):
         input_stream = InputStream(input)
-        lexer = UnifiedIRLexer(input_stream)
+        lexer = IRLexer(input_stream)
         lexer.removeErrorListeners()
         lexer.addErrorListener(self.error_listener)    
            
         token_stream = CommonTokenStream(lexer)
-        parser = UnifiedIRParser(token_stream)
+        parser = IRParser(token_stream)
         parser.removeErrorListeners()
         parser.addErrorListener(self.error_listener)
         tree = parser.root()

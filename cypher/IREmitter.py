@@ -418,10 +418,10 @@ class IREmitter(CypherParserListener):
                         )
                     elif edge_direction == "left":
                         ctx.slots["var_table"][previous_node_idxs].add_related_es(
-                            edge, edge_var, "forward", ctx.slots["var_table"][i], qualifier_constraints
+                            edge, edge_var, "backward", ctx.slots["var_table"][i], qualifier_constraints
                         )
                         ctx.slots["var_table"][i].add_related_es(
-                            edge, edge_var, "backward", ctx.slots["var_table"][previous_node_idxs], qualifier_constraints
+                            edge, edge_var, "forward", ctx.slots["var_table"][previous_node_idxs], qualifier_constraints
                         )
                     else:
                         ctx.slots["var_table"][previous_node_idxs].add_related_es(

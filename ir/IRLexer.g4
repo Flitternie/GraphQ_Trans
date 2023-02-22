@@ -1,4 +1,4 @@
-lexer grammar UnifiedIRLexer;
+lexer grammar IRLexer;
 
 WS
     : ( '\t' | '\n' | '\r' )+ ->skip

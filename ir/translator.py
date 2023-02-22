@@ -1,9 +1,9 @@
 from antlr4 import *
 from antlr4.InputStream import InputStream
 
-from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
-from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
-from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.IRLexer import IRLexer
+from graphq_trans.ir.IRParser import IRParser
+from graphq_trans.ir.IRParserListener import IRParserListener
 
 from graphq_trans.ir.SparqlEmitter import SparqlEmitter
 from graphq_trans.ir.OvernightEmitter import OvernightEmitter, overnight_domains
@@ -35,12 +35,12 @@ class Translator():
     
     def parse(self, input):
         input_stream = InputStream(input)
-        lexer = UnifiedIRLexer(input_stream)
+        lexer = IRLexer(input_stream)
         lexer.removeErrorListeners()
         lexer.addErrorListener(self.error_listener)    
            
         token_stream = CommonTokenStream(lexer)
-        parser = UnifiedIRParser(token_stream)
+        parser = IRParser(token_stream)
         parser.removeErrorListeners()
         parser.addErrorListener(self.error_listener)
         return parser.root()
@@ -72,5 +72,3 @@ class Translator():
         self.walker.walk(self.cypher_emitter, tree)
         logical_form = self.cypher_emitter.emit(tree)
         return logical_form
-
-    

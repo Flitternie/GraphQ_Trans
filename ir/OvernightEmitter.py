@@ -2,9 +2,9 @@ import os
 import re
 from antlr4 import *
 
-from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
-from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
-from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.IRLexer import IRLexer
+from graphq_trans.ir.IRParser import IRParser
+from graphq_trans.ir.IRParserListener import IRParserListener
 
 from graphq_trans.utils import *
 
@@ -40,7 +40,7 @@ def read_grammar(file_path):
 
 
 
-class OvernightEmitter(UnifiedIRParserListener):
+class OvernightEmitter(IRParserListener):
     def __init__(self, ungrounded=False):
         self.output = ""
         self.domain = None
@@ -134,46 +134,46 @@ class OvernightEmitter(UnifiedIRParserListener):
 
 
 
-    def enterRoot(self, ctx: UnifiedIRParser.RootContext):
+    def enterRoot(self, ctx: IRParser.RootContext):
         self.initialize()
         ctx.slots = strictDict({"LF": ""})
         return super().enterRoot(ctx)
 
-    def exitRoot(self, ctx: UnifiedIRParser.RootContext):
+    def exitRoot(self, ctx: IRParser.RootContext):
         self.output = ctx.slots["LF"]
         return super().exitRoot(ctx)    
     
-    def enterEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
+    def enterEntityQuery(self, ctx: IRParser.EntityQueryContext):
         ctx.slots = strictDict({"entitySet": entitySet()})
         return super().enterEntityQuery(ctx)
     
-    def exitEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
+    def exitEntityQuery(self, ctx: IRParser.EntityQueryContext):
         ctx.parentCtx.slots["LF"] = "( {} {} )".format(self.func["listValue"], ctx.slots["entitySet"])
         return super().exitEntityQuery(ctx)
     
-    def enterAttributeQuery(self, ctx: UnifiedIRParser.AttributeQueryContext):
+    def enterAttributeQuery(self, ctx: IRParser.AttributeQueryContext):
         ctx.slots = strictDict({"entitySet": entitySet(), "attribute": ""})
         return super().enterAttributeQuery(ctx)
     
-    def exitAttributeQuery(self, ctx: UnifiedIRParser.AttributeQueryContext):
+    def exitAttributeQuery(self, ctx: IRParser.AttributeQueryContext):
         subquery = "( {} {} {} )".format(self.func["getProperty"], ctx.slots["entitySet"], ctx.slots["attribute"])
         ctx.parentCtx.slots["LF"] = "( {} {} )".format(self.func["listValue"], subquery)
         return super().exitAttributeQuery(ctx)
     
-    def enterCountQuery(self, ctx: UnifiedIRParser.CountQueryContext):
+    def enterCountQuery(self, ctx: IRParser.CountQueryContext):
         ctx.slots = strictDict({"entitySet": entitySet()})
         return super().enterCountQuery(ctx)
     
-    def exitCountQuery(self, ctx: UnifiedIRParser.CountQueryContext):
+    def exitCountQuery(self, ctx: IRParser.CountQueryContext):
         subquery = "( {} {} )".format(self.func["size"], ctx.slots["entitySet"])
         ctx.parentCtx.slots["LF"] = "( {} {} )".format(self.func["listValue"], subquery)
         return super().exitCountQuery(ctx)
     
-    def enterSelectQuery(self, ctx: UnifiedIRParser.SelectQueryContext):
+    def enterSelectQuery(self, ctx: IRParser.SelectQueryContext):
         ctx.slots = strictDict({"entitySet": entitySet(), "attribute": "", "op": ""})
         return super().enterSelectQuery(ctx)
     
-    def exitSelectQuery(self, ctx: UnifiedIRParser.SelectQueryContext):
+    def exitSelectQuery(self, ctx: IRParser.SelectQueryContext):
         if ctx.slots["entitySet"].is_pop:
             subquery = "( lambda s ( {} ( var s ) {} {} ) )".format(self.func["superlative"], ctx.slots["op"], ctx.slots["attribute"])
         else:
@@ -181,19 +181,19 @@ class OvernightEmitter(UnifiedIRParserListener):
         ctx.parentCtx.slots["LF"] = "( {} {} )".format(self.func["listValue"], subquery)
         return super().exitSelectQuery(ctx)
 
-    def enterValueQuery(self, ctx: UnifiedIRParser.ValueQueryContext):
+    def enterValueQuery(self, ctx: IRParser.ValueQueryContext):
         ctx.slots = strictDict({"value": ""})
         return super().enterValueQuery(ctx)
     
-    def exitValueQuery(self, ctx: UnifiedIRParser.ValueQueryContext):
+    def exitValueQuery(self, ctx: IRParser.ValueQueryContext):
         ctx.parentCtx.slots["LF"] = "( {} {} )".format(self.func["listValue"], ctx.slots["value"])
         return super().exitValueQuery(ctx)
     
-    def enterEntitySetGroup(self, ctx: UnifiedIRParser.EntitySetGroupContext):
+    def enterEntitySetGroup(self, ctx: IRParser.EntitySetGroupContext):
         ctx.slots = strictDict({"entitySet": [], "setOP": ""})
         return super().enterEntitySetGroup(ctx)
     
-    def exitEntitySetGroup(self, ctx: UnifiedIRParser.EntitySetGroupContext):
+    def exitEntitySetGroup(self, ctx: IRParser.EntitySetGroupContext):
         assert isinstance(ctx.slots["entitySet"], list) and len(ctx.slots["entitySet"]) == 2
         if ctx.slots["setOP"] == "or":    
             insert(ctx.parentCtx, "( {} {} {} )".format(self.func["concat"], ctx.slots["entitySet"][0], ctx.slots["entitySet"][1]))
@@ -203,40 +203,40 @@ class OvernightEmitter(UnifiedIRParserListener):
             raise NotImplementedError("Unsupported set operator {}.".format(ctx.slots["setOP"]))
         return super().exitEntitySetGroup(ctx)
     
-    def enterEntitySetIntersect(self, ctx: UnifiedIRParser.EntitySetIntersectContext):
+    def enterEntitySetIntersect(self, ctx: IRParser.EntitySetIntersectContext):
         ctx.slots = strictDict({"entitySet": []})
         return super().enterEntitySetIntersect(ctx)
     
-    def exitEntitySetIntersect(self, ctx: UnifiedIRParser.EntitySetIntersectContext):
+    def exitEntitySetIntersect(self, ctx: IRParser.EntitySetIntersectContext):
         assert isinstance(ctx.slots["entitySet"], list) and len(ctx.slots["entitySet"]) == 2
         insert(ctx.parentCtx, "( {} {} {} )".format(self.func["and"], ctx.slots["entitySet"][0], ctx.slots["entitySet"][1]))
         return super().exitEntitySetIntersect(ctx)
 
-    def enterEntitySetFilter(self, ctx: UnifiedIRParser.EntitySetFilterContext):
+    def enterEntitySetFilter(self, ctx: IRParser.EntitySetFilterContext):
         ctx.slots = strictDict({"entitySet": entitySet()})
         return super().enterEntitySetFilter(ctx)
     
-    def exitEntitySetFilter(self, ctx: UnifiedIRParser.EntitySetFilterContext):
+    def exitEntitySetFilter(self, ctx: IRParser.EntitySetFilterContext):
         insert(ctx.parentCtx, ctx.slots["entitySet"])
         return super().exitEntitySetFilter(ctx)
     
-    def enterEntitySetAtom(self, ctx: UnifiedIRParser.EntitySetAtomContext):
+    def enterEntitySetAtom(self, ctx: IRParser.EntitySetAtomContext):
         ctx.slots = strictDict({"entity": ""})
         return super().enterEntitySetAtom(ctx)
     
-    def exitEntitySetAtom(self, ctx: UnifiedIRParser.EntitySetAtomContext):
+    def exitEntitySetAtom(self, ctx: IRParser.EntitySetAtomContext):
         insert(ctx.parentCtx, ctx.slots["entity"], is_atom=True)
         return super().exitEntitySetAtom(ctx)
     
-    def exitEntitySetPlaceholder(self, ctx: UnifiedIRParser.EntitySetPlaceholderContext):
+    def exitEntitySetPlaceholder(self, ctx: IRParser.EntitySetPlaceholderContext):
         insert(ctx.parentCtx, "", is_pop=True)
         return super().exitEntitySetPlaceholder(ctx)
     
-    def enterEntitySetByAttribute(self, ctx: UnifiedIRParser.EntitySetByAttributeContext):
+    def enterEntitySetByAttribute(self, ctx: IRParser.EntitySetByAttributeContext):
         ctx.slots = strictDict({"concept":"", "entitySet": entitySet(), "attribute": "", "op": "", "value": ""})
         return super().enterEntitySetByAttribute(ctx)
     
-    def exitEntitySetByAttribute(self, ctx: UnifiedIRParser.EntitySetByAttributeContext):
+    def exitEntitySetByAttribute(self, ctx: IRParser.EntitySetByAttributeContext):
         if ctx.slots["entitySet"].is_pop:
             assert ctx.slots["concept"] == ""
             subquery = "( lambda s ( {} ( var s ) {} {} {} ) )".format(self.func["filter"], ctx.slots["attribute"], ctx.slots["op"], ctx.slots["value"])
@@ -247,11 +247,11 @@ class OvernightEmitter(UnifiedIRParserListener):
         insert(ctx.parentCtx, subquery)
         return super().exitEntitySetByAttribute(ctx)
     
-    def enterFilterByAttribute(self, ctx: UnifiedIRParser.FilterByAttributeContext):
+    def enterFilterByAttribute(self, ctx: IRParser.FilterByAttributeContext):
         ctx.slots = strictDict({"attribute": "", "op": "", "value": ""})
         return super().enterFilterByAttribute(ctx)
     
-    def exitFilterByAttribute(self, ctx: UnifiedIRParser.FilterByAttributeContext):
+    def exitFilterByAttribute(self, ctx: IRParser.FilterByAttributeContext):
         ctx.parentCtx.slots["attribute"] = ctx.slots["attribute"]
         ctx.parentCtx.slots["op"] = ctx.slots["op"]
         # can be further restricted by ( call SW.ensureNumericProperty {} )
@@ -260,11 +260,11 @@ class OvernightEmitter(UnifiedIRParserListener):
     
 
     
-    def enterEntitySetByRank(self, ctx: UnifiedIRParser.EntitySetByRankContext):
+    def enterEntitySetByRank(self, ctx: IRParser.EntitySetByRankContext):
         ctx.slots = strictDict({"entitySet": entitySet(), "op": "", "attribute": ""})
         return super().enterEntitySetByRank(ctx)
     
-    def exitEntitySetByRank(self, ctx: UnifiedIRParser.EntitySetByRankContext):
+    def exitEntitySetByRank(self, ctx: IRParser.EntitySetByRankContext):
         if ctx.slots["entitySet"].is_pop:
             subquery = "( lambda s ( {} ( var s ) {} {} ) )".format(self.func["superlative"], ctx.slots["op"], ctx.slots["attribute"])
         else:
@@ -272,22 +272,22 @@ class OvernightEmitter(UnifiedIRParserListener):
         insert(ctx.parentCtx, subquery)
         return super().exitEntitySetByRank(ctx)
     
-    def enterFilterByRank(self, ctx: UnifiedIRParser.FilterByRankContext):
+    def enterFilterByRank(self, ctx: IRParser.FilterByRankContext):
         ctx.slots = strictDict({"op": "", "attribute": ""})
         return super().enterFilterByRank(ctx)
     
-    def exitFilterByRank(self, ctx: UnifiedIRParser.FilterByRankContext):
+    def exitFilterByRank(self, ctx: IRParser.FilterByRankContext):
         ctx.parentCtx.slots["op"] = ctx.slots["op"]
         ctx.parentCtx.slots["attribute"] = ctx.slots["attribute"]
         return super().exitFilterByRank(ctx)
     
 
 
-    def enterEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
+    def enterEntitySetByPredicate(self, ctx: IRParser.EntitySetByPredicateContext):
         ctx.slots = strictDict({"concept": "", "entitySet": [], "gate": True, "predicate": "", "op": "", "value": ""})
         return super().enterEntitySetByPredicate(ctx)
     
-    def exitEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
+    def exitEntitySetByPredicate(self, ctx: IRParser.EntitySetByPredicateContext):
         if ctx.slots["entitySet"][0].is_pop:
             ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign("( var s )")
         if ctx.slots["op"] == "" and ctx.slots["value"] == "":
@@ -297,7 +297,10 @@ class OvernightEmitter(UnifiedIRParserListener):
                     subquery = entitySet("( {} ( {} {} ) ( string ! type ) )".format(self.func["getProperty"], self.func["singleton"], ctx.slots["concept"]))
                     ctx.slots["entitySet"].insert(0, subquery)
                 # LB filterFunc constraintNP predicate RB
-                subquery = "( {} {} {} )".format(self.func["filter"], ctx.slots["entitySet"][0], ctx.slots["predicate"])
+                if ctx.slots["entitySet"][1].is_pop:
+                    subquery = "( {} {} {} )".format(self.func["filter"], ctx.slots["entitySet"][0], ctx.slots["predicate"])
+                else:
+                    subquery = "( {} {} {} ( string {} ) {} )".format(self.func["filter"], ctx.slots["entitySet"][0], ctx.slots["predicate"], ctx.slots["gate"], ctx.slots["entitySet"][1])
             else:
                 if ctx.slots["concept"]:
                     ctx.slots["entitySet"][0] = ctx.slots["entitySet"][0].reassign("( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"][0], self.func["reverse"], ctx.slots["concept"]))
@@ -346,11 +349,11 @@ class OvernightEmitter(UnifiedIRParserListener):
         insert(ctx.parentCtx, subquery)
         return super().exitEntitySetByPredicate(ctx)
     
-    def enterFilterByPredicate(self, ctx: UnifiedIRParser.FilterByPredicateContext):
+    def enterFilterByPredicate(self, ctx: IRParser.FilterByPredicateContext):
         ctx.slots = strictDict({"gate": True, "predicate": "", "direction": "", "op": "", "value": ""})
         return super().enterFilterByPredicate(ctx)
     
-    def exitFilterByPredicate(self, ctx: UnifiedIRParser.FilterByPredicateContext):
+    def exitFilterByPredicate(self, ctx: IRParser.FilterByPredicateContext):
         ctx.parentCtx.slots["gate"] = ctx.slots["gate"] 
         ctx.parentCtx.slots["predicate"] = ctx.slots["predicate"] if ctx.slots["direction"] == "forward" else "( {} {} )".format(self.func["reverse"], ctx.slots["predicate"])
         ctx.parentCtx.slots["op"] = ctx.slots["op"]
@@ -359,11 +362,11 @@ class OvernightEmitter(UnifiedIRParserListener):
 
 
 
-    def enterEntitySetByConcept(self, ctx: UnifiedIRParser.EntitySetByConceptContext):
+    def enterEntitySetByConcept(self, ctx: IRParser.EntitySetByConceptContext):
         ctx.slots = strictDict({"concept":"", "entitySet": entitySet()})
         return super().enterEntitySetByConcept(ctx)
 
-    def exitEntitySetByConcept(self, ctx: UnifiedIRParser.EntitySetByConceptContext):
+    def exitEntitySetByConcept(self, ctx: IRParser.EntitySetByConceptContext):
         concept = self.get_full_name_and_type(ctx.slots["concept"], domain=self.domain)
         if ctx.slots["entitySet"] == "":
                 # type + CP (through typeConstraintNP)
@@ -373,10 +376,10 @@ class OvernightEmitter(UnifiedIRParserListener):
             assert "RelNP" in concept.keys()
             if ctx.slots["entitySet"].is_atom:
                 subquery = "( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"], self.func["reverse"], concept["RelNP"])
-            elif isinstance(ctx.parentCtx.parentCtx, (UnifiedIRParser.AttributeQueryContext, UnifiedIRParser.EntitySetByAttributeContext, UnifiedIRParser.ValueByAttributeContext)):
+            elif isinstance(ctx.parentCtx.parentCtx, (IRParser.AttributeQueryContext, IRParser.EntitySetByAttributeContext, IRParser.ValueByAttributeContext)):
                 # reversePredicate + CP (through eventConstraintNP)
                 subquery = "( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"], self.func["reverse"], concept["RelNP"])
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetByPredicateContext):
+            elif isinstance(ctx.parentCtx, IRParser.EntitySetByPredicateContext):
                 if ctx.parentCtx.slots["entitySet"][0] != "":
                     # reversePredicate + CP (through eventConstraintNP)
                     subquery = "( {} {} ( {} {} ) )".format(self.func["getProperty"], ctx.slots["entitySet"], self.func["reverse"], concept["RelNP"])
@@ -390,44 +393,44 @@ class OvernightEmitter(UnifiedIRParserListener):
         return super().exitEntitySetByConcept(ctx)
 
     
-    def enterFilterByQualifier(self, ctx: UnifiedIRParser.FilterByQualifierContext):
+    def enterFilterByQualifier(self, ctx: IRParser.FilterByQualifierContext):
         raise NotImplementedError("Qualifier constraints not supported by Lambda-DCS.")
 
 
 
-    def enterValueByAttribute(self, ctx: UnifiedIRParser.ValueByAttributeContext):
+    def enterValueByAttribute(self, ctx: IRParser.ValueByAttributeContext):
         ctx.slots = strictDict({"attribute": "", "entitySet": entitySet()})
         return super().enterValueByAttribute(ctx)
     
-    def exitValueByAttribute(self, ctx: UnifiedIRParser.ValueByAttributeContext):
+    def exitValueByAttribute(self, ctx: IRParser.ValueByAttributeContext):
         # can be further restricted by ( call SW.ensureNumericEntity {} )
         ctx.parentCtx.slots["value"] = "( {} {} {} )".format(self.func["getProperty"], ctx.slots["entitySet"], ctx.slots["attribute"])
         return super().exitValueByAttribute(ctx)
     
-    def enterValueByAggregate(self, ctx: UnifiedIRParser.ValueByAggregateContext):
+    def enterValueByAggregate(self, ctx: IRParser.ValueByAggregateContext):
         ctx.slots = strictDict({"aggregate": "", "value": ""})
         return super().enterValueByAggregate(ctx)
     
-    def exitValueByAggregate(self, ctx: UnifiedIRParser.ValueByAggregateContext):
+    def exitValueByAggregate(self, ctx: IRParser.ValueByAggregateContext):
         ctx.parentCtx.slots["value"] = "( {} {} {} )".format(self.func["aggregate"], ctx.slots["aggregate"], ctx.slots["value"])
         return super().exitValueByAggregate(ctx)
     
-    def enterValueByUnion(self, ctx: UnifiedIRParser.ValueByUnionContext):
+    def enterValueByUnion(self, ctx: IRParser.ValueByUnionContext):
         ctx.slots = strictDict({"valueType": "", "value": []})
         return super().enterValueByUnion(ctx)
     
-    def exitValueByUnion(self, ctx: UnifiedIRParser.ValueByUnionContext):
+    def exitValueByUnion(self, ctx: IRParser.ValueByUnionContext):
         assert isinstance(ctx.slots["value"], list) and len(ctx.slots["value"]) == 2
         for i in range(len(ctx.slots["value"])):
             ctx.slots["value"][i] = self.process_value(ctx.slots["valueType"], ctx.slots["value"][i])
         ctx.parentCtx.slots["value"] = "( {} {} {} )".format(self.func["concat"], ctx.slots["value"][0], ctx.slots["value"][1])
         return super().exitValueByUnion(ctx)
 
-    def enterValueAtom(self, ctx: UnifiedIRParser.ValueAtomContext):
+    def enterValueAtom(self, ctx: IRParser.ValueAtomContext):
         ctx.slots = strictDict({"valueType": "", "value": ""})
         return super().enterValueAtom(ctx)
     
-    def exitValueAtom(self, ctx: UnifiedIRParser.ValueAtomContext):
+    def exitValueAtom(self, ctx: IRParser.ValueAtomContext):
         if len(ctx.slots["value"].split()) > 1:
             if len(ctx.slots["value"].split()) == 2:
                 processed_value = " en.".join(ctx.slots["value"].split())
@@ -447,133 +450,133 @@ class OvernightEmitter(UnifiedIRParserListener):
 
 
 
-    def enterEntity(self, ctx: UnifiedIRParser.EntityContext):
+    def enterEntity(self, ctx: IRParser.EntityContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterEntity(ctx)
     
-    def exitEntity(self, ctx: UnifiedIRParser.EntityContext):
+    def exitEntity(self, ctx: IRParser.EntityContext):
         ctx.parentCtx.slots["entity"] = self.get_full_name(ctx.slots["string"], datatype="EntityNP", domain=self.domain)
         return super().exitEntity(ctx)
     
-    def enterAttribute(self, ctx: UnifiedIRParser.AttributeContext):
+    def enterAttribute(self, ctx: IRParser.AttributeContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterAttribute(ctx)
     
-    def exitAttribute(self, ctx: UnifiedIRParser.AttributeContext):
+    def exitAttribute(self, ctx: IRParser.AttributeContext):
         ctx.parentCtx.slots["attribute"] = self.get_full_name(ctx.slots["string"], datatype="RelNP", domain=self.domain)
         return super().exitAttribute(ctx)
     
-    def enterConcept(self, ctx: UnifiedIRParser.ConceptContext):
+    def enterConcept(self, ctx: IRParser.ConceptContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterConcept(ctx)
     
-    def exitConcept(self, ctx: UnifiedIRParser.ConceptContext):
+    def exitConcept(self, ctx: IRParser.ConceptContext):
         ctx.parentCtx.slots["concept"] = ctx.slots["string"]
         if self.domain is None and not ctx.slots["string"].startswith(".en"):
             ctx.parentCtx.slots["concept"] = self.get_full_name(ctx.slots["string"], datatype="TypeNP", domain=self.domain)
         return super().exitConcept(ctx)
     
-    def enterPredicate(self, ctx: UnifiedIRParser.PredicateContext):
+    def enterPredicate(self, ctx: IRParser.PredicateContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterPredicate(ctx)
     
-    def exitPredicate(self, ctx: UnifiedIRParser.PredicateContext):
+    def exitPredicate(self, ctx: IRParser.PredicateContext):
         ctx.parentCtx.slots["predicate"] = self.get_full_name(ctx.slots["string"], datatype=("VP", "VPNP", "RelNP"), domain=self.domain)
         return super().exitPredicate(ctx)
     
-    def enterValue(self, ctx: UnifiedIRParser.ValueContext):
+    def enterValue(self, ctx: IRParser.ValueContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterValue(ctx)
     
-    def exitValue(self, ctx: UnifiedIRParser.ValueContext):
+    def exitValue(self, ctx: IRParser.ValueContext):
         ctx.parentCtx.slots["value"] = ctx.slots["string"]
         return super().exitValue(ctx)
 
-    def exitForward(self, ctx: UnifiedIRParser.ForwardContext):
+    def exitForward(self, ctx: IRParser.ForwardContext):
         ctx.parentCtx.slots["direction"] = "forward"
         return super().exitForward(ctx)
     
-    def exitBackward(self, ctx: UnifiedIRParser.BackwardContext):
+    def exitBackward(self, ctx: IRParser.BackwardContext):
         ctx.parentCtx.slots["direction"] = "backward"
         return super().exitBackward(ctx)
     
-    def exitAnd(self, ctx: UnifiedIRParser.AndContext):
+    def exitAnd(self, ctx: IRParser.AndContext):
         ctx.parentCtx.slots["setOP"] = "and"
         return super().exitAnd(ctx)
     
-    def exitOr(self, ctx: UnifiedIRParser.OrContext):
+    def exitOr(self, ctx: IRParser.OrContext):
         ctx.parentCtx.slots["setOP"] = "or"
         return super().exitOr(ctx)
     
-    def exitNot(self, ctx: UnifiedIRParser.NotContext):
+    def exitNot(self, ctx: IRParser.NotContext):
         ctx.parentCtx.slots["gate"] = False
         return super().exitNot(ctx)
     
-    def exitSum(self, ctx: UnifiedIRParser.SumContext):
+    def exitSum(self, ctx: IRParser.SumContext):
         ctx.parentCtx.slots["aggregate"] = "( string sum )"
         return super().exitSum(ctx)
     
-    def exitAverage(self, ctx: UnifiedIRParser.AverageContext):
+    def exitAverage(self, ctx: IRParser.AverageContext):
         ctx.parentCtx.slots["aggregate"] = "( string avg )"
         return super().exitAverage(ctx)
     
-    def exitLargest(self, ctx: UnifiedIRParser.LargestContext):
+    def exitLargest(self, ctx: IRParser.LargestContext):
         ctx.parentCtx.slots["op"] = "( string max )"
         return super().exitLargest(ctx)
     
-    def exitSmallest(self, ctx: UnifiedIRParser.SmallestContext):
+    def exitSmallest(self, ctx: IRParser.SmallestContext):
         ctx.parentCtx.slots["op"] = "( string min )"
         return super().exitSmallest(ctx)
 
-    def exitEqual(self, ctx: UnifiedIRParser.EqualContext):
+    def exitEqual(self, ctx: IRParser.EqualContext):
         ctx.parentCtx.slots["op"] = "( string = )"
         return super().exitEqual(ctx)
     
-    def exitNotEqual(self, ctx: UnifiedIRParser.NotEqualContext):
+    def exitNotEqual(self, ctx: IRParser.NotEqualContext):
         ctx.parentCtx.slots["op"] = "( string ! = )"
         return super().exitNotEqual(ctx)
     
-    def exitLarger(self, ctx: UnifiedIRParser.LargerContext):
+    def exitLarger(self, ctx: IRParser.LargerContext):
         ctx.parentCtx.slots["op"] = "( string > )"
         return super().exitLarger(ctx)
     
-    def exitSmaller(self, ctx: UnifiedIRParser.SmallerContext):
+    def exitSmaller(self, ctx: IRParser.SmallerContext):
         ctx.parentCtx.slots["op"] = "( string < )"
         return super().exitSmaller(ctx)
     
-    def exitLargerEqual(self, ctx: UnifiedIRParser.LargerEqualContext):
+    def exitLargerEqual(self, ctx: IRParser.LargerEqualContext):
         ctx.parentCtx.slots["op"] = "( string >= )"
         return super().exitLargerEqual(ctx)
     
-    def exitSmallerEqual(self, ctx: UnifiedIRParser.SmallerEqualContext):
+    def exitSmallerEqual(self, ctx: IRParser.SmallerEqualContext):
         ctx.parentCtx.slots["op"] = "( string <= )"
         return super().exitSmallerEqual(ctx)
     
-    def exitText(self, ctx: UnifiedIRParser.TextContext):
+    def exitText(self, ctx: IRParser.TextContext):
         ctx.parentCtx.slots["valueType"] = "string"
         return super().exitText(ctx)
     
-    def exitQuantity(self, ctx: UnifiedIRParser.QuantityContext):
+    def exitQuantity(self, ctx: IRParser.QuantityContext):
         ctx.parentCtx.slots["valueType"] = "number"
         return super().exitQuantity(ctx)
 
-    def exitDate(self, ctx: UnifiedIRParser.DateContext):
+    def exitDate(self, ctx: IRParser.DateContext):
         ctx.parentCtx.slots["valueType"] = "date"
         return super().exitDate(ctx)
     
-    def exitYear(self, ctx: UnifiedIRParser.YearContext):
+    def exitYear(self, ctx: IRParser.YearContext):
         ctx.parentCtx.slots["valueType"] = "year"
         return super().exitYear(ctx)
     
-    def exitTime(self, ctx: UnifiedIRParser.TimeContext):
+    def exitTime(self, ctx: IRParser.TimeContext):
         ctx.parentCtx.slots["valueType"] = "time"
         return super().exitTime(ctx)
     
 
-    def enterString(self, ctx: UnifiedIRParser.StringContext):
-        if not isinstance(ctx.parentCtx, UnifiedIRParser.StringContext):
+    def enterString(self, ctx: IRParser.StringContext):
+        if not isinstance(ctx.parentCtx, IRParser.StringContext):
             ctx.parentCtx.slots["string"] = str(ctx.getText()).strip()
 
-    def enterNumber(self, ctx: UnifiedIRParser.NumberContext):
-        if not isinstance(ctx.parentCtx, UnifiedIRParser.NumberContext):
+    def enterNumber(self, ctx: IRParser.NumberContext):
+        if not isinstance(ctx.parentCtx, IRParser.NumberContext):
             ctx.parentCtx.slots["number"] = str(ctx.getText()).strip()

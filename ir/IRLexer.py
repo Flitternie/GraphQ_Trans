@@ -1,4 +1,4 @@
-# Generated from UnifiedIRLexer.g4 by ANTLR 4.9.2
+# Generated from IRLexer.g4 by ANTLR 4.9.2
 from antlr4 import *
 from io import StringIO
 import sys
@@ -288,7 +288,7 @@ def serializedATN():
         return buf.getvalue()
 
 
-class UnifiedIRLexer(Lexer):
+class IRLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -392,7 +392,7 @@ class UnifiedIRLexer(Lexer):
                   "ENTI_END", "ATTR_END", "PRED_END", "CONC_END", "QUAL_END", 
                   "VALU_END", "LITERAL", "ANY_CHAR" ]
 
-    grammarFileName = "UnifiedIRLexer.g4"
+    grammarFileName = "IRLexer.g4"
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)

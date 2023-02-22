@@ -1,6 +1,6 @@
-parser grammar UnifiedIRParser;
+parser grammar IRParser;
 
-options { tokenVocab = UnifiedIRLexer; }
+options { tokenVocab = IRLexer; }
 
 root
     : ( entityQuery

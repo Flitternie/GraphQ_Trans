@@ -2,24 +2,24 @@ import re
 import warnings
 from antlr4 import *
 
-from graphq_trans.ir.UnifiedIRLexer import UnifiedIRLexer
-from graphq_trans.ir.UnifiedIRParser import UnifiedIRParser
-from graphq_trans.ir.UnifiedIRParserListener import UnifiedIRParserListener
+from graphq_trans.ir.IRLexer import IRLexer
+from graphq_trans.ir.IRParser import IRParser
+from graphq_trans.ir.IRParserListener import IRParserListener
 
 from graphq_trans.utils import *
 from graphq_trans.ir.misc import *
 
 
-class CypherEmitter(UnifiedIRParserListener):
+class CypherEmitter(IRParserListener):
     def __init__(self):
         self.output = ""
 
         self.entitySetSet = [
-            UnifiedIRParser.EntitySetGroupContext,
-            UnifiedIRParser.EntitySetIntersectContext,
-            UnifiedIRParser.EntitySetFilterContext,
-            UnifiedIRParser.EntitySetAtomContext,
-            UnifiedIRParser.EntitySetPlaceholderContext,
+            IRParser.EntitySetGroupContext,
+            IRParser.EntitySetIntersectContext,
+            IRParser.EntitySetFilterContext,
+            IRParser.EntitySetAtomContext,
+            IRParser.EntitySetPlaceholderContext,
         ]
 
     def initialize(self):
@@ -28,15 +28,15 @@ class CypherEmitter(UnifiedIRParserListener):
     def emit(self, ctx):
         return self.output
 
-    # Enter a parse tree produced by UnifiedIRParser#root.
-    def enterRoot(self, ctx: UnifiedIRParser.RootContext):
+    # Enter a parse tree produced by IRParser#root.
+    def enterRoot(self, ctx: IRParser.RootContext):
         self.initialize()
         ctx.slots = strictDict({"matchClauses": [], "returnClause": "", "orderByClause": "", "limitClause": "",
                                 "parallelQuery": {}})
         return super().enterRoot(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#root.
-    def exitRoot(self, ctx: UnifiedIRParser.RootContext):
+    # Exit a parse tree produced by IRParser#root.
+    def exitRoot(self, ctx: IRParser.RootContext):
         for clause in ctx.slots["matchClauses"]:
             self.output += clause + "\n"
         self.output += ctx.slots["returnClause"]
@@ -55,37 +55,37 @@ class CypherEmitter(UnifiedIRParserListener):
 
         return super().exitRoot(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entityQuery.
-    def enterEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
+    # Enter a parse tree produced by IRParser#entityQuery.
+    def enterEntityQuery(self, ctx: IRParser.EntityQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": ""})
         return super().enterEntityQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entityQuery.
-    def exitEntityQuery(self, ctx: UnifiedIRParser.EntityQueryContext):
+    # Exit a parse tree produced by IRParser#entityQuery.
+    def exitEntityQuery(self, ctx: IRParser.EntityQueryContext):
         return_clause = "RETURN {}.name".format(ctx.slots["query_var"])
         ctx.parentCtx.slots["matchClauses"] = ctx.slots["matchClauses"]
         ctx.parentCtx.slots["returnClause"] = return_clause
         return super().exitEntityQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#attributeQuery.
-    def enterAttributeQuery(self, ctx: UnifiedIRParser.AttributeQueryContext):
+    # Enter a parse tree produced by IRParser#attributeQuery.
+    def enterAttributeQuery(self, ctx: IRParser.AttributeQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": "", "query_attr": ""})
         return super().enterAttributeQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#attributeQuery.
-    def exitAttributeQuery(self, ctx: UnifiedIRParser.AttributeQueryContext):
+    # Exit a parse tree produced by IRParser#attributeQuery.
+    def exitAttributeQuery(self, ctx: IRParser.AttributeQueryContext):
         return_clause = "RETURN {}.{}".format(ctx.slots["query_var"], ctx.slots["query_attr"])
         ctx.parentCtx.slots["matchClauses"] = ctx.slots["matchClauses"]
         ctx.parentCtx.slots["returnClause"] = return_clause
         return super().exitEntityQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#predicateQuery.
-    def enterPredicateQuery(self, ctx: UnifiedIRParser.PredicateQueryContext):
+    # Enter a parse tree produced by IRParser#predicateQuery.
+    def enterPredicateQuery(self, ctx: IRParser.PredicateQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": "", "clauses": [], "edge_var": "", "var": ""})
         return super().enterPredicateQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#predicateQuery.
-    def exitPredicateQuery(self, ctx: UnifiedIRParser.PredicateQueryContext):
+    # Exit a parse tree produced by IRParser#predicateQuery.
+    def exitPredicateQuery(self, ctx: IRParser.PredicateQueryContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         assert len(children) == 2
         head, tail = children
@@ -105,7 +105,7 @@ class CypherEmitter(UnifiedIRParserListener):
         ctx.slots["var"] = head.slots["var"]
         ctx.slots["clauses"] = clauses_head + shift_index(n_step, r_step, clauses_tail)
 
-        clause = "MATCH ({})-[{}]->({})".format(head.slots["var"], ctx.slots["edge_var"], tail.slots["var"])
+        clause = "MATCH ({})<-[{}]-({})".format(head.slots["var"], ctx.slots["edge_var"], tail.slots["var"])
         ctx.slots["clauses"].append(clause)
 
         ctx.slots["matchClauses"] = ctx.slots["clauses"]
@@ -116,25 +116,25 @@ class CypherEmitter(UnifiedIRParserListener):
         ctx.parentCtx.slots["returnClause"] = return_clause
         return super().exitPredicateQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#qualifierQuery.
-    def enterQualifierQuery(self, ctx: UnifiedIRParser.QualifierQueryContext):
+    # Enter a parse tree produced by IRParser#qualifierQuery.
+    def enterQualifierQuery(self, ctx: IRParser.QualifierQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": "", "query_attr": ""})
         return super().enterQualifierQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#qualifierQuery.
-    def exitQualifierQuery(self, ctx: UnifiedIRParser.QualifierQueryContext):
+    # Exit a parse tree produced by IRParser#qualifierQuery.
+    def exitQualifierQuery(self, ctx: IRParser.QualifierQueryContext):
         return_clause = "RETURN {}.{}".format(ctx.slots["query_var"], ctx.slots["query_attr"])
         ctx.parentCtx.slots["matchClauses"] = ctx.slots["matchClauses"]
         ctx.parentCtx.slots["returnClause"] = return_clause
         return super().exitQualifierQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#countQuery.
-    def enterCountQuery(self, ctx: UnifiedIRParser.CountQueryContext):
+    # Enter a parse tree produced by IRParser#countQuery.
+    def enterCountQuery(self, ctx: IRParser.CountQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": "", "extra_es": []})
         return super().enterCountQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#countQuery.
-    def exitCountQuery(self, ctx: UnifiedIRParser.CountQueryContext):
+    # Exit a parse tree produced by IRParser#countQuery.
+    def exitCountQuery(self, ctx: IRParser.CountQueryContext):
         return_clause = "RETURN count({})".format(ctx.slots["query_var"])
         ctx.parentCtx.slots["matchClauses"] = ctx.slots["matchClauses"]
         ctx.parentCtx.slots["returnClause"] = return_clause
@@ -147,25 +147,25 @@ class CypherEmitter(UnifiedIRParserListener):
             }
         return super().exitCountQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#verifyQuery.
-    def enterVerifyQuery(self, ctx: UnifiedIRParser.VerifyQueryContext):
+    # Enter a parse tree produced by IRParser#verifyQuery.
+    def enterVerifyQuery(self, ctx: IRParser.VerifyQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": ""})
         return super().enterVerifyQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#verifyQuery.
-    def exitVerifyQuery(self, ctx: UnifiedIRParser.VerifyQueryContext):
+    # Exit a parse tree produced by IRParser#verifyQuery.
+    def exitVerifyQuery(self, ctx: IRParser.VerifyQueryContext):
         return_clause = "RETURN isEmpty({})".format(ctx.slots["query_var"])
         ctx.parentCtx.slots["matchClauses"] = ctx.slots["matchClauses"]
         ctx.parentCtx.slots["returnClause"] = return_clause
         return super().exitVerifyQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#selectQuery.
-    def enterSelectQuery(self, ctx: UnifiedIRParser.SelectQueryContext):
+    # Enter a parse tree produced by IRParser#selectQuery.
+    def enterSelectQuery(self, ctx: IRParser.SelectQueryContext):
         ctx.slots = strictDict({"matchClauses": [], "query_var": "", "query_attr": "", "order": "", "extra_es": []})
         return super().enterSelectQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#selectQuery.
-    def exitSelectQuery(self, ctx: UnifiedIRParser.SelectQueryContext):
+    # Exit a parse tree produced by IRParser#selectQuery.
+    def exitSelectQuery(self, ctx: IRParser.SelectQueryContext):
         orderByClause = "ORDER BY {}.{}".format(ctx.slots["query_var"], ctx.slots["query_attr"])
         if ctx.slots["order"] == "largest":
             orderByClause += " DESC"
@@ -191,22 +191,22 @@ class CypherEmitter(UnifiedIRParserListener):
 
         return super().exitSelectQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#valueQuery.
-    def enterValueQuery(self, ctx: UnifiedIRParser.ValueQueryContext):
+    # Enter a parse tree produced by IRParser#valueQuery.
+    def enterValueQuery(self, ctx: IRParser.ValueQueryContext):
         return super().enterValueQuery(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#valueQuery.
-    def exitValueQuery(self, ctx: UnifiedIRParser.ValueQueryContext):
+    # Exit a parse tree produced by IRParser#valueQuery.
+    def exitValueQuery(self, ctx: IRParser.ValueQueryContext):
         return super().exitValueQuery(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#verifyByAttribute.
-    def enterVerifyByAttribute(self, ctx: UnifiedIRParser.VerifyByAttributeContext):
+    # Enter a parse tree produced by IRParser#verifyByAttribute.
+    def enterVerifyByAttribute(self, ctx: IRParser.VerifyByAttributeContext):
         ctx.slots = strictDict(
             {"nodeProperty": "", "relationshipProperty": "", "var": "", "edge_var": "", "clauses": []})
         return super().enterVerifyByAttribute(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#verifyByAttribute.
-    def exitVerifyByAttribute(self, ctx: UnifiedIRParser.VerifyByAttributeContext):
+    # Exit a parse tree produced by IRParser#verifyByAttribute.
+    def exitVerifyByAttribute(self, ctx: IRParser.VerifyByAttributeContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         assert len(children) == 1
         head = children[0]
@@ -229,21 +229,21 @@ class CypherEmitter(UnifiedIRParserListener):
         ctx.slots["edge_var"] = head.slots["edge_var"]
         ctx.slots["clauses"] = clauses
         ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
-        if isinstance(ctx.parentCtx, UnifiedIRParser.VerifyQueryContext):
+        if isinstance(ctx.parentCtx, IRParser.VerifyQueryContext):
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.QualifierQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.QualifierQueryContext):
             ctx.parentCtx.slots["query_var"] = ctx.slots["edge_var"]
 
         return super().exitVerifyByAttribute(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#verifyByPredicate.
-    def enterVerifyByPredicate(self, ctx: UnifiedIRParser.VerifyByPredicateContext):
+    # Enter a parse tree produced by IRParser#verifyByPredicate.
+    def enterVerifyByPredicate(self, ctx: IRParser.VerifyByPredicateContext):
         ctx.slots = strictDict({"predicate": "", "direction": "", "var": "", "edge_var": "", "clauses": [],
                                 "relationshipProperty": ""})
         return super().enterVerifyByPredicate(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#verifyByPredicate.
-    def exitVerifyByPredicate(self, ctx: UnifiedIRParser.VerifyByPredicateContext):
+    # Exit a parse tree produced by IRParser#verifyByPredicate.
+    def exitVerifyByPredicate(self, ctx: IRParser.VerifyByPredicateContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         assert len(children) == 2
         head, tail = children
@@ -261,7 +261,7 @@ class CypherEmitter(UnifiedIRParserListener):
         else:
             ctx.slots["edge_var"] = re.sub(r"(?<=r)\d+", lambda x: str(int(x.group()) + r_step), ctx.slots["edge_var"])
 
-        if ctx.slots["direction"] == "forward":
+        if ctx.slots["direction"] == "backward":
             clause = "MATCH ({})<-[{}:{}]-({})"
         else:
             clause = "MATCH ({})-[{}:{}]->({})"
@@ -273,25 +273,25 @@ class CypherEmitter(UnifiedIRParserListener):
         ctx.slots["var"] = head.slots["var"]
 
         ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
-        if isinstance(ctx.parentCtx, UnifiedIRParser.VerifyQueryContext):
+        if isinstance(ctx.parentCtx, IRParser.VerifyQueryContext):
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.QualifierQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.QualifierQueryContext):
             ctx.parentCtx.slots["query_var"] = ctx.slots["edge_var"]
         return super().exitVerifyByPredicate(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetGroup.
-    def enterEntitySetGroup(self, ctx: UnifiedIRParser.EntitySetGroupContext):
+    # Enter a parse tree produced by IRParser#entitySetGroup.
+    def enterEntitySetGroup(self, ctx: IRParser.EntitySetGroupContext):
         ctx.slots = strictDict({"clauses": [], "var": "", "edge_var": "", "setOP": ""})
         return super().enterEntitySetGroup(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetGroup.
-    def exitEntitySetGroup(self, ctx: UnifiedIRParser.EntitySetGroupContext):
+    # Exit a parse tree produced by IRParser#entitySetGroup.
+    def exitEntitySetGroup(self, ctx: IRParser.EntitySetGroupContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         assert len(children) == 2
         head, tail = children
         clauses_head, clauses_tail = ctx.slots["clauses"]
         if ctx.slots["setOP"] == "OR":
-            if isinstance(ctx.parentCtx, UnifiedIRParser.SelectQueryContext):
+            if isinstance(ctx.parentCtx, IRParser.SelectQueryContext):
                 ctx.slots["clauses"] = clauses_head
                 ctx.slots["var"] = head.slots["var"]
                 ctx.slots["edge_var"] = head.slots["edge_var"]
@@ -299,7 +299,7 @@ class CypherEmitter(UnifiedIRParserListener):
                 ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
 
                 ctx.parentCtx.slots["extra_es"] = (clauses_tail, tail.slots["var"])
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.CountQueryContext):
+            elif isinstance(ctx.parentCtx, IRParser.CountQueryContext):
                 ctx.slots["clauses"] = clauses_head
                 ctx.slots["var"] = head.slots["var"]
                 ctx.slots["edge_var"] = head.slots["edge_var"]
@@ -329,35 +329,35 @@ class CypherEmitter(UnifiedIRParserListener):
                 ctx.slots["edge_var"] = tail.slots["edge_var"]
             # raise NotImplementedError("Recursive UNION not implemented yet")
 
-            if isinstance(ctx.parentCtx, UnifiedIRParser.AttributeQueryContext):
+            if isinstance(ctx.parentCtx, IRParser.AttributeQueryContext):
                 ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
                 ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.EntityQueryContext):
+            elif isinstance(ctx.parentCtx, IRParser.EntityQueryContext):
                 ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
                 ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.CountQueryContext):
+            elif isinstance(ctx.parentCtx, IRParser.CountQueryContext):
                 ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
                 ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetByPredicateContext):
+            elif isinstance(ctx.parentCtx, IRParser.EntitySetByPredicateContext):
                 ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetGroupContext):
+            elif isinstance(ctx.parentCtx, IRParser.EntitySetGroupContext):
                 ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByPredicateContext):
+            elif isinstance(ctx.parentCtx, IRParser.VerifyByPredicateContext):
                 ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByAttributeContext):
+            elif isinstance(ctx.parentCtx, IRParser.VerifyByAttributeContext):
                 ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-            elif isinstance(ctx.parentCtx, UnifiedIRParser.PredicateQueryContext):
+            elif isinstance(ctx.parentCtx, IRParser.PredicateQueryContext):
                 ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
 
         return super().exitEntitySetGroup(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetIntersect.
-    def enterEntitySetIntersect(self, ctx: UnifiedIRParser.EntitySetIntersectContext):
+    # Enter a parse tree produced by IRParser#entitySetIntersect.
+    def enterEntitySetIntersect(self, ctx: IRParser.EntitySetIntersectContext):
         ctx.slots = strictDict({"clauses": [], "var": "", "edge_var": ""})
         return super().enterEntitySetIntersect(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetIntersect.
-    def exitEntitySetIntersect(self, ctx: UnifiedIRParser.EntitySetIntersectContext):
+    # Exit a parse tree produced by IRParser#entitySetIntersect.
+    def exitEntitySetIntersect(self, ctx: IRParser.EntitySetIntersectContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         assert len(children) == 2
         head, tail = children
@@ -381,114 +381,114 @@ class CypherEmitter(UnifiedIRParserListener):
         else:
             ctx.slots["edge_var"] = tail.slots["edge_var"]
 
-        if isinstance(ctx.parentCtx, UnifiedIRParser.AttributeQueryContext):
+        if isinstance(ctx.parentCtx, IRParser.AttributeQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntityQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntityQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.CountQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.CountQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetByPredicateContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetByPredicateContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetGroupContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetGroupContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByPredicateContext):
+        elif isinstance(ctx.parentCtx, IRParser.VerifyByPredicateContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByAttributeContext):
+        elif isinstance(ctx.parentCtx, IRParser.VerifyByAttributeContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.PredicateQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.PredicateQueryContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.AttributeQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.AttributeQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
 
         return super().exitEntitySetIntersect(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetFilter.
-    def enterEntitySetFilter(self, ctx: UnifiedIRParser.EntitySetFilterContext):
+    # Enter a parse tree produced by IRParser#entitySetFilter.
+    def enterEntitySetFilter(self, ctx: IRParser.EntitySetFilterContext):
         ctx.slots = strictDict({"clauses": [], "var": "", "edge_var": ""})
         return super().enterEntitySetFilter(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetFilter.
-    def exitEntitySetFilter(self, ctx: UnifiedIRParser.EntitySetFilterContext):
-        if isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetByPredicateContext):
+    # Exit a parse tree produced by IRParser#entitySetFilter.
+    def exitEntitySetFilter(self, ctx: IRParser.EntitySetFilterContext):
+        if isinstance(ctx.parentCtx, IRParser.EntitySetByPredicateContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetIntersectContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetIntersectContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByAttributeContext):
+        elif isinstance(ctx.parentCtx, IRParser.VerifyByAttributeContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByPredicateContext):
+        elif isinstance(ctx.parentCtx, IRParser.VerifyByPredicateContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetGroupContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetGroupContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntityQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntityQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.CountQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.CountQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.SelectQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.SelectQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.AttributeQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.AttributeQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.PredicateQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.PredicateQueryContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
         return super().exitEntitySetFilter(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetAtom.
-    def enterEntitySetAtom(self, ctx: UnifiedIRParser.EntitySetAtomContext):
+    # Enter a parse tree produced by IRParser#entitySetAtom.
+    def enterEntitySetAtom(self, ctx: IRParser.EntitySetAtomContext):
         ctx.slots = strictDict({"var": "n1", "edge_var": "", "entity": "ones", "clauses": []})
         return super().enterEntitySetAtom(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetAtom.
-    def exitEntitySetAtom(self, ctx: UnifiedIRParser.EntitySetAtomContext):
+    # Exit a parse tree produced by IRParser#entitySetAtom.
+    def exitEntitySetAtom(self, ctx: IRParser.EntitySetAtomContext):
         ctx.slots["clauses"] = ["MATCH ({}) WHERE {}.name = {}".format(
             ctx.slots["var"], ctx.slots["var"], ctx.slots["entity"]
         )]
-        if isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetByPredicateContext):
+        if isinstance(ctx.parentCtx, IRParser.EntitySetByPredicateContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetByAttributeContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetByAttributeContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByPredicateContext):
+        elif isinstance(ctx.parentCtx, IRParser.VerifyByPredicateContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetIntersectContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetIntersectContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.EntitySetGroupContext):
+        elif isinstance(ctx.parentCtx, IRParser.EntitySetGroupContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.VerifyByAttributeContext):
+        elif isinstance(ctx.parentCtx, IRParser.VerifyByAttributeContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.PredicateQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.PredicateQueryContext):
             ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.AttributeQueryContext):
+        elif isinstance(ctx.parentCtx, IRParser.AttributeQueryContext):
             ctx.parentCtx.slots["matchClauses"].extend(ctx.slots["clauses"])
             ctx.parentCtx.slots["query_var"] = ctx.slots["var"]
         else:
             pass
         return super().exitEntitySetAtom(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetPlaceholder.
-    def enterEntitySetPlaceholder(self, ctx: UnifiedIRParser.EntitySetPlaceholderContext):
+    # Enter a parse tree produced by IRParser#entitySetPlaceholder.
+    def enterEntitySetPlaceholder(self, ctx: IRParser.EntitySetPlaceholderContext):
         ctx.slots = strictDict({"var": "", "edge_var": "", "entity": "ones", "clauses": []})
         return super().enterEntitySetPlaceholder(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetPlaceholder.
-    def exitEntitySetPlaceholder(self, ctx: UnifiedIRParser.EntitySetPlaceholderContext):
+    # Exit a parse tree produced by IRParser#entitySetPlaceholder.
+    def exitEntitySetPlaceholder(self, ctx: IRParser.EntitySetPlaceholderContext):
         ctx.parentCtx.slots["clauses"].append(ctx.slots["clauses"])
         return super().exitEntitySetPlaceholder(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetByAttribute.
-    def enterEntitySetByAttribute(self, ctx: UnifiedIRParser.EntitySetByAttributeContext):
+    # Enter a parse tree produced by IRParser#entitySetByAttribute.
+    def enterEntitySetByAttribute(self, ctx: IRParser.EntitySetByAttributeContext):
         ctx.slots = strictDict(
             {"clauses": [], "var": "n1", "edge_var": "", "concept": "", "nodeProperty": "",
              "relationshipProperty": ""})
         return super().enterEntitySetByAttribute(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetByAttribute.
-    def exitEntitySetByAttribute(self, ctx: UnifiedIRParser.EntitySetByAttributeContext):
+    # Exit a parse tree produced by IRParser#entitySetByAttribute.
+    def exitEntitySetByAttribute(self, ctx: IRParser.EntitySetByAttributeContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         if ctx.slots["relationshipProperty"]:
             warnings.warn("Cypher does not support attribute qualifier since it's not treated as a proper edge!")
@@ -517,16 +517,16 @@ class CypherEmitter(UnifiedIRParserListener):
         ctx.parentCtx.slots["var"] = ctx.slots["var"]
         return super().exitEntitySetByAttribute(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetByPredicate.
-    def enterEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
+    # Enter a parse tree produced by IRParser#entitySetByPredicate.
+    def enterEntitySetByPredicate(self, ctx: IRParser.EntitySetByPredicateContext):
         ctx.slots = strictDict(
             {"clauses": [], "var": "", "edge_var": "", "concept": "", "predicate": "", "direction": "",
              "relationshipProperty": ""}
         )
         return super().enterEntitySetByPredicate(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetByPredicate.
-    def exitEntitySetByPredicate(self, ctx: UnifiedIRParser.EntitySetByPredicateContext):
+    # Exit a parse tree produced by IRParser#entitySetByPredicate.
+    def exitEntitySetByPredicate(self, ctx: IRParser.EntitySetByPredicateContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
         if len(children) == 1:
             tail = children[0]
@@ -542,12 +542,12 @@ class CypherEmitter(UnifiedIRParserListener):
                                             tail.slots["edge_var"])
 
             if ctx.slots["concept"]:
-                if ctx.slots["direction"] == "forward":
+                if ctx.slots["direction"] == "backward":
                     clause = "MATCH ({}:{})<-[{}:{}]-({})"
                 else:
                     clause = "MATCH ({}:{})-[{}:{}]->({})"
             else:
-                if ctx.slots["direction"] == "forward":
+                if ctx.slots["direction"] == "backward":
                     clause = "MATCH ({}{})<-[{}:{}]-({})"
                 else:
                     clause = "MATCH ({}{})-[{}:{}]->({})"
@@ -582,12 +582,12 @@ class CypherEmitter(UnifiedIRParserListener):
             ctx.slots["clauses"] = clauses_head + shift_index(n_step, r_step, clauses_tail)
 
             if ctx.slots["concept"]:
-                if ctx.slots["direction"] == "forward":
+                if ctx.slots["direction"] == "backward":
                     clause = "MATCH ({}:{})<-[{}:{}]-({})"
                 else:
                     clause = "MATCH ({}:{})-[{}:{}]->({})"
             else:
-                if ctx.slots["direction"] == "forward":
+                if ctx.slots["direction"] == "backward":
                     clause = "MATCH ({}{})<-[{}:{}]-({})"
                 else:
                     clause = "MATCH ({}{})-[{}:{}]->({})"
@@ -606,13 +606,13 @@ class CypherEmitter(UnifiedIRParserListener):
 
         return super().exitEntitySetByPredicate(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetByConcept.
-    def enterEntitySetByConcept(self, ctx: UnifiedIRParser.EntitySetByConceptContext):
+    # Enter a parse tree produced by IRParser#entitySetByConcept.
+    def enterEntitySetByConcept(self, ctx: IRParser.EntitySetByConceptContext):
         ctx.slots = strictDict({"concept": "", "var": "", "edge_var": "", "clauses": []})
         return super().enterEntitySetByConcept(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetByConcept.
-    def exitEntitySetByConcept(self, ctx: UnifiedIRParser.EntitySetByConceptContext):
+    # Exit a parse tree produced by IRParser#entitySetByConcept.
+    def exitEntitySetByConcept(self, ctx: IRParser.EntitySetByConceptContext):
         children = [child for child in iter(ctx.getChildren()) if type(child) in self.entitySetSet]
 
         if children:
@@ -637,243 +637,243 @@ class CypherEmitter(UnifiedIRParserListener):
 
         return super().enterEntitySetByConcept(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#entitySetByRank.
-    def enterEntitySetByRank(self, ctx: UnifiedIRParser.EntitySetByRankContext):
+    # Enter a parse tree produced by IRParser#entitySetByRank.
+    def enterEntitySetByRank(self, ctx: IRParser.EntitySetByRankContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#entitySetByRank.
-    def exitEntitySetByRank(self, ctx: UnifiedIRParser.EntitySetByRankContext):
+    # Exit a parse tree produced by IRParser#entitySetByRank.
+    def exitEntitySetByRank(self, ctx: IRParser.EntitySetByRankContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#filterByRank.
-    def enterFilterByRank(self, ctx: UnifiedIRParser.FilterByRankContext):
+    # Enter a parse tree produced by IRParser#filterByRank.
+    def enterFilterByRank(self, ctx: IRParser.FilterByRankContext):
         ctx.slots = strictDict({"attribute": "", "number": "", "stringOP": ""})
         return super().enterFilterByRank(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#filterByRank.
-    def exitFilterByRank(self, ctx: UnifiedIRParser.FilterByRankContext):
-        if isinstance(ctx.parentCtx, UnifiedIRParser.SelectQueryContext):
+    # Exit a parse tree produced by IRParser#filterByRank.
+    def exitFilterByRank(self, ctx: IRParser.FilterByRankContext):
+        if isinstance(ctx.parentCtx, IRParser.SelectQueryContext):
             ctx.parentCtx.slots["query_attr"] = ctx.slots["attribute"]
             ctx.parentCtx.slots["order"] = ctx.slots["stringOP"]
         else:
             pass
         return super().exitFilterByRank(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#filterByAttribute.
-    def enterFilterByAttribute(self, ctx: UnifiedIRParser.FilterByAttributeContext):
+    # Enter a parse tree produced by IRParser#filterByAttribute.
+    def enterFilterByAttribute(self, ctx: IRParser.FilterByAttributeContext):
         ctx.slots = strictDict({"attribute": None, "symOP": None, "value": ""})
         return super().enterFilterByAttribute(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#filterByAttribute.
-    def exitFilterByAttribute(self, ctx: UnifiedIRParser.FilterByAttributeContext):
+    # Exit a parse tree produced by IRParser#filterByAttribute.
+    def exitFilterByAttribute(self, ctx: IRParser.FilterByAttributeContext):
         ctx.parentCtx.slots["nodeProperty"] = "{}.{} {} {}".format(
             "{}", ctx.slots["attribute"], ctx.slots["symOP"], ctx.slots["value"]
         )
         return super().exitFilterByAttribute(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#filterByPredicate.
-    def enterFilterByPredicate(self, ctx: UnifiedIRParser.FilterByPredicateContext):
+    # Enter a parse tree produced by IRParser#filterByPredicate.
+    def enterFilterByPredicate(self, ctx: IRParser.FilterByPredicateContext):
         ctx.slots = strictDict({"predicate": None, "direction": None, "edge_var": ""})
         return super().enterFilterByPredicate(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#filterByPredicate.
-    def exitFilterByPredicate(self, ctx: UnifiedIRParser.FilterByPredicateContext):
+    # Exit a parse tree produced by IRParser#filterByPredicate.
+    def exitFilterByPredicate(self, ctx: IRParser.FilterByPredicateContext):
         ctx.parentCtx.slots["predicate"] = ctx.slots["predicate"]
         ctx.parentCtx.slots["direction"] = ctx.slots["direction"]
         ctx.parentCtx.slots["edge_var"] = ctx.slots["edge_var"]
         return super().exitFilterByPredicate(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#filterByQualifier.
-    def enterFilterByQualifier(self, ctx: UnifiedIRParser.FilterByQualifierContext):
+    # Enter a parse tree produced by IRParser#filterByQualifier.
+    def enterFilterByQualifier(self, ctx: IRParser.FilterByQualifierContext):
         ctx.slots = strictDict({"qualifier": "", "symOP": "", "value": ""})
         return super().enterFilterByQualifier(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#filterByQualifier.
-    def exitFilterByQualifier(self, ctx: UnifiedIRParser.FilterByQualifierContext):
+    # Exit a parse tree produced by IRParser#filterByQualifier.
+    def exitFilterByQualifier(self, ctx: IRParser.FilterByQualifierContext):
         ctx.parentCtx.slots["relationshipProperty"] = "{}.{} {} {}".format(
             "{}", ctx.slots["qualifier"], ctx.slots["symOP"], ctx.slots["value"]
         )
         return super().exitFilterByQualifier(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#forward.
-    def enterForward(self, ctx: UnifiedIRParser.ForwardContext):
+    # Enter a parse tree produced by IRParser#forward.
+    def enterForward(self, ctx: IRParser.ForwardContext):
         return super().enterForward(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#forward.
-    def exitForward(self, ctx: UnifiedIRParser.ForwardContext):
+    # Exit a parse tree produced by IRParser#forward.
+    def exitForward(self, ctx: IRParser.ForwardContext):
         ctx.parentCtx.slots["direction"] = "forward"
         return super().exitForward(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#backward.
-    def enterBackward(self, ctx: UnifiedIRParser.BackwardContext):
+    # Enter a parse tree produced by IRParser#backward.
+    def enterBackward(self, ctx: IRParser.BackwardContext):
         return super().enterBackward(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#backward.
-    def exitBackward(self, ctx: UnifiedIRParser.BackwardContext):
+    # Exit a parse tree produced by IRParser#backward.
+    def exitBackward(self, ctx: IRParser.BackwardContext):
         ctx.parentCtx.slots["direction"] = "backward"
         return super().exitBackward(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#and.
-    def enterAnd(self, ctx: UnifiedIRParser.AndContext):
+    # Enter a parse tree produced by IRParser#and.
+    def enterAnd(self, ctx: IRParser.AndContext):
         ctx.slots = strictDict({"setOP": "AND"})
         return super().enterAnd(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#and.
-    def exitAnd(self, ctx: UnifiedIRParser.AndContext):
+    # Exit a parse tree produced by IRParser#and.
+    def exitAnd(self, ctx: IRParser.AndContext):
         ctx.parentCtx.slots["setOP"] = ctx.slots["setOP"]
         return super().exitAnd(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#or.
-    def enterOr(self, ctx: UnifiedIRParser.OrContext):
+    # Enter a parse tree produced by IRParser#or.
+    def enterOr(self, ctx: IRParser.OrContext):
         ctx.slots = strictDict({"setOP": "OR"})
         return super().enterOr(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#or.
-    def exitOr(self, ctx: UnifiedIRParser.OrContext):
+    # Exit a parse tree produced by IRParser#or.
+    def exitOr(self, ctx: IRParser.OrContext):
         ctx.parentCtx.slots["setOP"] = ctx.slots["setOP"]
         return super().exitOr(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#not.
-    def enterNot(self, ctx: UnifiedIRParser.NotContext):
+    # Enter a parse tree produced by IRParser#not.
+    def enterNot(self, ctx: IRParser.NotContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#not.
-    def exitNot(self, ctx: UnifiedIRParser.NotContext):
+    # Exit a parse tree produced by IRParser#not.
+    def exitNot(self, ctx: IRParser.NotContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#notEqual.
-    def enterNotEqual(self, ctx: UnifiedIRParser.NotEqualContext):
+    # Enter a parse tree produced by IRParser#notEqual.
+    def enterNotEqual(self, ctx: IRParser.NotEqualContext):
         ctx.slots = strictDict({"symOP": "<>"})
         return super().enterNotEqual(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#notEqual.
-    def exitNotEqual(self, ctx: UnifiedIRParser.NotEqualContext):
+    # Exit a parse tree produced by IRParser#notEqual.
+    def exitNotEqual(self, ctx: IRParser.NotEqualContext):
         ctx.parentCtx.slots["symOP"] = ctx.slots["symOP"]
         return super().exitNotEqual(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#equal.
-    def enterEqual(self, ctx: UnifiedIRParser.EqualContext):
+    # Enter a parse tree produced by IRParser#equal.
+    def enterEqual(self, ctx: IRParser.EqualContext):
         ctx.slots = strictDict({"symOP": "="})
         return super().enterEqual(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#equal.
-    def exitEqual(self, ctx: UnifiedIRParser.EqualContext):
+    # Exit a parse tree produced by IRParser#equal.
+    def exitEqual(self, ctx: IRParser.EqualContext):
         ctx.parentCtx.slots["symOP"] = ctx.slots["symOP"]
         return super().exitEqual(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#larger.
-    def enterLarger(self, ctx: UnifiedIRParser.LargerContext):
+    # Enter a parse tree produced by IRParser#larger.
+    def enterLarger(self, ctx: IRParser.LargerContext):
         ctx.slots = strictDict({"symOP": ">"})
         return super().enterLarger(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#larger.
-    def exitLarger(self, ctx: UnifiedIRParser.LargerContext):
+    # Exit a parse tree produced by IRParser#larger.
+    def exitLarger(self, ctx: IRParser.LargerContext):
         ctx.parentCtx.slots["symOP"] = ctx.slots["symOP"]
         return super().exitLarger(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#smaller.
-    def enterSmaller(self, ctx: UnifiedIRParser.SmallerContext):
+    # Enter a parse tree produced by IRParser#smaller.
+    def enterSmaller(self, ctx: IRParser.SmallerContext):
         ctx.slots = strictDict({"symOP": "<"})
         return super().enterSmaller(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#smaller.
-    def exitSmaller(self, ctx: UnifiedIRParser.SmallerContext):
+    # Exit a parse tree produced by IRParser#smaller.
+    def exitSmaller(self, ctx: IRParser.SmallerContext):
         ctx.parentCtx.slots["symOP"] = ctx.slots["symOP"]
         return super().exitSmaller(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#largerEqual.
-    def enterLargerEqual(self, ctx: UnifiedIRParser.LargerEqualContext):
+    # Enter a parse tree produced by IRParser#largerEqual.
+    def enterLargerEqual(self, ctx: IRParser.LargerEqualContext):
         ctx.slots = strictDict({"symOP": ">="})
         return super().enterLargerEqual(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#largerEqual.
-    def exitLargerEqual(self, ctx: UnifiedIRParser.LargerEqualContext):
+    # Exit a parse tree produced by IRParser#largerEqual.
+    def exitLargerEqual(self, ctx: IRParser.LargerEqualContext):
         ctx.parentCtx.slots["symOP"] = ctx.slots["symOP"]
         return super().exitLargerEqual(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#smallerEqual.
-    def enterSmallerEqual(self, ctx: UnifiedIRParser.SmallerEqualContext):
+    # Enter a parse tree produced by IRParser#smallerEqual.
+    def enterSmallerEqual(self, ctx: IRParser.SmallerEqualContext):
         ctx.slots = strictDict({"symOP": "<="})
         return super().enterSmallerEqual(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#smallerEqual.
-    def exitSmallerEqual(self, ctx: UnifiedIRParser.SmallerEqualContext):
+    # Exit a parse tree produced by IRParser#smallerEqual.
+    def exitSmallerEqual(self, ctx: IRParser.SmallerEqualContext):
         ctx.parentCtx.slots["symOP"] = ctx.slots["symOP"]
         return super().exitSmallerEqual(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#largest.
-    def enterLargest(self, ctx: UnifiedIRParser.LargestContext):
+    # Enter a parse tree produced by IRParser#largest.
+    def enterLargest(self, ctx: IRParser.LargestContext):
         ctx.slots = strictDict({"stringOP": "largest"})
         return super().enterLargest(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#largest.
-    def exitLargest(self, ctx: UnifiedIRParser.LargestContext):
+    # Exit a parse tree produced by IRParser#largest.
+    def exitLargest(self, ctx: IRParser.LargestContext):
         ctx.parentCtx.slots["stringOP"] = ctx.slots["stringOP"]
         return super().exitLargest(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#smallest.
-    def enterSmallest(self, ctx: UnifiedIRParser.SmallestContext):
+    # Enter a parse tree produced by IRParser#smallest.
+    def enterSmallest(self, ctx: IRParser.SmallestContext):
         ctx.slots = strictDict({"stringOP": "largest"})
         return super().enterSmallest(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#smallest.
-    def exitSmallest(self, ctx: UnifiedIRParser.SmallestContext):
+    # Exit a parse tree produced by IRParser#smallest.
+    def exitSmallest(self, ctx: IRParser.SmallestContext):
         ctx.parentCtx.slots["stringOP"] = ctx.slots["stringOP"]
         return super().exitSmallest(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#sum.
-    def enterSum(self, ctx: UnifiedIRParser.SumContext):
+    # Enter a parse tree produced by IRParser#sum.
+    def enterSum(self, ctx: IRParser.SumContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#sum.
-    def exitSum(self, ctx: UnifiedIRParser.SumContext):
+    # Exit a parse tree produced by IRParser#sum.
+    def exitSum(self, ctx: IRParser.SumContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#average.
-    def enterAverage(self, ctx: UnifiedIRParser.AverageContext):
+    # Enter a parse tree produced by IRParser#average.
+    def enterAverage(self, ctx: IRParser.AverageContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#average.
-    def exitAverage(self, ctx: UnifiedIRParser.AverageContext):
+    # Exit a parse tree produced by IRParser#average.
+    def exitAverage(self, ctx: IRParser.AverageContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#valueByUnion.
-    def enterValueByUnion(self, ctx: UnifiedIRParser.ValueByUnionContext):
+    # Enter a parse tree produced by IRParser#valueByUnion.
+    def enterValueByUnion(self, ctx: IRParser.ValueByUnionContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#valueByUnion.
-    def exitValueByUnion(self, ctx: UnifiedIRParser.ValueByUnionContext):
+    # Exit a parse tree produced by IRParser#valueByUnion.
+    def exitValueByUnion(self, ctx: IRParser.ValueByUnionContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#valueByAggregate.
-    def enterValueByAggregate(self, ctx: UnifiedIRParser.ValueByAggregateContext):
+    # Enter a parse tree produced by IRParser#valueByAggregate.
+    def enterValueByAggregate(self, ctx: IRParser.ValueByAggregateContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#valueByAggregate.
-    def exitValueByAggregate(self, ctx: UnifiedIRParser.ValueByAggregateContext):
+    # Exit a parse tree produced by IRParser#valueByAggregate.
+    def exitValueByAggregate(self, ctx: IRParser.ValueByAggregateContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#valueByAttribute.
-    def enterValueByAttribute(self, ctx: UnifiedIRParser.ValueByAttributeContext):
+    # Enter a parse tree produced by IRParser#valueByAttribute.
+    def enterValueByAttribute(self, ctx: IRParser.ValueByAttributeContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#valueByAttribute.
-    def exitValueByAttribute(self, ctx: UnifiedIRParser.ValueByAttributeContext):
+    # Exit a parse tree produced by IRParser#valueByAttribute.
+    def exitValueByAttribute(self, ctx: IRParser.ValueByAttributeContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#valueAtom.
-    def enterValueAtom(self, ctx: UnifiedIRParser.ValueAtomContext):
+    # Enter a parse tree produced by IRParser#valueAtom.
+    def enterValueAtom(self, ctx: IRParser.ValueAtomContext):
         ctx.slots = strictDict({"valueType": "", "value": ""})
         return super().enterValueAtom(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#valueAtom.
-    def exitValueAtom(self, ctx: UnifiedIRParser.ValueAtomContext):
-        if isinstance(ctx.parentCtx, UnifiedIRParser.FilterByAttributeContext):
+    # Exit a parse tree produced by IRParser#valueAtom.
+    def exitValueAtom(self, ctx: IRParser.ValueAtomContext):
+        if isinstance(ctx.parentCtx, IRParser.FilterByAttributeContext):
             if ctx.slots["valueType"] == "text":
                 ctx.parentCtx.slots["value"] = valid_str(ctx.slots["value"])
             else:
                 ctx.parentCtx.slots["value"] = ctx.slots["value"]
-        elif isinstance(ctx.parentCtx, UnifiedIRParser.FilterByQualifierContext):
+        elif isinstance(ctx.parentCtx, IRParser.FilterByQualifierContext):
             if ctx.slots["valueType"] == "text":
                 ctx.parentCtx.slots["value"] = valid_str(ctx.slots["value"])
             else:
@@ -881,137 +881,137 @@ class CypherEmitter(UnifiedIRParserListener):
 
         return super().exitValueAtom(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#text.
-    def enterText(self, ctx: UnifiedIRParser.TextContext):
+    # Enter a parse tree produced by IRParser#text.
+    def enterText(self, ctx: IRParser.TextContext):
         ctx.slots = strictDict({"string": ctx.getText()})
         return super().enterText(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#text.
-    def exitText(self, ctx: UnifiedIRParser.TextContext):
+    # Exit a parse tree produced by IRParser#text.
+    def exitText(self, ctx: IRParser.TextContext):
         ctx.parentCtx.slots["valueType"] = ctx.slots["string"]
         return super().exitNumber(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#quantity.
-    def enterQuantity(self, ctx: UnifiedIRParser.QuantityContext):
+    # Enter a parse tree produced by IRParser#quantity.
+    def enterQuantity(self, ctx: IRParser.QuantityContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#quantity.
-    def exitQuantity(self, ctx: UnifiedIRParser.QuantityContext):
+    # Exit a parse tree produced by IRParser#quantity.
+    def exitQuantity(self, ctx: IRParser.QuantityContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#date.
-    def enterDate(self, ctx: UnifiedIRParser.DateContext):
+    # Enter a parse tree produced by IRParser#date.
+    def enterDate(self, ctx: IRParser.DateContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#date.
-    def exitDate(self, ctx: UnifiedIRParser.DateContext):
+    # Exit a parse tree produced by IRParser#date.
+    def exitDate(self, ctx: IRParser.DateContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#Month.
-    def enterMonth(self, ctx: UnifiedIRParser.MonthContext):
+    # Enter a parse tree produced by IRParser#Month.
+    def enterMonth(self, ctx: IRParser.MonthContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#Month.
-    def exitMonth(self, ctx: UnifiedIRParser.MonthContext):
+    # Exit a parse tree produced by IRParser#Month.
+    def exitMonth(self, ctx: IRParser.MonthContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#year.
-    def enterYear(self, ctx: UnifiedIRParser.YearContext):
+    # Enter a parse tree produced by IRParser#year.
+    def enterYear(self, ctx: IRParser.YearContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#year.
-    def exitYear(self, ctx: UnifiedIRParser.YearContext):
+    # Exit a parse tree produced by IRParser#year.
+    def exitYear(self, ctx: IRParser.YearContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#time.
-    def enterTime(self, ctx: UnifiedIRParser.TimeContext):
+    # Enter a parse tree produced by IRParser#time.
+    def enterTime(self, ctx: IRParser.TimeContext):
         pass
 
-    # Exit a parse tree produced by UnifiedIRParser#time.
-    def exitTime(self, ctx: UnifiedIRParser.TimeContext):
+    # Exit a parse tree produced by IRParser#time.
+    def exitTime(self, ctx: IRParser.TimeContext):
         pass
 
-    # Enter a parse tree produced by UnifiedIRParser#entity.
-    def enterEntity(self, ctx: UnifiedIRParser.EntityContext):
+    # Enter a parse tree produced by IRParser#entity.
+    def enterEntity(self, ctx: IRParser.EntityContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterEntity(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#entity.
-    def exitEntity(self, ctx: UnifiedIRParser.EntityContext):
+    # Exit a parse tree produced by IRParser#entity.
+    def exitEntity(self, ctx: IRParser.EntityContext):
         ctx.parentCtx.slots["entity"] = valid_str(ctx.slots["string"])
         return super().exitEntity(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#attribute.
-    def enterAttribute(self, ctx: UnifiedIRParser.AttributeContext):
+    # Enter a parse tree produced by IRParser#attribute.
+    def enterAttribute(self, ctx: IRParser.AttributeContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterAttribute(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#attribute.
-    def exitAttribute(self, ctx: UnifiedIRParser.AttributeContext):
-        if isinstance(ctx.parentCtx, UnifiedIRParser.AttributeQueryContext):
+    # Exit a parse tree produced by IRParser#attribute.
+    def exitAttribute(self, ctx: IRParser.AttributeContext):
+        if isinstance(ctx.parentCtx, IRParser.AttributeQueryContext):
             ctx.parentCtx.slots["query_attr"] = valid_var(ctx.slots["string"])
         else:
             ctx.parentCtx.slots["attribute"] = valid_var(ctx.slots["string"])
         return super().exitAttribute(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#concept.
-    def enterConcept(self, ctx: UnifiedIRParser.ConceptContext):
+    # Enter a parse tree produced by IRParser#concept.
+    def enterConcept(self, ctx: IRParser.ConceptContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterConcept(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#concept.
-    def exitConcept(self, ctx: UnifiedIRParser.ConceptContext):
+    # Exit a parse tree produced by IRParser#concept.
+    def exitConcept(self, ctx: IRParser.ConceptContext):
         ctx.parentCtx.slots["concept"] = valid_var(ctx.slots["string"])
         return super().exitConcept(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#predicate.
-    def enterPredicate(self, ctx: UnifiedIRParser.PredicateContext):
+    # Enter a parse tree produced by IRParser#predicate.
+    def enterPredicate(self, ctx: IRParser.PredicateContext):
         ctx.slots = strictDict({"string": "", "var": "r1"})
         return super().enterPredicate(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#predicate.
-    def exitPredicate(self, ctx: UnifiedIRParser.PredicateContext):
+    # Exit a parse tree produced by IRParser#predicate.
+    def exitPredicate(self, ctx: IRParser.PredicateContext):
         ctx.parentCtx.slots["predicate"] = valid_var(ctx.slots["string"])
         ctx.parentCtx.slots["edge_var"] = ctx.slots["var"]
         return super().exitPredicate(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#qualifier.
-    def enterQualifier(self, ctx: UnifiedIRParser.QualifierContext):
+    # Enter a parse tree produced by IRParser#qualifier.
+    def enterQualifier(self, ctx: IRParser.QualifierContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterQualifier(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#qualifier.
-    def exitQualifier(self, ctx: UnifiedIRParser.QualifierContext):
-        if isinstance(ctx.parentCtx, UnifiedIRParser.QualifierQueryContext):
+    # Exit a parse tree produced by IRParser#qualifier.
+    def exitQualifier(self, ctx: IRParser.QualifierContext):
+        if isinstance(ctx.parentCtx, IRParser.QualifierQueryContext):
             ctx.parentCtx.slots["query_attr"] = valid_var(ctx.slots["string"])
         else:
             ctx.parentCtx.slots["qualifier"] = valid_var(ctx.slots["string"])
 
-    # Enter a parse tree produced by UnifiedIRParser#value.
-    def enterValue(self, ctx: UnifiedIRParser.ValueContext):
+    # Enter a parse tree produced by IRParser#value.
+    def enterValue(self, ctx: IRParser.ValueContext):
         ctx.slots = strictDict({"string": ""})
         return super().enterValue(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#value.
-    def exitValue(self, ctx: UnifiedIRParser.ValueContext):
+    # Exit a parse tree produced by IRParser#value.
+    def exitValue(self, ctx: IRParser.ValueContext):
         ctx.parentCtx.slots["value"] = ctx.slots["string"]
         return super().exitValue(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#number.
-    def enterNumber(self, ctx: UnifiedIRParser.NumberContext):
+    # Enter a parse tree produced by IRParser#number.
+    def enterNumber(self, ctx: IRParser.NumberContext):
         return super().enterNumber(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#number.
-    def exitNumber(self, ctx: UnifiedIRParser.NumberContext):
+    # Exit a parse tree produced by IRParser#number.
+    def exitNumber(self, ctx: IRParser.NumberContext):
         return super().exitNumber(ctx)
 
-    # Enter a parse tree produced by UnifiedIRParser#string.
-    def enterString(self, ctx: UnifiedIRParser.StringContext):
+    # Enter a parse tree produced by IRParser#string.
+    def enterString(self, ctx: IRParser.StringContext):
         ctx.slots = strictDict({"string": ctx.getText()})
         return super().enterString(ctx)
 
-    # Exit a parse tree produced by UnifiedIRParser#string.
-    def exitString(self, ctx: UnifiedIRParser.StringContext):
+    # Exit a parse tree produced by IRParser#string.
+    def exitString(self, ctx: IRParser.StringContext):
         ctx.parentCtx.slots["string"] = ctx.slots["string"]
         return super().exitString(ctx)
 

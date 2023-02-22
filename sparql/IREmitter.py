@@ -1068,7 +1068,7 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
             intersect_set = 'that <R> {} </R> {} to {}'
 
-            direc = 'backward'
+            direc = 'forward'
             pred = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraint_e = scout_entity_set(triple_table, filter_table, triple[2], excluding=[var])
 
@@ -1082,7 +1082,7 @@ def scout_entity_set(triple_table: dict, filter_table: dict, var: str, excluding
 
             intersect_set = 'that <R> {} </R> {} to {}'
 
-            direc = 'forward'
+            direc = 'backward'
             pred = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraint_e = scout_entity_set(triple_table, filter_table, triple[0], excluding=[var])
             # intersect_set = intersect_set.format(logic, pred, direc, constraint_e)
@@ -1130,7 +1130,7 @@ def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[],
             return verify
         elif triple[2].startswith('?e') and triple[2] not in excluding and triple[1] not in excluding and triple[0] == var:
             verify = '{} that <R> {} </R> {} to {}'
-            direc = 'backward'
+            direc = 'forward'
             pred = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraint_e = scout_entity_set(triple_table, filter_table, triple[2], excluding=[var])
             new_excluding = excluding
@@ -1143,7 +1143,7 @@ def scout_verify(triple_table: dict, filter_table: dict, var: str, excluding=[],
 
         elif triple[0].startswith('?e') and triple[0] not in excluding and triple[1] not in excluding and triple[2] == var:
             verify = '{} that <R> {} </R> {} to {}'
-            direc = 'forward'
+            direc = 'backward'
             pred = triple[1].strip('"').replace('<', '').replace('>', '').replace('_', ' ')
             constraint_e = scout_entity_set(triple_table, filter_table, triple[0], excluding=[var])
             new_excluding = excluding

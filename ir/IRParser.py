@@ -1,4 +1,4 @@
-# Generated from UnifiedIRParser.g4 by ANTLR 4.9.2
+# Generated from IRParser.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -173,9 +173,9 @@ def serializedATN():
         return buf.getvalue()
 
 
-class UnifiedIRParser ( Parser ):
+class IRParser ( Parser ):
 
-    grammarFileName = "UnifiedIRParser.g4"
+    grammarFileName = "IRParser.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -327,42 +327,42 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def EOF(self):
-            return self.getToken(UnifiedIRParser.EOF, 0)
+            return self.getToken(IRParser.EOF, 0)
 
         def entityQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntityQueryContext,0)
+            return self.getTypedRuleContext(IRParser.EntityQueryContext,0)
 
 
         def attributeQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.AttributeQueryContext,0)
+            return self.getTypedRuleContext(IRParser.AttributeQueryContext,0)
 
 
         def predicateQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.PredicateQueryContext,0)
+            return self.getTypedRuleContext(IRParser.PredicateQueryContext,0)
 
 
         def qualifierQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.QualifierQueryContext,0)
+            return self.getTypedRuleContext(IRParser.QualifierQueryContext,0)
 
 
         def countQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.CountQueryContext,0)
+            return self.getTypedRuleContext(IRParser.CountQueryContext,0)
 
 
         def verifyQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.VerifyQueryContext,0)
+            return self.getTypedRuleContext(IRParser.VerifyQueryContext,0)
 
 
         def selectQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.SelectQueryContext,0)
+            return self.getTypedRuleContext(IRParser.SelectQueryContext,0)
 
 
         def valueQuery(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueQueryContext,0)
+            return self.getTypedRuleContext(IRParser.ValueQueryContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_root
+            return IRParser.RULE_root
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterRoot" ):
@@ -377,7 +377,7 @@ class UnifiedIRParser ( Parser ):
 
     def root(self):
 
-        localctx = UnifiedIRParser.RootContext(self, self._ctx, self.state)
+        localctx = IRParser.RootContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_root)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -426,7 +426,7 @@ class UnifiedIRParser ( Parser ):
 
 
             self.state = 74
-            self.match(UnifiedIRParser.EOF)
+            self.match(IRParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -444,14 +444,14 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def What(self):
-            return self.getToken(UnifiedIRParser.What, 0)
+            return self.getToken(IRParser.What, 0)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_entityQuery
+            return IRParser.RULE_entityQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEntityQuery" ):
@@ -466,12 +466,12 @@ class UnifiedIRParser ( Parser ):
 
     def entityQuery(self):
 
-        localctx = UnifiedIRParser.EntityQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.EntityQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_entityQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 76
-            self.match(UnifiedIRParser.What)
+            self.match(IRParser.What)
             self.state = 77
             self.entitySet()
         except RecognitionException as re:
@@ -491,21 +491,21 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def What(self):
-            return self.getToken(UnifiedIRParser.What, 0)
+            return self.getToken(IRParser.What, 0)
 
         def attribute(self):
-            return self.getTypedRuleContext(UnifiedIRParser.AttributeContext,0)
+            return self.getTypedRuleContext(IRParser.AttributeContext,0)
 
 
         def Of(self):
-            return self.getToken(UnifiedIRParser.Of, 0)
+            return self.getToken(IRParser.Of, 0)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_attributeQuery
+            return IRParser.RULE_attributeQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterAttributeQuery" ):
@@ -520,16 +520,16 @@ class UnifiedIRParser ( Parser ):
 
     def attributeQuery(self):
 
-        localctx = UnifiedIRParser.AttributeQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.AttributeQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_attributeQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 79
-            self.match(UnifiedIRParser.What)
+            self.match(IRParser.What)
             self.state = 80
             self.attribute()
             self.state = 81
-            self.match(UnifiedIRParser.Of)
+            self.match(IRParser.Of)
             self.state = 82
             self.entitySet()
         except RecognitionException as re:
@@ -549,23 +549,23 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def What(self):
-            return self.getToken(UnifiedIRParser.What, 0)
+            return self.getToken(IRParser.What, 0)
 
         def From(self):
-            return self.getToken(UnifiedIRParser.From, 0)
+            return self.getToken(IRParser.From, 0)
 
         def entitySet(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.EntitySetContext)
+                return self.getTypedRuleContexts(IRParser.EntitySetContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,i)
+                return self.getTypedRuleContext(IRParser.EntitySetContext,i)
 
 
         def To(self):
-            return self.getToken(UnifiedIRParser.To, 0)
+            return self.getToken(IRParser.To, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_predicateQuery
+            return IRParser.RULE_predicateQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterPredicateQuery" ):
@@ -580,18 +580,18 @@ class UnifiedIRParser ( Parser ):
 
     def predicateQuery(self):
 
-        localctx = UnifiedIRParser.PredicateQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.PredicateQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_predicateQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 84
-            self.match(UnifiedIRParser.What)
+            self.match(IRParser.What)
             self.state = 85
-            self.match(UnifiedIRParser.From)
+            self.match(IRParser.From)
             self.state = 86
             self.entitySet()
             self.state = 87
-            self.match(UnifiedIRParser.To)
+            self.match(IRParser.To)
             self.state = 88
             self.entitySet()
         except RecognitionException as re:
@@ -611,21 +611,21 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def What(self):
-            return self.getToken(UnifiedIRParser.What, 0)
+            return self.getToken(IRParser.What, 0)
 
         def qualifier(self):
-            return self.getTypedRuleContext(UnifiedIRParser.QualifierContext,0)
+            return self.getTypedRuleContext(IRParser.QualifierContext,0)
 
 
         def Of(self):
-            return self.getToken(UnifiedIRParser.Of, 0)
+            return self.getToken(IRParser.Of, 0)
 
         def verify(self):
-            return self.getTypedRuleContext(UnifiedIRParser.VerifyContext,0)
+            return self.getTypedRuleContext(IRParser.VerifyContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_qualifierQuery
+            return IRParser.RULE_qualifierQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterQualifierQuery" ):
@@ -640,16 +640,16 @@ class UnifiedIRParser ( Parser ):
 
     def qualifierQuery(self):
 
-        localctx = UnifiedIRParser.QualifierQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.QualifierQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_qualifierQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 90
-            self.match(UnifiedIRParser.What)
+            self.match(IRParser.What)
             self.state = 91
             self.qualifier()
             self.state = 92
-            self.match(UnifiedIRParser.Of)
+            self.match(IRParser.Of)
             self.state = 93
             self.verify()
         except RecognitionException as re:
@@ -669,14 +669,14 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def Count(self):
-            return self.getToken(UnifiedIRParser.Count, 0)
+            return self.getToken(IRParser.Count, 0)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_countQuery
+            return IRParser.RULE_countQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterCountQuery" ):
@@ -691,12 +691,12 @@ class UnifiedIRParser ( Parser ):
 
     def countQuery(self):
 
-        localctx = UnifiedIRParser.CountQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.CountQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_countQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 95
-            self.match(UnifiedIRParser.Count)
+            self.match(IRParser.Count)
             self.state = 96
             self.entitySet()
         except RecognitionException as re:
@@ -716,14 +716,14 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def Verify(self):
-            return self.getToken(UnifiedIRParser.Verify, 0)
+            return self.getToken(IRParser.Verify, 0)
 
         def verify(self):
-            return self.getTypedRuleContext(UnifiedIRParser.VerifyContext,0)
+            return self.getTypedRuleContext(IRParser.VerifyContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_verifyQuery
+            return IRParser.RULE_verifyQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterVerifyQuery" ):
@@ -738,12 +738,12 @@ class UnifiedIRParser ( Parser ):
 
     def verifyQuery(self):
 
-        localctx = UnifiedIRParser.VerifyQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.VerifyQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_verifyQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 98
-            self.match(UnifiedIRParser.Verify)
+            self.match(IRParser.Verify)
             self.state = 99
             self.verify()
         except RecognitionException as re:
@@ -763,21 +763,21 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def Select(self):
-            return self.getToken(UnifiedIRParser.Select, 0)
+            return self.getToken(IRParser.Select, 0)
 
         def filterByRank(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByRankContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByRankContext,0)
 
 
         def Among(self):
-            return self.getToken(UnifiedIRParser.Among, 0)
+            return self.getToken(IRParser.Among, 0)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_selectQuery
+            return IRParser.RULE_selectQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSelectQuery" ):
@@ -792,16 +792,16 @@ class UnifiedIRParser ( Parser ):
 
     def selectQuery(self):
 
-        localctx = UnifiedIRParser.SelectQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.SelectQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_selectQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 101
-            self.match(UnifiedIRParser.Select)
+            self.match(IRParser.Select)
             self.state = 102
             self.filterByRank()
             self.state = 103
-            self.match(UnifiedIRParser.Among)
+            self.match(IRParser.Among)
             self.state = 104
             self.entitySet()
         except RecognitionException as re:
@@ -821,14 +821,14 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def What(self):
-            return self.getToken(UnifiedIRParser.What, 0)
+            return self.getToken(IRParser.What, 0)
 
         def valueSet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueSetContext,0)
+            return self.getTypedRuleContext(IRParser.ValueSetContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_valueQuery
+            return IRParser.RULE_valueQuery
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterValueQuery" ):
@@ -843,12 +843,12 @@ class UnifiedIRParser ( Parser ):
 
     def valueQuery(self):
 
-        localctx = UnifiedIRParser.ValueQueryContext(self, self._ctx, self.state)
+        localctx = IRParser.ValueQueryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_valueQuery)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 106
-            self.match(UnifiedIRParser.What)
+            self.match(IRParser.What)
             self.state = 107
             self.valueSet()
         except RecognitionException as re:
@@ -869,7 +869,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_verify
+            return IRParser.RULE_verify
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -879,21 +879,21 @@ class UnifiedIRParser ( Parser ):
 
     class VerifyByPredicateContext(VerifyContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.VerifyContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.VerifyContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def entitySet(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.EntitySetContext)
+                return self.getTypedRuleContexts(IRParser.EntitySetContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,i)
+                return self.getTypedRuleContext(IRParser.EntitySetContext,i)
 
         def filterByPredicate(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByPredicateContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByPredicateContext,0)
 
         def filterByQualifier(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByQualifierContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByQualifierContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -907,18 +907,18 @@ class UnifiedIRParser ( Parser ):
 
     class VerifyByAttributeContext(VerifyContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.VerifyContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.VerifyContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
         def filterByAttribute(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByAttributeContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByAttributeContext,0)
 
         def filterByQualifier(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByQualifierContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByQualifierContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -933,7 +933,7 @@ class UnifiedIRParser ( Parser ):
 
     def verify(self):
 
-        localctx = UnifiedIRParser.VerifyContext(self, self._ctx, self.state)
+        localctx = IRParser.VerifyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_verify)
         self._la = 0 # Token type
         try:
@@ -941,7 +941,7 @@ class UnifiedIRParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
             if la_ == 1:
-                localctx = UnifiedIRParser.VerifyByAttributeContext(self, localctx)
+                localctx = IRParser.VerifyByAttributeContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 109
                 self.entitySet()
@@ -950,7 +950,7 @@ class UnifiedIRParser ( Parser ):
                 self.state = 112
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.LB:
+                if _la==IRParser.LB:
                     self.state = 111
                     self.filterByQualifier()
 
@@ -958,7 +958,7 @@ class UnifiedIRParser ( Parser ):
                 pass
 
             elif la_ == 2:
-                localctx = UnifiedIRParser.VerifyByPredicateContext(self, localctx)
+                localctx = IRParser.VerifyByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 114
                 self.entitySet()
@@ -969,7 +969,7 @@ class UnifiedIRParser ( Parser ):
                 self.state = 118
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.LB:
+                if _la==IRParser.LB:
                     self.state = 117
                     self.filterByQualifier()
 
@@ -995,7 +995,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_entitySet
+            return IRParser.RULE_entitySet
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -1005,23 +1005,23 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetGroupContext(EntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.EntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.EntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ES_START(self):
-            return self.getToken(UnifiedIRParser.ES_START, 0)
+            return self.getToken(IRParser.ES_START, 0)
         def entitySet(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.EntitySetContext)
+                return self.getTypedRuleContexts(IRParser.EntitySetContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,i)
+                return self.getTypedRuleContext(IRParser.EntitySetContext,i)
 
         def setOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.SetOPContext,0)
+            return self.getTypedRuleContext(IRParser.SetOPContext,0)
 
         def ES_END(self):
-            return self.getToken(UnifiedIRParser.ES_END, 0)
+            return self.getToken(IRParser.ES_END, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEntitySetGroup" ):
@@ -1034,24 +1034,24 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetIntersectContext(EntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.EntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.EntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ES_START(self):
-            return self.getToken(UnifiedIRParser.ES_START, 0)
+            return self.getToken(IRParser.ES_START, 0)
         def entitySet(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.EntitySetContext)
+                return self.getTypedRuleContexts(IRParser.EntitySetContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,i)
+                return self.getTypedRuleContext(IRParser.EntitySetContext,i)
 
         def LB(self):
-            return self.getToken(UnifiedIRParser.LB, 0)
+            return self.getToken(IRParser.LB, 0)
         def RB(self):
-            return self.getToken(UnifiedIRParser.RB, 0)
+            return self.getToken(IRParser.RB, 0)
         def ES_END(self):
-            return self.getToken(UnifiedIRParser.ES_END, 0)
+            return self.getToken(IRParser.ES_END, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEntitySetIntersect" ):
@@ -1064,12 +1064,12 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetAtomContext(EntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.EntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.EntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def entity(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntityContext,0)
+            return self.getTypedRuleContext(IRParser.EntityContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1083,12 +1083,12 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetPlaceholderContext(EntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.EntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.EntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Ones(self):
-            return self.getToken(UnifiedIRParser.Ones, 0)
+            return self.getToken(IRParser.Ones, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEntitySetPlaceholder" ):
@@ -1101,17 +1101,17 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetFilterContext(EntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.EntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.EntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ES_START(self):
-            return self.getToken(UnifiedIRParser.ES_START, 0)
+            return self.getToken(IRParser.ES_START, 0)
         def filterFromEntitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterFromEntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.FilterFromEntitySetContext,0)
 
         def ES_END(self):
-            return self.getToken(UnifiedIRParser.ES_END, 0)
+            return self.getToken(IRParser.ES_END, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEntitySetFilter" ):
@@ -1125,17 +1125,17 @@ class UnifiedIRParser ( Parser ):
 
     def entitySet(self):
 
-        localctx = UnifiedIRParser.EntitySetContext(self, self._ctx, self.state)
+        localctx = IRParser.EntitySetContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_entitySet)
         try:
             self.state = 141
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
-                localctx = UnifiedIRParser.EntitySetGroupContext(self, localctx)
+                localctx = IRParser.EntitySetGroupContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 122
-                self.match(UnifiedIRParser.ES_START)
+                self.match(IRParser.ES_START)
                 self.state = 123
                 self.entitySet()
                 self.state = 124
@@ -1143,49 +1143,49 @@ class UnifiedIRParser ( Parser ):
                 self.state = 125
                 self.entitySet()
                 self.state = 126
-                self.match(UnifiedIRParser.ES_END)
+                self.match(IRParser.ES_END)
                 pass
 
             elif la_ == 2:
-                localctx = UnifiedIRParser.EntitySetIntersectContext(self, localctx)
+                localctx = IRParser.EntitySetIntersectContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 128
-                self.match(UnifiedIRParser.ES_START)
+                self.match(IRParser.ES_START)
                 self.state = 129
                 self.entitySet()
                 self.state = 130
-                self.match(UnifiedIRParser.LB)
+                self.match(IRParser.LB)
                 self.state = 131
                 self.entitySet()
                 self.state = 132
-                self.match(UnifiedIRParser.RB)
+                self.match(IRParser.RB)
                 self.state = 133
-                self.match(UnifiedIRParser.ES_END)
+                self.match(IRParser.ES_END)
                 pass
 
             elif la_ == 3:
-                localctx = UnifiedIRParser.EntitySetFilterContext(self, localctx)
+                localctx = IRParser.EntitySetFilterContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 135
-                self.match(UnifiedIRParser.ES_START)
+                self.match(IRParser.ES_START)
                 self.state = 136
                 self.filterFromEntitySet()
                 self.state = 137
-                self.match(UnifiedIRParser.ES_END)
+                self.match(IRParser.ES_END)
                 pass
 
             elif la_ == 4:
-                localctx = UnifiedIRParser.EntitySetAtomContext(self, localctx)
+                localctx = IRParser.EntitySetAtomContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 139
                 self.entity()
                 pass
 
             elif la_ == 5:
-                localctx = UnifiedIRParser.EntitySetPlaceholderContext(self, localctx)
+                localctx = IRParser.EntitySetPlaceholderContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 140
-                self.match(UnifiedIRParser.Ones)
+                self.match(IRParser.Ones)
                 pass
 
 
@@ -1207,7 +1207,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_filterFromEntitySet
+            return IRParser.RULE_filterFromEntitySet
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -1217,24 +1217,24 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetByPredicateContext(FilterFromEntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.FilterFromEntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.FilterFromEntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def filterByPredicate(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByPredicateContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByPredicateContext,0)
 
         def entitySet(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.EntitySetContext)
+                return self.getTypedRuleContexts(IRParser.EntitySetContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,i)
+                return self.getTypedRuleContext(IRParser.EntitySetContext,i)
 
         def concept(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ConceptContext,0)
+            return self.getTypedRuleContext(IRParser.ConceptContext,0)
 
         def filterByQualifier(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByQualifierContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByQualifierContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1248,21 +1248,21 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetByAttributeContext(FilterFromEntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.FilterFromEntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.FilterFromEntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def filterByAttribute(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByAttributeContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByAttributeContext,0)
 
         def concept(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ConceptContext,0)
+            return self.getTypedRuleContext(IRParser.ConceptContext,0)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
         def filterByQualifier(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByQualifierContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByQualifierContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1276,15 +1276,15 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetByConceptContext(FilterFromEntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.FilterFromEntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.FilterFromEntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def concept(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ConceptContext,0)
+            return self.getTypedRuleContext(IRParser.ConceptContext,0)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1298,15 +1298,15 @@ class UnifiedIRParser ( Parser ):
 
     class EntitySetByRankContext(FilterFromEntitySetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.FilterFromEntitySetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.FilterFromEntitySetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
         def filterByRank(self):
-            return self.getTypedRuleContext(UnifiedIRParser.FilterByRankContext,0)
+            return self.getTypedRuleContext(IRParser.FilterByRankContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1321,7 +1321,7 @@ class UnifiedIRParser ( Parser ):
 
     def filterFromEntitySet(self):
 
-        localctx = UnifiedIRParser.FilterFromEntitySetContext(self, self._ctx, self.state)
+        localctx = IRParser.FilterFromEntitySetContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_filterFromEntitySet)
         self._la = 0 # Token type
         try:
@@ -1329,7 +1329,7 @@ class UnifiedIRParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
             if la_ == 1:
-                localctx = UnifiedIRParser.EntitySetByAttributeContext(self, localctx)
+                localctx = IRParser.EntitySetByAttributeContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 151
                 self._errHandler.sync(self)
@@ -1340,7 +1340,7 @@ class UnifiedIRParser ( Parser ):
                     self.state = 145
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UnifiedIRParser.Ones) | (1 << UnifiedIRParser.ES_START) | (1 << UnifiedIRParser.ENTI_START))) != 0):
+                    if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IRParser.Ones) | (1 << IRParser.ES_START) | (1 << IRParser.ENTI_START))) != 0):
                         self.state = 144
                         self.entitySet()
 
@@ -1351,7 +1351,7 @@ class UnifiedIRParser ( Parser ):
                     self.state = 148
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==UnifiedIRParser.CONC_START:
+                    if _la==IRParser.CONC_START:
                         self.state = 147
                         self.concept()
 
@@ -1366,7 +1366,7 @@ class UnifiedIRParser ( Parser ):
                 self.state = 155
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.LB:
+                if _la==IRParser.LB:
                     self.state = 154
                     self.filterByQualifier()
 
@@ -1374,7 +1374,7 @@ class UnifiedIRParser ( Parser ):
                 pass
 
             elif la_ == 2:
-                localctx = UnifiedIRParser.EntitySetByPredicateContext(self, localctx)
+                localctx = IRParser.EntitySetByPredicateContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 165
                 self._errHandler.sync(self)
@@ -1385,7 +1385,7 @@ class UnifiedIRParser ( Parser ):
                     self.state = 159
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UnifiedIRParser.Ones) | (1 << UnifiedIRParser.ES_START) | (1 << UnifiedIRParser.ENTI_START))) != 0):
+                    if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IRParser.Ones) | (1 << IRParser.ES_START) | (1 << IRParser.ENTI_START))) != 0):
                         self.state = 158
                         self.entitySet()
 
@@ -1396,7 +1396,7 @@ class UnifiedIRParser ( Parser ):
                     self.state = 162
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==UnifiedIRParser.CONC_START:
+                    if _la==IRParser.CONC_START:
                         self.state = 161
                         self.concept()
 
@@ -1413,7 +1413,7 @@ class UnifiedIRParser ( Parser ):
                 self.state = 170
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.LB:
+                if _la==IRParser.LB:
                     self.state = 169
                     self.filterByQualifier()
 
@@ -1421,14 +1421,14 @@ class UnifiedIRParser ( Parser ):
                 pass
 
             elif la_ == 3:
-                localctx = UnifiedIRParser.EntitySetByConceptContext(self, localctx)
+                localctx = IRParser.EntitySetByConceptContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 172
                 self.concept()
                 self.state = 174
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UnifiedIRParser.Ones) | (1 << UnifiedIRParser.ES_START) | (1 << UnifiedIRParser.ENTI_START))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IRParser.Ones) | (1 << IRParser.ES_START) | (1 << IRParser.ENTI_START))) != 0):
                     self.state = 173
                     self.entitySet()
 
@@ -1436,7 +1436,7 @@ class UnifiedIRParser ( Parser ):
                 pass
 
             elif la_ == 4:
-                localctx = UnifiedIRParser.EntitySetByRankContext(self, localctx)
+                localctx = IRParser.EntitySetByRankContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 176
                 self.entitySet()
@@ -1462,28 +1462,28 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def stringOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringOPContext,0)
+            return self.getTypedRuleContext(IRParser.StringOPContext,0)
 
 
         def attribute(self):
-            return self.getTypedRuleContext(UnifiedIRParser.AttributeContext,0)
+            return self.getTypedRuleContext(IRParser.AttributeContext,0)
 
 
         def That(self):
-            return self.getToken(UnifiedIRParser.That, 0)
+            return self.getToken(IRParser.That, 0)
 
         def Has(self):
-            return self.getToken(UnifiedIRParser.Has, 0)
+            return self.getToken(IRParser.Has, 0)
 
         def Top(self):
-            return self.getToken(UnifiedIRParser.Top, 0)
+            return self.getToken(IRParser.Top, 0)
 
         def number(self):
-            return self.getTypedRuleContext(UnifiedIRParser.NumberContext,0)
+            return self.getTypedRuleContext(IRParser.NumberContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_filterByRank
+            return IRParser.RULE_filterByRank
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFilterByRank" ):
@@ -1498,7 +1498,7 @@ class UnifiedIRParser ( Parser ):
 
     def filterByRank(self):
 
-        localctx = UnifiedIRParser.FilterByRankContext(self, self._ctx, self.state)
+        localctx = IRParser.FilterByRankContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_filterByRank)
         self._la = 0 # Token type
         try:
@@ -1506,19 +1506,19 @@ class UnifiedIRParser ( Parser ):
             self.state = 183
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==UnifiedIRParser.That:
+            if _la==IRParser.That:
                 self.state = 181
-                self.match(UnifiedIRParser.That)
+                self.match(IRParser.That)
                 self.state = 182
-                self.match(UnifiedIRParser.Has)
+                self.match(IRParser.Has)
 
 
             self.state = 187
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==UnifiedIRParser.Top:
+            if _la==IRParser.Top:
                 self.state = 185
-                self.match(UnifiedIRParser.Top)
+                self.match(IRParser.Top)
                 self.state = 186
                 self.number()
 
@@ -1544,22 +1544,22 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def attribute(self):
-            return self.getTypedRuleContext(UnifiedIRParser.AttributeContext,0)
+            return self.getTypedRuleContext(IRParser.AttributeContext,0)
 
 
         def symbolOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.SymbolOPContext,0)
+            return self.getTypedRuleContext(IRParser.SymbolOPContext,0)
 
 
         def valueSet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueSetContext,0)
+            return self.getTypedRuleContext(IRParser.ValueSetContext,0)
 
 
         def Whose(self):
-            return self.getToken(UnifiedIRParser.Whose, 0)
+            return self.getToken(IRParser.Whose, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_filterByAttribute
+            return IRParser.RULE_filterByAttribute
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFilterByAttribute" ):
@@ -1574,7 +1574,7 @@ class UnifiedIRParser ( Parser ):
 
     def filterByAttribute(self):
 
-        localctx = UnifiedIRParser.FilterByAttributeContext(self, self._ctx, self.state)
+        localctx = IRParser.FilterByAttributeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_filterByAttribute)
         self._la = 0 # Token type
         try:
@@ -1582,9 +1582,9 @@ class UnifiedIRParser ( Parser ):
             self.state = 193
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==UnifiedIRParser.Whose:
+            if _la==IRParser.Whose:
                 self.state = 192
-                self.match(UnifiedIRParser.Whose)
+                self.match(IRParser.Whose)
 
 
             self.state = 195
@@ -1610,37 +1610,37 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def predicate(self):
-            return self.getTypedRuleContext(UnifiedIRParser.PredicateContext,0)
+            return self.getTypedRuleContext(IRParser.PredicateContext,0)
 
 
         def To(self):
-            return self.getToken(UnifiedIRParser.To, 0)
+            return self.getToken(IRParser.To, 0)
 
         def That(self):
-            return self.getToken(UnifiedIRParser.That, 0)
+            return self.getToken(IRParser.That, 0)
 
         def logicGate(self):
-            return self.getTypedRuleContext(UnifiedIRParser.LogicGateContext,0)
+            return self.getTypedRuleContext(IRParser.LogicGateContext,0)
 
 
         def direction(self):
-            return self.getTypedRuleContext(UnifiedIRParser.DirectionContext,0)
+            return self.getTypedRuleContext(IRParser.DirectionContext,0)
 
 
         def valueSet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueSetContext,0)
+            return self.getTypedRuleContext(IRParser.ValueSetContext,0)
 
 
         def symbolOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.SymbolOPContext,0)
+            return self.getTypedRuleContext(IRParser.SymbolOPContext,0)
 
 
         def stringOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringOPContext,0)
+            return self.getTypedRuleContext(IRParser.StringOPContext,0)
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_filterByPredicate
+            return IRParser.RULE_filterByPredicate
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFilterByPredicate" ):
@@ -1655,7 +1655,7 @@ class UnifiedIRParser ( Parser ):
 
     def filterByPredicate(self):
 
-        localctx = UnifiedIRParser.FilterByPredicateContext(self, self._ctx, self.state)
+        localctx = IRParser.FilterByPredicateContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_filterByPredicate)
         self._la = 0 # Token type
         try:
@@ -1667,15 +1667,15 @@ class UnifiedIRParser ( Parser ):
                 self.state = 200
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.That:
+                if _la==IRParser.That:
                     self.state = 199
-                    self.match(UnifiedIRParser.That)
+                    self.match(IRParser.That)
 
 
                 self.state = 203
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.Not:
+                if _la==IRParser.Not:
                     self.state = 202
                     self.logicGate()
 
@@ -1685,13 +1685,13 @@ class UnifiedIRParser ( Parser ):
                 self.state = 207
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.Forward or _la==UnifiedIRParser.Backward:
+                if _la==IRParser.Forward or _la==IRParser.Backward:
                     self.state = 206
                     self.direction()
 
 
                 self.state = 209
-                self.match(UnifiedIRParser.To)
+                self.match(IRParser.To)
                 pass
 
             elif la_ == 2:
@@ -1699,15 +1699,15 @@ class UnifiedIRParser ( Parser ):
                 self.state = 212
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.That:
+                if _la==IRParser.That:
                     self.state = 211
-                    self.match(UnifiedIRParser.That)
+                    self.match(IRParser.That)
 
 
                 self.state = 215
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.Not:
+                if _la==IRParser.Not:
                     self.state = 214
                     self.logicGate()
 
@@ -1717,17 +1717,17 @@ class UnifiedIRParser ( Parser ):
                 self.state = 219
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.Forward or _la==UnifiedIRParser.Backward:
+                if _la==IRParser.Forward or _la==IRParser.Backward:
                     self.state = 218
                     self.direction()
 
 
                 self.state = 221
-                self.match(UnifiedIRParser.To)
+                self.match(IRParser.To)
                 self.state = 223
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UnifiedIRParser.Not) | (1 << UnifiedIRParser.Is) | (1 << UnifiedIRParser.IsNot) | (1 << UnifiedIRParser.LargerThan) | (1 << UnifiedIRParser.SmallerThan) | (1 << UnifiedIRParser.AtLeast) | (1 << UnifiedIRParser.AtMost))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IRParser.Not) | (1 << IRParser.Is) | (1 << IRParser.IsNot) | (1 << IRParser.LargerThan) | (1 << IRParser.SmallerThan) | (1 << IRParser.AtLeast) | (1 << IRParser.AtMost))) != 0):
                     self.state = 222
                     self.symbolOP()
 
@@ -1741,15 +1741,15 @@ class UnifiedIRParser ( Parser ):
                 self.state = 228
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.That:
+                if _la==IRParser.That:
                     self.state = 227
-                    self.match(UnifiedIRParser.That)
+                    self.match(IRParser.That)
 
 
                 self.state = 231
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.Not:
+                if _la==IRParser.Not:
                     self.state = 230
                     self.logicGate()
 
@@ -1759,13 +1759,13 @@ class UnifiedIRParser ( Parser ):
                 self.state = 235
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==UnifiedIRParser.Forward or _la==UnifiedIRParser.Backward:
+                if _la==IRParser.Forward or _la==IRParser.Backward:
                     self.state = 234
                     self.direction()
 
 
                 self.state = 237
-                self.match(UnifiedIRParser.To)
+                self.match(IRParser.To)
                 self.state = 238
                 self.stringOP()
                 pass
@@ -1788,25 +1788,25 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def LB(self):
-            return self.getToken(UnifiedIRParser.LB, 0)
+            return self.getToken(IRParser.LB, 0)
 
         def qualifier(self):
-            return self.getTypedRuleContext(UnifiedIRParser.QualifierContext,0)
+            return self.getTypedRuleContext(IRParser.QualifierContext,0)
 
 
         def symbolOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.SymbolOPContext,0)
+            return self.getTypedRuleContext(IRParser.SymbolOPContext,0)
 
 
         def valueSet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueSetContext,0)
+            return self.getTypedRuleContext(IRParser.ValueSetContext,0)
 
 
         def RB(self):
-            return self.getToken(UnifiedIRParser.RB, 0)
+            return self.getToken(IRParser.RB, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_filterByQualifier
+            return IRParser.RULE_filterByQualifier
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFilterByQualifier" ):
@@ -1821,12 +1821,12 @@ class UnifiedIRParser ( Parser ):
 
     def filterByQualifier(self):
 
-        localctx = UnifiedIRParser.FilterByQualifierContext(self, self._ctx, self.state)
+        localctx = IRParser.FilterByQualifierContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_filterByQualifier)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 242
-            self.match(UnifiedIRParser.LB)
+            self.match(IRParser.LB)
             self.state = 243
             self.qualifier()
             self.state = 244
@@ -1834,7 +1834,7 @@ class UnifiedIRParser ( Parser ):
             self.state = 245
             self.valueSet()
             self.state = 246
-            self.match(UnifiedIRParser.RB)
+            self.match(IRParser.RB)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1853,7 +1853,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_direction
+            return IRParser.RULE_direction
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -1863,12 +1863,12 @@ class UnifiedIRParser ( Parser ):
 
     class ForwardContext(DirectionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.DirectionContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.DirectionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Forward(self):
-            return self.getToken(UnifiedIRParser.Forward, 0)
+            return self.getToken(IRParser.Forward, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterForward" ):
@@ -1881,12 +1881,12 @@ class UnifiedIRParser ( Parser ):
 
     class BackwardContext(DirectionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.DirectionContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.DirectionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Backward(self):
-            return self.getToken(UnifiedIRParser.Backward, 0)
+            return self.getToken(IRParser.Backward, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterBackward" ):
@@ -1900,23 +1900,23 @@ class UnifiedIRParser ( Parser ):
 
     def direction(self):
 
-        localctx = UnifiedIRParser.DirectionContext(self, self._ctx, self.state)
+        localctx = IRParser.DirectionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_direction)
         try:
             self.state = 250
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [UnifiedIRParser.Forward]:
-                localctx = UnifiedIRParser.ForwardContext(self, localctx)
+            if token in [IRParser.Forward]:
+                localctx = IRParser.ForwardContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 248
-                self.match(UnifiedIRParser.Forward)
+                self.match(IRParser.Forward)
                 pass
-            elif token in [UnifiedIRParser.Backward]:
-                localctx = UnifiedIRParser.BackwardContext(self, localctx)
+            elif token in [IRParser.Backward]:
+                localctx = IRParser.BackwardContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 249
-                self.match(UnifiedIRParser.Backward)
+                self.match(IRParser.Backward)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -1939,7 +1939,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_setOP
+            return IRParser.RULE_setOP
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -1949,12 +1949,12 @@ class UnifiedIRParser ( Parser ):
 
     class OrContext(SetOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SetOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SetOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Or(self):
-            return self.getToken(UnifiedIRParser.Or, 0)
+            return self.getToken(IRParser.Or, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterOr" ):
@@ -1967,12 +1967,12 @@ class UnifiedIRParser ( Parser ):
 
     class AndContext(SetOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SetOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SetOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def And(self):
-            return self.getToken(UnifiedIRParser.And, 0)
+            return self.getToken(IRParser.And, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterAnd" ):
@@ -1986,23 +1986,23 @@ class UnifiedIRParser ( Parser ):
 
     def setOP(self):
 
-        localctx = UnifiedIRParser.SetOPContext(self, self._ctx, self.state)
+        localctx = IRParser.SetOPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 34, self.RULE_setOP)
         try:
             self.state = 254
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [UnifiedIRParser.And]:
-                localctx = UnifiedIRParser.AndContext(self, localctx)
+            if token in [IRParser.And]:
+                localctx = IRParser.AndContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 252
-                self.match(UnifiedIRParser.And)
+                self.match(IRParser.And)
                 pass
-            elif token in [UnifiedIRParser.Or]:
-                localctx = UnifiedIRParser.OrContext(self, localctx)
+            elif token in [IRParser.Or]:
+                localctx = IRParser.OrContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 253
-                self.match(UnifiedIRParser.Or)
+                self.match(IRParser.Or)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2025,7 +2025,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_logicGate
+            return IRParser.RULE_logicGate
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -2035,12 +2035,12 @@ class UnifiedIRParser ( Parser ):
 
     class NotContext(LogicGateContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.LogicGateContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.LogicGateContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Not(self):
-            return self.getToken(UnifiedIRParser.Not, 0)
+            return self.getToken(IRParser.Not, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterNot" ):
@@ -2054,13 +2054,13 @@ class UnifiedIRParser ( Parser ):
 
     def logicGate(self):
 
-        localctx = UnifiedIRParser.LogicGateContext(self, self._ctx, self.state)
+        localctx = IRParser.LogicGateContext(self, self._ctx, self.state)
         self.enterRule(localctx, 36, self.RULE_logicGate)
         try:
-            localctx = UnifiedIRParser.NotContext(self, localctx)
+            localctx = IRParser.NotContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
             self.state = 256
-            self.match(UnifiedIRParser.Not)
+            self.match(IRParser.Not)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2079,7 +2079,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_symbolOP
+            return IRParser.RULE_symbolOP
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -2089,12 +2089,12 @@ class UnifiedIRParser ( Parser ):
 
     class EqualContext(SymbolOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SymbolOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SymbolOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Is(self):
-            return self.getToken(UnifiedIRParser.Is, 0)
+            return self.getToken(IRParser.Is, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEqual" ):
@@ -2107,12 +2107,12 @@ class UnifiedIRParser ( Parser ):
 
     class LargerContext(SymbolOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SymbolOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SymbolOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def LargerThan(self):
-            return self.getToken(UnifiedIRParser.LargerThan, 0)
+            return self.getToken(IRParser.LargerThan, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterLarger" ):
@@ -2125,12 +2125,12 @@ class UnifiedIRParser ( Parser ):
 
     class SmallerContext(SymbolOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SymbolOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SymbolOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def SmallerThan(self):
-            return self.getToken(UnifiedIRParser.SmallerThan, 0)
+            return self.getToken(IRParser.SmallerThan, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSmaller" ):
@@ -2143,14 +2143,14 @@ class UnifiedIRParser ( Parser ):
 
     class NotEqualContext(SymbolOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SymbolOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SymbolOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def IsNot(self):
-            return self.getToken(UnifiedIRParser.IsNot, 0)
+            return self.getToken(IRParser.IsNot, 0)
         def Not(self):
-            return self.getToken(UnifiedIRParser.Not, 0)
+            return self.getToken(IRParser.Not, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterNotEqual" ):
@@ -2163,12 +2163,12 @@ class UnifiedIRParser ( Parser ):
 
     class LargerEqualContext(SymbolOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SymbolOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SymbolOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def AtLeast(self):
-            return self.getToken(UnifiedIRParser.AtLeast, 0)
+            return self.getToken(IRParser.AtLeast, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterLargerEqual" ):
@@ -2181,12 +2181,12 @@ class UnifiedIRParser ( Parser ):
 
     class SmallerEqualContext(SymbolOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.SymbolOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.SymbolOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def AtMost(self):
-            return self.getToken(UnifiedIRParser.AtMost, 0)
+            return self.getToken(IRParser.AtMost, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSmallerEqual" ):
@@ -2200,53 +2200,53 @@ class UnifiedIRParser ( Parser ):
 
     def symbolOP(self):
 
-        localctx = UnifiedIRParser.SymbolOPContext(self, self._ctx, self.state)
+        localctx = IRParser.SymbolOPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_symbolOP)
         try:
             self.state = 265
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [UnifiedIRParser.IsNot]:
-                localctx = UnifiedIRParser.NotEqualContext(self, localctx)
+            if token in [IRParser.IsNot]:
+                localctx = IRParser.NotEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 258
-                self.match(UnifiedIRParser.IsNot)
+                self.match(IRParser.IsNot)
                 pass
-            elif token in [UnifiedIRParser.Not]:
-                localctx = UnifiedIRParser.NotEqualContext(self, localctx)
+            elif token in [IRParser.Not]:
+                localctx = IRParser.NotEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 259
-                self.match(UnifiedIRParser.Not)
+                self.match(IRParser.Not)
                 pass
-            elif token in [UnifiedIRParser.Is]:
-                localctx = UnifiedIRParser.EqualContext(self, localctx)
+            elif token in [IRParser.Is]:
+                localctx = IRParser.EqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 260
-                self.match(UnifiedIRParser.Is)
+                self.match(IRParser.Is)
                 pass
-            elif token in [UnifiedIRParser.LargerThan]:
-                localctx = UnifiedIRParser.LargerContext(self, localctx)
+            elif token in [IRParser.LargerThan]:
+                localctx = IRParser.LargerContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 261
-                self.match(UnifiedIRParser.LargerThan)
+                self.match(IRParser.LargerThan)
                 pass
-            elif token in [UnifiedIRParser.SmallerThan]:
-                localctx = UnifiedIRParser.SmallerContext(self, localctx)
+            elif token in [IRParser.SmallerThan]:
+                localctx = IRParser.SmallerContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 262
-                self.match(UnifiedIRParser.SmallerThan)
+                self.match(IRParser.SmallerThan)
                 pass
-            elif token in [UnifiedIRParser.AtLeast]:
-                localctx = UnifiedIRParser.LargerEqualContext(self, localctx)
+            elif token in [IRParser.AtLeast]:
+                localctx = IRParser.LargerEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 263
-                self.match(UnifiedIRParser.AtLeast)
+                self.match(IRParser.AtLeast)
                 pass
-            elif token in [UnifiedIRParser.AtMost]:
-                localctx = UnifiedIRParser.SmallerEqualContext(self, localctx)
+            elif token in [IRParser.AtMost]:
+                localctx = IRParser.SmallerEqualContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
                 self.state = 264
-                self.match(UnifiedIRParser.AtMost)
+                self.match(IRParser.AtMost)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2269,7 +2269,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_stringOP
+            return IRParser.RULE_stringOP
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -2279,12 +2279,12 @@ class UnifiedIRParser ( Parser ):
 
     class LargestContext(StringOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.StringOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.StringOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Largest(self):
-            return self.getToken(UnifiedIRParser.Largest, 0)
+            return self.getToken(IRParser.Largest, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterLargest" ):
@@ -2297,12 +2297,12 @@ class UnifiedIRParser ( Parser ):
 
     class SmallestContext(StringOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.StringOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.StringOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Smallest(self):
-            return self.getToken(UnifiedIRParser.Smallest, 0)
+            return self.getToken(IRParser.Smallest, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSmallest" ):
@@ -2316,23 +2316,23 @@ class UnifiedIRParser ( Parser ):
 
     def stringOP(self):
 
-        localctx = UnifiedIRParser.StringOPContext(self, self._ctx, self.state)
+        localctx = IRParser.StringOPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 40, self.RULE_stringOP)
         try:
             self.state = 269
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [UnifiedIRParser.Largest]:
-                localctx = UnifiedIRParser.LargestContext(self, localctx)
+            if token in [IRParser.Largest]:
+                localctx = IRParser.LargestContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 267
-                self.match(UnifiedIRParser.Largest)
+                self.match(IRParser.Largest)
                 pass
-            elif token in [UnifiedIRParser.Smallest]:
-                localctx = UnifiedIRParser.SmallestContext(self, localctx)
+            elif token in [IRParser.Smallest]:
+                localctx = IRParser.SmallestContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 268
-                self.match(UnifiedIRParser.Smallest)
+                self.match(IRParser.Smallest)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2355,7 +2355,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_aggregateOP
+            return IRParser.RULE_aggregateOP
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -2365,12 +2365,12 @@ class UnifiedIRParser ( Parser ):
 
     class AverageContext(AggregateOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.AggregateOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.AggregateOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Average(self):
-            return self.getToken(UnifiedIRParser.Average, 0)
+            return self.getToken(IRParser.Average, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterAverage" ):
@@ -2383,12 +2383,12 @@ class UnifiedIRParser ( Parser ):
 
     class SumContext(AggregateOPContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.AggregateOPContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.AggregateOPContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Sum(self):
-            return self.getToken(UnifiedIRParser.Sum, 0)
+            return self.getToken(IRParser.Sum, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSum" ):
@@ -2402,23 +2402,23 @@ class UnifiedIRParser ( Parser ):
 
     def aggregateOP(self):
 
-        localctx = UnifiedIRParser.AggregateOPContext(self, self._ctx, self.state)
+        localctx = IRParser.AggregateOPContext(self, self._ctx, self.state)
         self.enterRule(localctx, 42, self.RULE_aggregateOP)
         try:
             self.state = 273
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [UnifiedIRParser.Sum]:
-                localctx = UnifiedIRParser.SumContext(self, localctx)
+            if token in [IRParser.Sum]:
+                localctx = IRParser.SumContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 271
-                self.match(UnifiedIRParser.Sum)
+                self.match(IRParser.Sum)
                 pass
-            elif token in [UnifiedIRParser.Average]:
-                localctx = UnifiedIRParser.AverageContext(self, localctx)
+            elif token in [IRParser.Average]:
+                localctx = IRParser.AverageContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 272
-                self.match(UnifiedIRParser.Average)
+                self.match(IRParser.Average)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2441,7 +2441,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_valueSet
+            return IRParser.RULE_valueSet
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -2451,15 +2451,15 @@ class UnifiedIRParser ( Parser ):
 
     class ValueAtomContext(ValueSetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueSetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueSetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def value(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueContext,0)
+            return self.getTypedRuleContext(IRParser.ValueContext,0)
 
         def valueType(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueTypeContext,0)
+            return self.getTypedRuleContext(IRParser.ValueTypeContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -2473,17 +2473,17 @@ class UnifiedIRParser ( Parser ):
 
     class ValueByAttributeContext(ValueSetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueSetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueSetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def attribute(self):
-            return self.getTypedRuleContext(UnifiedIRParser.AttributeContext,0)
+            return self.getTypedRuleContext(IRParser.AttributeContext,0)
 
         def Of(self):
-            return self.getToken(UnifiedIRParser.Of, 0)
+            return self.getToken(IRParser.Of, 0)
         def entitySet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.EntitySetContext,0)
+            return self.getTypedRuleContext(IRParser.EntitySetContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -2497,21 +2497,21 @@ class UnifiedIRParser ( Parser ):
 
     class ValueByUnionContext(ValueSetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueSetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueSetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def valueType(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueTypeContext,0)
+            return self.getTypedRuleContext(IRParser.ValueTypeContext,0)
 
         def valueSet(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.ValueSetContext)
+                return self.getTypedRuleContexts(IRParser.ValueSetContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.ValueSetContext,i)
+                return self.getTypedRuleContext(IRParser.ValueSetContext,i)
 
         def Or(self):
-            return self.getToken(UnifiedIRParser.Or, 0)
+            return self.getToken(IRParser.Or, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterValueByUnion" ):
@@ -2524,17 +2524,17 @@ class UnifiedIRParser ( Parser ):
 
     class ValueByAggregateContext(ValueSetContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueSetContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueSetContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def aggregateOP(self):
-            return self.getTypedRuleContext(UnifiedIRParser.AggregateOPContext,0)
+            return self.getTypedRuleContext(IRParser.AggregateOPContext,0)
 
         def Of(self):
-            return self.getToken(UnifiedIRParser.Of, 0)
+            return self.getToken(IRParser.Of, 0)
         def valueSet(self):
-            return self.getTypedRuleContext(UnifiedIRParser.ValueSetContext,0)
+            return self.getTypedRuleContext(IRParser.ValueSetContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -2549,7 +2549,7 @@ class UnifiedIRParser ( Parser ):
 
     def valueSet(self):
 
-        localctx = UnifiedIRParser.ValueSetContext(self, self._ctx, self.state)
+        localctx = IRParser.ValueSetContext(self, self._ctx, self.state)
         self.enterRule(localctx, 44, self.RULE_valueSet)
         self._la = 0 # Token type
         try:
@@ -2557,47 +2557,47 @@ class UnifiedIRParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,35,self._ctx)
             if la_ == 1:
-                localctx = UnifiedIRParser.ValueByUnionContext(self, localctx)
+                localctx = IRParser.ValueByUnionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 275
                 self.valueType()
                 self.state = 276
                 self.valueSet()
                 self.state = 277
-                self.match(UnifiedIRParser.Or)
+                self.match(IRParser.Or)
                 self.state = 278
                 self.valueSet()
                 pass
 
             elif la_ == 2:
-                localctx = UnifiedIRParser.ValueByAggregateContext(self, localctx)
+                localctx = IRParser.ValueByAggregateContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 280
                 self.aggregateOP()
                 self.state = 281
-                self.match(UnifiedIRParser.Of)
+                self.match(IRParser.Of)
                 self.state = 282
                 self.valueSet()
                 pass
 
             elif la_ == 3:
-                localctx = UnifiedIRParser.ValueByAttributeContext(self, localctx)
+                localctx = IRParser.ValueByAttributeContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 284
                 self.attribute()
                 self.state = 285
-                self.match(UnifiedIRParser.Of)
+                self.match(IRParser.Of)
                 self.state = 286
                 self.entitySet()
                 pass
 
             elif la_ == 4:
-                localctx = UnifiedIRParser.ValueAtomContext(self, localctx)
+                localctx = IRParser.ValueAtomContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 289
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UnifiedIRParser.Text) | (1 << UnifiedIRParser.Quantity) | (1 << UnifiedIRParser.Date) | (1 << UnifiedIRParser.Month) | (1 << UnifiedIRParser.Year) | (1 << UnifiedIRParser.Time))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IRParser.Text) | (1 << IRParser.Quantity) | (1 << IRParser.Date) | (1 << IRParser.Month) | (1 << IRParser.Year) | (1 << IRParser.Time))) != 0):
                     self.state = 288
                     self.valueType()
 
@@ -2625,7 +2625,7 @@ class UnifiedIRParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_valueType
+            return IRParser.RULE_valueType
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -2635,12 +2635,12 @@ class UnifiedIRParser ( Parser ):
 
     class DateContext(ValueTypeContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueTypeContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueTypeContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Date(self):
-            return self.getToken(UnifiedIRParser.Date, 0)
+            return self.getToken(IRParser.Date, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterDate" ):
@@ -2653,12 +2653,12 @@ class UnifiedIRParser ( Parser ):
 
     class MonthContext(ValueTypeContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueTypeContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueTypeContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Month(self):
-            return self.getToken(UnifiedIRParser.Month, 0)
+            return self.getToken(IRParser.Month, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterMonth" ):
@@ -2671,12 +2671,12 @@ class UnifiedIRParser ( Parser ):
 
     class QuantityContext(ValueTypeContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueTypeContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueTypeContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Quantity(self):
-            return self.getToken(UnifiedIRParser.Quantity, 0)
+            return self.getToken(IRParser.Quantity, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterQuantity" ):
@@ -2689,12 +2689,12 @@ class UnifiedIRParser ( Parser ):
 
     class YearContext(ValueTypeContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueTypeContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueTypeContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Year(self):
-            return self.getToken(UnifiedIRParser.Year, 0)
+            return self.getToken(IRParser.Year, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterYear" ):
@@ -2707,12 +2707,12 @@ class UnifiedIRParser ( Parser ):
 
     class TextContext(ValueTypeContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueTypeContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueTypeContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Text(self):
-            return self.getToken(UnifiedIRParser.Text, 0)
+            return self.getToken(IRParser.Text, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterText" ):
@@ -2725,12 +2725,12 @@ class UnifiedIRParser ( Parser ):
 
     class TimeContext(ValueTypeContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a UnifiedIRParser.ValueTypeContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a IRParser.ValueTypeContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def Time(self):
-            return self.getToken(UnifiedIRParser.Time, 0)
+            return self.getToken(IRParser.Time, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterTime" ):
@@ -2744,47 +2744,47 @@ class UnifiedIRParser ( Parser ):
 
     def valueType(self):
 
-        localctx = UnifiedIRParser.ValueTypeContext(self, self._ctx, self.state)
+        localctx = IRParser.ValueTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 46, self.RULE_valueType)
         try:
             self.state = 300
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [UnifiedIRParser.Text]:
-                localctx = UnifiedIRParser.TextContext(self, localctx)
+            if token in [IRParser.Text]:
+                localctx = IRParser.TextContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 294
-                self.match(UnifiedIRParser.Text)
+                self.match(IRParser.Text)
                 pass
-            elif token in [UnifiedIRParser.Quantity]:
-                localctx = UnifiedIRParser.QuantityContext(self, localctx)
+            elif token in [IRParser.Quantity]:
+                localctx = IRParser.QuantityContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 295
-                self.match(UnifiedIRParser.Quantity)
+                self.match(IRParser.Quantity)
                 pass
-            elif token in [UnifiedIRParser.Date]:
-                localctx = UnifiedIRParser.DateContext(self, localctx)
+            elif token in [IRParser.Date]:
+                localctx = IRParser.DateContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 296
-                self.match(UnifiedIRParser.Date)
+                self.match(IRParser.Date)
                 pass
-            elif token in [UnifiedIRParser.Month]:
-                localctx = UnifiedIRParser.MonthContext(self, localctx)
+            elif token in [IRParser.Month]:
+                localctx = IRParser.MonthContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 297
-                self.match(UnifiedIRParser.Month)
+                self.match(IRParser.Month)
                 pass
-            elif token in [UnifiedIRParser.Year]:
-                localctx = UnifiedIRParser.YearContext(self, localctx)
+            elif token in [IRParser.Year]:
+                localctx = IRParser.YearContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 298
-                self.match(UnifiedIRParser.Year)
+                self.match(IRParser.Year)
                 pass
-            elif token in [UnifiedIRParser.Time]:
-                localctx = UnifiedIRParser.TimeContext(self, localctx)
+            elif token in [IRParser.Time]:
+                localctx = IRParser.TimeContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 299
-                self.match(UnifiedIRParser.Time)
+                self.match(IRParser.Time)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2806,17 +2806,17 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def ENTI_START(self):
-            return self.getToken(UnifiedIRParser.ENTI_START, 0)
+            return self.getToken(IRParser.ENTI_START, 0)
 
         def string(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringContext,0)
+            return self.getTypedRuleContext(IRParser.StringContext,0)
 
 
         def ENTI_END(self):
             return self.getToken(Parser.ENTI_END, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_entity
+            return IRParser.RULE_entity
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEntity" ):
@@ -2831,16 +2831,16 @@ class UnifiedIRParser ( Parser ):
 
     def entity(self):
 
-        localctx = UnifiedIRParser.EntityContext(self, self._ctx, self.state)
+        localctx = IRParser.EntityContext(self, self._ctx, self.state)
         self.enterRule(localctx, 48, self.RULE_entity)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 302
-            self.match(UnifiedIRParser.ENTI_START)
+            self.match(IRParser.ENTI_START)
             self.state = 303
             self.string()
             self.state = 304
-            self.match(UnifiedIRParser.ENTI_END)
+            self.match(IRParser.ENTI_END)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2858,17 +2858,17 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def ATTR_START(self):
-            return self.getToken(UnifiedIRParser.ATTR_START, 0)
+            return self.getToken(IRParser.ATTR_START, 0)
 
         def string(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringContext,0)
+            return self.getTypedRuleContext(IRParser.StringContext,0)
 
 
         def ATTR_END(self):
-            return self.getToken(UnifiedIRParser.ATTR_END, 0)
+            return self.getToken(IRParser.ATTR_END, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_attribute
+            return IRParser.RULE_attribute
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterAttribute" ):
@@ -2883,16 +2883,16 @@ class UnifiedIRParser ( Parser ):
 
     def attribute(self):
 
-        localctx = UnifiedIRParser.AttributeContext(self, self._ctx, self.state)
+        localctx = IRParser.AttributeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 50, self.RULE_attribute)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 306
-            self.match(UnifiedIRParser.ATTR_START)
+            self.match(IRParser.ATTR_START)
             self.state = 307
             self.string()
             self.state = 308
-            self.match(UnifiedIRParser.ATTR_END)
+            self.match(IRParser.ATTR_END)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2910,17 +2910,17 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def CONC_START(self):
-            return self.getToken(UnifiedIRParser.CONC_START, 0)
+            return self.getToken(IRParser.CONC_START, 0)
 
         def string(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringContext,0)
+            return self.getTypedRuleContext(IRParser.StringContext,0)
 
 
         def CONC_END(self):
-            return self.getToken(UnifiedIRParser.CONC_END, 0)
+            return self.getToken(IRParser.CONC_END, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_concept
+            return IRParser.RULE_concept
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterConcept" ):
@@ -2935,16 +2935,16 @@ class UnifiedIRParser ( Parser ):
 
     def concept(self):
 
-        localctx = UnifiedIRParser.ConceptContext(self, self._ctx, self.state)
+        localctx = IRParser.ConceptContext(self, self._ctx, self.state)
         self.enterRule(localctx, 52, self.RULE_concept)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 310
-            self.match(UnifiedIRParser.CONC_START)
+            self.match(IRParser.CONC_START)
             self.state = 311
             self.string()
             self.state = 312
-            self.match(UnifiedIRParser.CONC_END)
+            self.match(IRParser.CONC_END)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2962,17 +2962,17 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def PRED_START(self):
-            return self.getToken(UnifiedIRParser.PRED_START, 0)
+            return self.getToken(IRParser.PRED_START, 0)
 
         def string(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringContext,0)
+            return self.getTypedRuleContext(IRParser.StringContext,0)
 
 
         def PRED_END(self):
-            return self.getToken(UnifiedIRParser.PRED_END, 0)
+            return self.getToken(IRParser.PRED_END, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_predicate
+            return IRParser.RULE_predicate
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterPredicate" ):
@@ -2987,16 +2987,16 @@ class UnifiedIRParser ( Parser ):
 
     def predicate(self):
 
-        localctx = UnifiedIRParser.PredicateContext(self, self._ctx, self.state)
+        localctx = IRParser.PredicateContext(self, self._ctx, self.state)
         self.enterRule(localctx, 54, self.RULE_predicate)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 314
-            self.match(UnifiedIRParser.PRED_START)
+            self.match(IRParser.PRED_START)
             self.state = 315
             self.string()
             self.state = 316
-            self.match(UnifiedIRParser.PRED_END)
+            self.match(IRParser.PRED_END)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3014,17 +3014,17 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def QUAL_START(self):
-            return self.getToken(UnifiedIRParser.QUAL_START, 0)
+            return self.getToken(IRParser.QUAL_START, 0)
 
         def string(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringContext,0)
+            return self.getTypedRuleContext(IRParser.StringContext,0)
 
 
         def QUAL_END(self):
-            return self.getToken(UnifiedIRParser.QUAL_END, 0)
+            return self.getToken(IRParser.QUAL_END, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_qualifier
+            return IRParser.RULE_qualifier
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterQualifier" ):
@@ -3039,16 +3039,16 @@ class UnifiedIRParser ( Parser ):
 
     def qualifier(self):
 
-        localctx = UnifiedIRParser.QualifierContext(self, self._ctx, self.state)
+        localctx = IRParser.QualifierContext(self, self._ctx, self.state)
         self.enterRule(localctx, 56, self.RULE_qualifier)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 318
-            self.match(UnifiedIRParser.QUAL_START)
+            self.match(IRParser.QUAL_START)
             self.state = 319
             self.string()
             self.state = 320
-            self.match(UnifiedIRParser.QUAL_END)
+            self.match(IRParser.QUAL_END)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3066,17 +3066,17 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def VALU_START(self):
-            return self.getToken(UnifiedIRParser.VALU_START, 0)
+            return self.getToken(IRParser.VALU_START, 0)
 
         def string(self):
-            return self.getTypedRuleContext(UnifiedIRParser.StringContext,0)
+            return self.getTypedRuleContext(IRParser.StringContext,0)
 
 
         def VALU_END(self):
-            return self.getToken(UnifiedIRParser.VALU_END, 0)
+            return self.getToken(IRParser.VALU_END, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_value
+            return IRParser.RULE_value
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterValue" ):
@@ -3091,16 +3091,16 @@ class UnifiedIRParser ( Parser ):
 
     def value(self):
 
-        localctx = UnifiedIRParser.ValueContext(self, self._ctx, self.state)
+        localctx = IRParser.ValueContext(self, self._ctx, self.state)
         self.enterRule(localctx, 58, self.RULE_value)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 322
-            self.match(UnifiedIRParser.VALU_START)
+            self.match(IRParser.VALU_START)
             self.state = 323
             self.string()
             self.state = 324
-            self.match(UnifiedIRParser.VALU_END)
+            self.match(IRParser.VALU_END)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3118,10 +3118,10 @@ class UnifiedIRParser ( Parser ):
             self.parser = parser
 
         def INTEGER(self):
-            return self.getToken(UnifiedIRParser.INTEGER, 0)
+            return self.getToken(IRParser.INTEGER, 0)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_number
+            return IRParser.RULE_number
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterNumber" ):
@@ -3136,12 +3136,12 @@ class UnifiedIRParser ( Parser ):
 
     def number(self):
 
-        localctx = UnifiedIRParser.NumberContext(self, self._ctx, self.state)
+        localctx = IRParser.NumberContext(self, self._ctx, self.state)
         self.enterRule(localctx, 60, self.RULE_number)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 326
-            self.match(UnifiedIRParser.INTEGER)
+            self.match(IRParser.INTEGER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3160,43 +3160,43 @@ class UnifiedIRParser ( Parser ):
 
         def SPACE(self, i:int=None):
             if i is None:
-                return self.getTokens(UnifiedIRParser.SPACE)
+                return self.getTokens(IRParser.SPACE)
             else:
-                return self.getToken(UnifiedIRParser.SPACE, i)
+                return self.getToken(IRParser.SPACE, i)
 
         def STRING_LITERAL(self, i:int=None):
             if i is None:
-                return self.getTokens(UnifiedIRParser.STRING_LITERAL)
+                return self.getTokens(IRParser.STRING_LITERAL)
             else:
-                return self.getToken(UnifiedIRParser.STRING_LITERAL, i)
+                return self.getToken(IRParser.STRING_LITERAL, i)
 
         def LB(self, i:int=None):
             if i is None:
-                return self.getTokens(UnifiedIRParser.LB)
+                return self.getTokens(IRParser.LB)
             else:
-                return self.getToken(UnifiedIRParser.LB, i)
+                return self.getToken(IRParser.LB, i)
 
         def string(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UnifiedIRParser.StringContext)
+                return self.getTypedRuleContexts(IRParser.StringContext)
             else:
-                return self.getTypedRuleContext(UnifiedIRParser.StringContext,i)
+                return self.getTypedRuleContext(IRParser.StringContext,i)
 
 
         def RB(self, i:int=None):
             if i is None:
-                return self.getTokens(UnifiedIRParser.RB)
+                return self.getTokens(IRParser.RB)
             else:
-                return self.getToken(UnifiedIRParser.RB, i)
+                return self.getToken(IRParser.RB, i)
 
         def LITERAL(self, i:int=None):
             if i is None:
-                return self.getTokens(UnifiedIRParser.LITERAL)
+                return self.getTokens(IRParser.LITERAL)
             else:
-                return self.getToken(UnifiedIRParser.LITERAL, i)
+                return self.getToken(IRParser.LITERAL, i)
 
         def getRuleIndex(self):
-            return UnifiedIRParser.RULE_string
+            return IRParser.RULE_string
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterString" ):
@@ -3211,7 +3211,7 @@ class UnifiedIRParser ( Parser ):
 
     def string(self):
 
-        localctx = UnifiedIRParser.StringContext(self, self._ctx, self.state)
+        localctx = IRParser.StringContext(self, self._ctx, self.state)
         self.enterRule(localctx, 62, self.RULE_string)
         self._la = 0 # Token type
         try:
@@ -3223,25 +3223,25 @@ class UnifiedIRParser ( Parser ):
                 self.state = 335
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [UnifiedIRParser.SPACE]:
+                if token in [IRParser.SPACE]:
                     self.state = 328
-                    self.match(UnifiedIRParser.SPACE)
+                    self.match(IRParser.SPACE)
                     pass
-                elif token in [UnifiedIRParser.STRING_LITERAL]:
+                elif token in [IRParser.STRING_LITERAL]:
                     self.state = 329
-                    self.match(UnifiedIRParser.STRING_LITERAL)
+                    self.match(IRParser.STRING_LITERAL)
                     pass
-                elif token in [UnifiedIRParser.LB]:
+                elif token in [IRParser.LB]:
                     self.state = 330
-                    self.match(UnifiedIRParser.LB)
+                    self.match(IRParser.LB)
                     self.state = 331
                     self.string()
                     self.state = 332
-                    self.match(UnifiedIRParser.RB)
+                    self.match(IRParser.RB)
                     pass
-                elif token in [UnifiedIRParser.LITERAL]:
+                elif token in [IRParser.LITERAL]:
                     self.state = 334
-                    self.match(UnifiedIRParser.LITERAL)
+                    self.match(IRParser.LITERAL)
                     pass
                 else:
                     raise NoViableAltException(self)
@@ -3249,7 +3249,7 @@ class UnifiedIRParser ( Parser ):
                 self.state = 337 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UnifiedIRParser.LB) | (1 << UnifiedIRParser.SPACE) | (1 << UnifiedIRParser.STRING_LITERAL) | (1 << UnifiedIRParser.LITERAL))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IRParser.LB) | (1 << IRParser.SPACE) | (1 << IRParser.STRING_LITERAL) | (1 << IRParser.LITERAL))) != 0)):
                     break
 
         except RecognitionException as re:
