@@ -28,7 +28,8 @@ class Translator():
         return parser.root()
 
     def to_ir(self, input):
-        tree = self.parse(get_program_seq(input))
+        input = get_program_seq(input) if isinstance(input, list) else input
+        tree = self.parse(input)
         self.walker.walk(self.emitter, tree)
         ir = self.emitter.emit(tree)
         return ir
