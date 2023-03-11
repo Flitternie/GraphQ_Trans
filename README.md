@@ -91,10 +91,11 @@ For lambda-DCS, please refers to the original paper [(Liang, 2013)](https://arxi
 If you find our work helpful, please cite it as follows:
 
 ```
-@article{nie2022graphq,
-  title={GraphQ IR: Unifying Semantic Parsing of Graph Query Language with Intermediate Representation},
-  author={Nie, Lunyiu and Cao, Shulin and Shi, Jiaxin and Tian, Qi and Hou, Lei and Li, Juanzi and Zhai, Jidong},
-  journal={arXiv preprint arXiv:2205.12078},
+@inproceedings{nie2022graphq,
+  title={GraphQ IR: Unifying the Semantic Parsing of Graph Query Languages with One Intermediate Representation},
+  author={Nie, Lunyiu and Cao, Shulin and Shi, Jiaxin and Sun, Jiuding and Tian, Qi and Hou, Lei and Li, Juanzi and Zhai, Jidong},
+  booktitle={Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing},
+  pages={5848--5865},
   year={2022}
 }
 ```

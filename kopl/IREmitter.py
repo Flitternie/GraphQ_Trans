@@ -217,7 +217,7 @@ class IREmitter(KoplListener):
         return super().enterEntitySetByConcept(ctx)
 
     def exitEntitySetByConcept(self, ctx: KoplParser.EntitySetByConceptContext):
-        insert(ctx.parentCtx, "{}{}".format(ctx.slots["conceptFilter"], scoping("entity", ctx.slots["entitySet"])))
+        insert(ctx.parentCtx, "{}{}".format(ctx.slots["conceptFilter"].strip(), scoping("entity", ctx.slots["entitySet"])))
         return super().exitEntitySetByConcept(ctx)
     
     def exitEntitySetPopulation(self, ctx: KoplParser.EntitySetPopulationContext):
