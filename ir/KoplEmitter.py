@@ -283,6 +283,8 @@ class KoplEmitter(IRParserListener):
             subquery += self.SEP + ctx.slots["qualifierFilter"]
         if ctx.slots["concept"]:
             subquery += self.SEP + self.func["FilterConcept"].format(ctx.slots["concept"])
+        if len(ctx.slots["entitySet"]) == 2:
+            subquery += self.SEP + self.func["And"]
         insert(ctx.parentCtx, subquery)
         return super().exitEntitySetByPredicate(ctx)
     
