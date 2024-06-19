@@ -1,7 +1,10 @@
 ![Icon](./docs/imgs/icon.png)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Downloads](https://static.pepy.tech/badge/graphq_trans)](https://pepy.tech/project/graphq_trans)
+[![Downloads](https://static.pepy.tech/badge/graphq_trans/month)](https://pepy.tech/project/graphq_trans)
 [![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg?style=flat)](https://github.com/flitternie/graphq_trans/issues)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 GraphQ Trans is a source-to-source compiler that supports the transpilation among multiple graph query languages via a unified intermediate representation. You may install this package via pip:
 
