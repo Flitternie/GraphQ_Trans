@@ -9,7 +9,7 @@
 GraphQ Trans is a source-to-source compiler that supports the transpilation among multiple graph query languages via a unified intermediate representation. You may install this package via pip:
 
 ```bash
-pip install graphq_trans
+pip install graphq-trans
 ```
 
 For our demonstration website, please visit https://graphqtrans.xlore.cn/
